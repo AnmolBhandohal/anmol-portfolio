@@ -29,13 +29,13 @@ const SITE = {
 const PROJECTS = [
 /* ─────────────────────────────────────────────── FIELD */
 {
-  id:'field', n:'01', ch:1,
-  title:'Electrical Apprentice — Powerworks',
+  id:'field', n:'01', ch:1, feature:'recall',
+  title:'Electrical Apprentice',
   short:'Field record · Powerworks',
   status:'Summer 2026', live:false,
   label:'FIELD RECORD / SUMMER 2026',
   year:'Summer 2026',
-  role:'Electrical apprentice · commercial & residential',
+  role:'Powerworks · commercial & residential',
 
   problem:'A $9.6M three-storey commercial building needed its addressable fire alarm programmed — including the logic that tells the elevators what to do when it goes off.',
   approach:'Programmed a Mircom FX-3500: pull stations, smoke and heat detectors, and the relay outputs that drive Phase I elevator recall.',
@@ -63,7 +63,7 @@ const PROJECTS = [
          TECK; and installing lighting, HRV and heater fans, receptacles and low-voltage data to the
          Canadian Electrical Code.` },
 
-    { h:'Elevator recall is a truth table',
+    { h:'Elevator recall is a truth table', lab:'recall',
       p:`The most interesting job was the fire alarm on the <strong>Caishen at Windermere</strong>
          building — a Mircom FX-3500 addressable panel. Beyond the pull stations and detectors, the
          panel has to tell the elevator controller what to do in an alarm.<br><br>
@@ -79,7 +79,7 @@ if (alarm.any) {
   relay.hold(DOORS_OPEN);    // and stays there for fire crews
 }` },
 
-    { h:'Finding a ground fault by halving the circuit',
+    { h:'Finding a ground fault by halving the circuit', lab:'fault',
       p:`An intermittent ground fault showed up on a live fire alarm circuit. Checking every device
          one by one is slow, and "intermittent" means it might not show up on the device you
          happen to be checking.<br><br>
@@ -137,7 +137,7 @@ if (alarm.any) {
 
 /* ─────────────────────────────────────────────── ARVP */
 {
-  id:'arvp-auv', n:'02', ch:2,
+  id:'arvp-auv', n:'02', ch:2, feature:'filter',
   title:'ARVP — Autonomous Underwater Vehicle',
   short:'ARVP underwater vehicle',
   status:'Active', live:true,
@@ -148,7 +148,7 @@ if (alarm.any) {
   problem:'Once the hull is sealed and the vehicle is in the water, no connector can be reached, reseated, or reworked.',
   approach:'Took failure modes out on the bench: keyed connectors that can\'t be plugged in backwards, CAN for the vehicle bus, and a 4-layer board checked against the manufacturer\'s rules.',
   result:'4-layer stackup cleared a full design-rule check with <b>zero violations</b> before sign-off.',
-  metric:{ value:'0', unit:'violations', label:'Full DRC, 4-layer' },
+  metric:{ value:'4', unit:'layers', label:'Stackup · DRC clean' },
 
   body:`Electrical subsystem work on the University of Alberta's autonomous sub. When the hull is
         sealed there's no reaching back in — so the work is making the wrong thing
@@ -191,7 +191,7 @@ if (alarm.any) {
          <strong>zero violations</strong> before sign-off. A rule violation found in Altium costs a
          minute; one found on a fabricated board costs a re-spin.` },
 
-    { h:'Pulling 1 kHz out of 15 kHz noise',
+    { h:'Pulling 1 kHz out of 15 kHz noise', lab:'filter',
       p:`A sensor signal at 1&nbsp;kHz shared its line with 15&nbsp;kHz noise. The two are
          log<sub>10</sub>(15) ≈ <strong>1.2 decades</strong> apart, and that gap sets how steep a
          low-pass filter has to be to pass one and crush the other.<br><br>
@@ -223,7 +223,7 @@ if (alarm.any) {
 
 /* ─────────────────────────────────────────────── ESP32 */
 {
-  id:'env-monitor', n:'03', ch:2,
+  id:'env-monitor', n:'03', ch:2, feature:'ring',
   title:'ESP32 Environmental Monitor',
   short:'Environmental monitor',
   status:'Built', live:false,
@@ -254,7 +254,7 @@ if (alarm.any) {
          the same way, for the same length of time.<br><br>
          So the design target was a <strong>six-hour capture</strong>, run identically in each room.` },
 
-    { h:'Sizing the buffer from the question',
+    { h:'Sizing the buffer from the question', lab:'ring',
       p:`Six hours at one sample every 30 seconds is 6 × 3600 / 30 = <strong>720 samples</strong>.
          That's the buffer: a fixed 720-point ring. When it's full, the newest sample overwrites the
          oldest, so memory use is constant no matter how long the device runs — there's no
@@ -309,7 +309,7 @@ void push(const Sample& s) {
 
 /* ─────────────────────────────────────────────── LAMP */
 {
-  id:'led-lamp', n:'04', ch:2,
+  id:'led-lamp', n:'04', ch:2, featureFig:'LAMP_PCB',
   title:'Adaptive Closed-Loop LED Lamp',
   short:'Adaptive LED lamp',
   status:'In development', live:true,
@@ -326,9 +326,9 @@ void push(const Sample& s) {
         loop is the easy half — the interesting decisions are the PWM frequency and a gate network
         that fails <strong>safe</strong>. The hero at the top of this page simulates its gate drive.`,
 
-  specs:[['Drive','Low-side MOSFET · 12 V strip'],['Target','<b>5 kHz</b> PWM (design)'],
+  specs:[['Drive','RJK1003DPP low-side · 12 V strip'],['Target','<b>5 kHz</b> PWM (design)'],
          ['Board','2-layer · Altium · full GND plane'],['Status','Breadboard → PCB layout']],
-  tags:['Altium','PWM','MOSFET','Control','ESP32'],
+  tags:['Altium','PWM','MOSFET','Control','ESP32','15-part BOM'],
   stack:['Altium Designer','ESP32','C++','PWM','MOSFET switching','I²C'],
   photo:null, repo:null,
 
@@ -366,13 +366,17 @@ ledcWrite(CH, duty);` },
          5&nbsp;kHz sits in the gap: a 200&nbsp;µs period, invisible, above the whine, with switching
          loss that stays small. It's the design target; the scope capture will confirm it.` },
 
-    { h:'Two resistors that fail safe',
+    { h:'Two resistors that fail safe', fig:'LAMP_SCHEMATIC', figcap:'Power stage, redrawn from the Altium sheet. Values and part numbers are the ones on the schematic.',
       p:`<strong>R1, 100&nbsp;Ω in series with the gate.</strong> A MOSFET gate is a capacitor.
          Driving one straight from a pin means a current spike limited only by parasitics. R1 caps it
          at 3.3&nbsp;V / 100&nbsp;Ω = 33&nbsp;mA and damps ringing.<br><br>
          <strong>R2, 100&nbsp;kΩ from gate to ground.</strong> A gate holds charge. During boot, reset
          or reflash, the ESP32 pin floats — and without R2 the gate keeps whatever charge it had, so
          the LED does something undefined. R2 bleeds it off, so <em>undefined means off</em>.` },
+
+    { h:'The board, as it stands', fig:'LAMP_PCB', figcap:'Placement from PCB3.PcbDoc, rendered from the file itself. Parts are placed; routing is next. C2, R3 and R4 are still parked off-board.', bom:true,
+      p:`Fifteen parts on a 2-layer carrier that the ESP32 dev board plugs into. The bill of materials
+         below is pulled straight from the schematic — including the MOSFET that review flagged.` },
 
     { h:'What review caught before a board was ordered',
       p:`A schematic review before fabrication flagged real problems — which is exactly when you
@@ -387,9 +391,10 @@ ledcWrite(CH, duty);` },
          <strong>SDA/SCL swapped</strong> against the ESP32 default — a one-line software fix, but
          swapped back in the schematic so no future library trips on it.` },
 
-    { h:'The feedback trap (designing for it now)',
-      p:`The lamp lights the sensor that controls the lamp. Sample too fast or set the gains too high
-         and the loop will hunt — the light visibly pulses around the setpoint.<br><br>
+    { h:'The feedback trap (designing for it now)', lab:'loop',
+      p:`The lamp lights the sensor that controls the lamp, so every correction changes the very
+         reading it's correcting. Set the gain too high and the loop hunts — the light visibly pulses
+         around the setpoint.<br><br>
          The plan: run the loop at 10–20&nbsp;Hz rather than per PWM cycle (the room doesn't change
          in microseconds), start with conservative gains, and position the sensor to see ambient
          light more than the lamp's own output — reducing the loop gain in hardware instead of
@@ -428,7 +433,7 @@ ledcWrite(CH, duty);` },
   problem:'Pomodoro timers interrupt you every 25 minutes. For an ADHD brain mid-hyperfocus, the interruption is the failure mode, not the feature.',
   approach:'Inverted the incentive: score streaks for finishing self-defined blocks instead of enforcing fixed breaks.',
   result:'A React app that rewards finishing what you started — with <b>no forced breaks</b>.',
-  metric:{ value:'0', unit:'forced breaks', label:'By design' },
+  metric:null,
 
   body:`Pomodoro timers don't survive contact with an ADHD brain. Getting pulled out of deep focus
         every 25 minutes is <strong>the failure mode, not the feature</strong>.`,

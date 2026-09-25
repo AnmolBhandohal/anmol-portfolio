@@ -41,15 +41,11 @@
     <a href="#contact">Contact</a>
     <a href="resume.pdf" class="nav-cv" download>Résumé</a>
     <button class="kbd" id="openPal" aria-label="Open command palette"><span>⌘</span>K</button>
-    <button class="tgl" id="motionTgl" aria-label="Toggle animation" title="Toggle animation">
-      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M1 10h3V4h6v6h3"/></svg>
-    </button>
-    <span class="clock" id="clk">—</span>
+    <button class="tgl" id="motionTgl" aria-label="Toggle animation">Motion</button>
   </div>
 </nav>
 
-<div class="rail" id="rail"></div>
+<div class="rail" id="rail" hidden></div>
 
 <div class="wrap">
 
@@ -76,7 +72,7 @@
 
     <dl class="stats">
       <div class="stat"><dt>Field</dt><dd><b class="y">7</b> sites · summer 2026</dd></div>
-      <div class="stat"><dt>ARVP board</dt><dd><b>0</b> DRC violations</dd></div>
+      <div class="stat"><dt>ARVP board</dt><dd><b>4</b> layers · DRC clean</dd></div>
       <div class="stat"><dt>Program</dt><dd><b>5</b> of 8 terms</dd></div>
     </dl>
   </div>
@@ -104,16 +100,16 @@
   </figure>
 </header>
 
-<!-- 7-SECOND LAYER -->
+<!-- 7-SECOND LAYER: an index, not a card grid -->
 <section class="glance" id="glance">
-  <div class="sh"><span class="k">/01</span><h3>At a glance</h3>
-    <span class="r">Problem → result · every number verified</span></div>
-  <div class="gcards" id="gcards"></div>
+  <div class="sh"><span class="k">/01</span><h3>Index</h3>
+    <span class="r"><i class="lg y"></i>CH1 field <i class="lg c"></i>CH2 projects</span></div>
+  <ol class="idx" id="idx"></ol>
 </section>
 
 <section class="sect sect-work" id="work-h">
-  <div class="sh"><span class="k">/02</span><h3>Field record &amp; projects</h3>
-    <span class="r"><i class="lg y"></i>CH1 field <i class="lg c"></i>CH2 projects</span></div>
+  <div class="sh"><span class="k">/02</span><h3>The work</h3>
+    <span class="r">Every figure is live — try them</span></div>
 </section>
 <main id="work"></main>
 
@@ -193,7 +189,10 @@
 })();
 </script>
 <script src="js/content.js"></script>
+<script src="js/hardware.js"></script>
+<script src="js/pcb-lamp.js"></script>
 <script src="js/instrument.js"></script>
+<script src="js/labs.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

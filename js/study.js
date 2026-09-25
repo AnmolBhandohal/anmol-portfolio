@@ -56,7 +56,7 @@ root.innerHTML = `
   <div class="cs-meta">
     <div><span>When</span><b>${p.year}</b></div>
     <div><span>Role</span><b>${p.role}</b></div>
-    <div><span>${p.metric.label}</span><b class="acc">${p.metric.value} ${p.metric.unit}</b></div>
+    ${p.metric ? `<div><span>${p.metric.label}</span><b class="acc">${p.metric.value} ${p.metric.unit}</b></div>` : ''}
     ${p.repo ? `<div><span>Source</span><b><a href="${p.repo}" class="acc">GitHub ↗</a></b></div>` : ''}
   </div>
   <div class="cs-sum">
@@ -74,6 +74,10 @@ root.innerHTML = `
     <h2 data-n="${String(i + 1).padStart(2, '0')}">${s.h}</h2>
     <p>${s.p}</p>
     ${s.code ? `<div class="cs-code"><div class="bar">${p.id === 'field' ? 'LOGIC' : 'C++'}</div><pre>${hl(s.code)}</pre></div>` : ''}
+    ${s.fig && window[s.fig] ? `<figure class="cs-fig ${s.fig === 'LAMP_PCB' ? 'is-pcb' : 'is-sch'}">${window[s.fig]}<figcaption>${s.figcap || ''}</figcaption></figure>` : ''}
+    ${s.bom && window.LAMP_BOM ? `<div class="bom-wrap"><table class="bom"><thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Job</th></tr></thead><tbody>
+      ${LAMP_BOM.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</tbody></table></div>` : ''}
+    ${s.lab ? `<div class="cs-lab" data-lab="${s.lab}"></div>` : ''}
   </section>`).join('')}
 
   <section class="cs-sec rv">
@@ -91,6 +95,8 @@ root.innerHTML = `
   ${prev ? `<a href="project.html?p=${prev.id}">← Previous<span>${prev.short}</span></a>` : '<span></span>'}
   ${next ? `<a href="project.html?p=${next.id}" style="text-align:right">Next →<span>${next.short}</span></a>` : '<span></span>'}
 </div>`;
+
+window.mountLabs && window.mountLabs();
 
 /* reading progress */
 const bar = document.getElementById('progBar');

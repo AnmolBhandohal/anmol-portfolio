@@ -22,18 +22,19 @@ document.getElementById('heroMail').href = `mailto:${SITE.email}`;
 const arrow = `<svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 4h12M9 1l3 3-3 3"/></svg>`;
 const chCls = p => p.ch === 1 ? 'ch1' : 'ch2';
 
-/* ── AT A GLANCE ──────────────────────────────────── */
-document.getElementById('gcards').innerHTML = PROJECTS.map(p => `
-  <a class="gcard rv ${chCls(p)}" href="project.html?p=${p.id}">
-    <div class="gc-top">
-      <span class="gc-n">CH${p.ch} · ${p.n} · ${p.year}</span>
-      <span class="gc-metric"><b>${p.metric.value}</b><i>${p.metric.unit}</i></span>
-    </div>
-    <h4>${p.short}</h4>
-    <div class="gc-row"><em>Problem</em>${p.problem}</div>
-    <div class="gc-row"><em>Result</em>${p.result}</div>
-    <span class="gc-go">Read the ${p.ch === 1 ? 'field record' : 'case study'} ${arrow}</span>
-  </a>`).join('');
+/* ── INDEX (the 7-second layer) ───────────────────── */
+const strip = s => s.replace(/<[^>]+>/g, '');
+document.getElementById('idx').innerHTML = PROJECTS.map(p => `
+  <li class="ix rv ${chCls(p)}">
+    <a href="project.html?p=${p.id}">
+      <span class="ix-n">${p.n}</span>
+      <span class="ix-t"><b>${p.title}</b><i>${strip(p.problem)}</i></span>
+      <span class="ix-k">${p.ch === 1 ? 'Field' : 'Project'}</span>
+      <span class="ix-y">${p.year.replace(' — in development', '')}</span>
+      <span class="ix-m">${p.metric ? `<b>${p.metric.value}</b> ${p.metric.unit}<i>${p.metric.label}</i>` : '<i>Personal tool</i>'}</span>
+      <span class="ix-go">${arrow}</span>
+    </a>
+  </li>`).join('');
 
 /* ── SKILLS ───────────────────────────────────────── */
 document.getElementById('caps').innerHTML = SKILLS.map(s => `
@@ -50,7 +51,7 @@ document.getElementById('ctaBtns').innerHTML = `
 
 /* ── SCENES ───────────────────────────────────────── */
 document.getElementById('work').innerHTML = PROJECTS.map(p => `
-<section class="scene ${chCls(p)}" data-scene data-id="${p.id}" id="s-${p.id}">
+<section class="scene ${chCls(p)}${PROJECTS.indexOf(p) % 2 ? ' flip' : ''}" data-scene data-id="${p.id}" id="s-${p.id}">
   <div class="s-txt">
     <div class="s-meta">
       <span class="s-num">${p.n}</span>
@@ -65,17 +66,18 @@ document.getElementById('work').innerHTML = PROJECTS.map(p => `
     <div class="s-tags rv">${p.tags.map(t => `<span class="s-tag">${t}</span>`).join('')}</div>
     <a class="s-cta rv" href="project.html?p=${p.id}"><span>Read the ${p.ch === 1 ? 'field record' : 'case study'} ${arrow}</span></a>
   </div>
-  <div class="s-vis" data-label="${p.label}">
-    <span class="corner c1"></span><span class="corner c2"></span>
-    <span class="corner c3"></span><span class="corner c4"></span>
-    ${p.photo ? `<img src="${p.photo}" alt="${p.title}" loading="lazy">` : p.viz}
-  </div>
+  ${p.feature
+    ? `<div class="s-lab" data-lab="${p.feature}"></div>`
+    : `<div class="s-vis ${p.featureFig ? 's-fig' : ''}" data-label="${p.featureFig ? 'PCB3.PcbDoc · PLACEMENT, REV A' : p.label}">
+        ${p.photo ? `<img src="${p.photo}" alt="${p.title}" loading="lazy">` : p.featureFig ? window[p.featureFig] || p.viz : p.viz}
+      </div>`}
 </section>`).join('');
 
 const rail = document.getElementById('rail');
 rail.innerHTML = PROJECTS.map((p, i) =>
   `<button data-i="${i}" class="${chCls(p)}" title="${p.short}" aria-label="Jump to ${p.short}"><span>${p.n}</span><i></i></button>`).join('');
 const railBtns = [...rail.querySelectorAll('button')];
+window.mountLabs && window.mountLabs();
 const scenes = [...document.querySelectorAll('[data-scene]')];
 
 /* ── NAV ──────────────────────────────────────────── */
@@ -130,13 +132,14 @@ if (HAS_GSAP && motionOn) {
   scenes.forEach(sc => {
     const words = sc.querySelectorAll('h2 .w>i');
     const reveals = sc.querySelectorAll('.rv');
-    const vis = sc.querySelector('.s-vis');
+    const vis = sc.querySelector('.s-vis,.s-lab');
     primeDraw(sc);
-    gsap.timeline({ scrollTrigger: { trigger: sc, start: 'top 70%', once: true } })
+    const draws = sc.querySelectorAll('.draw');
+    const tl = gsap.timeline({ scrollTrigger: { trigger: sc, start: 'top 70%', once: true } })
       .from(words, { yPercent: 110, duration: .8, stagger: .035, ease: 'expo.out' })
-      .from(vis, { opacity: 0, duration: .8, ease: 'power2.out' }, '-=.6')
-      .to(sc.querySelectorAll('.draw'), { strokeDashoffset: 0, duration: 1.3, stagger: .04, ease: 'power2.inOut' }, '-=.5')
-      .to(reveals, { opacity: 1, y: 0, duration: .7, stagger: .06, ease: 'power3.out' }, '-=1.2');
+      .from(vis, { opacity: 0, duration: .8, ease: 'power2.out' }, '-=.6');
+    if (draws.length) tl.to(draws, { strokeDashoffset: 0, duration: 1.3, stagger: .04, ease: 'power2.inOut' }, '-=.5');
+    tl.to(reveals, { opacity: 1, y: 0, duration: .7, stagger: .06, ease: 'power3.out' }, draws.length ? '-=1.2' : '-=.5');
     gsap.to(sc.querySelector('.s-num'), { yPercent: -30, ease: 'none',
       scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: 1.2 } });
   });
@@ -159,10 +162,12 @@ tgl.addEventListener('click', () => {
 });
 
 /* ── CLOCK ────────────────────────────────────────── */
-const clk = document.getElementById('clk');
-const tick = () => clk.textContent = new Date().toLocaleTimeString('en-CA',
-  { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Edmonton' }) + ' MT';
-tick(); setInterval(tick, 10000);
+const kb = document.querySelector('#openPal span');
+if (kb && !/Mac|iPhone|iPad/.test(navigator.platform)) kb.textContent = 'Ctrl ';
+/* failsafe: never leave content hidden if a reveal never fires */
+setTimeout(() => document.querySelectorAll('.rv').forEach(el => {
+  if (getComputedStyle(el).opacity === '0' && el.getBoundingClientRect().top < innerHeight) { el.style.opacity = 1; el.style.transform = 'none'; }
+}), 2500);
 
 /* ═══ COMMAND PALETTE ═════════════════════════════ */
 const pal = document.getElementById('pal'), palIn = document.getElementById('palIn'),
