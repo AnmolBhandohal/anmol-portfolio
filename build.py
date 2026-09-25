@@ -77,9 +77,19 @@ def cmd_check():
     else:
         ok(f"{photos} photo(s)")
 
+    print("\nIntegrity (claims not backed by career/experience.json)")
+    banned = ["±7", "40+ days", "weeks unattended", "Bench-tested", "Built & bench", "no audible whine", "Holds setpoint within"]
+    hits = [b for b in banned if b.lower() in src.lower()]
+    if hits:
+        for h in hits:
+            bad(f"unverified claim present: {h!r}")
+        fails += len(hits)
+    else:
+        ok("no known unverified claims")
+
     print("\nFiles")
     for f in ["index.html", "project.html", "css/main.css",
-              "js/content.js", "js/main.js", "js/study.js", "js/scope.js"]:
+              "js/content.js", "js/main.js", "js/study.js", "js/instrument.js", "resume.pdf"]:
         pth = ROOT / f
         (ok if pth.exists() else bad)(f)
         fails += 0 if pth.exists() else 1

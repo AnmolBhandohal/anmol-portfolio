@@ -1,378 +1,486 @@
 /* ═══════════════════════════════════════════════════════════
-   content.js — SINGLE SOURCE OF TRUTH
-   Everything on this site is generated from this file:
-   the landing page, every case-study page, the command
-   palette, the sitemap, and the OG tags.
+   content.js — SINGLE SOURCE OF TRUTH for this site.
+   Upstream truth: C:/Users/Anmol/career/experience.json
 
-   TO ADD A PROJECT: run `python new-project.py` or copy a
-   block below. Nothing else needs editing, ever.
+   INTEGRITY RULE: every number on this site must exist in
+   experience.json as verified. Unbuilt work says so and quotes
+   DESIGN TARGETS, labelled as targets — never measured results.
+   `python build.py check` scans for the old unverified claims.
+
+   ch: 1 = field work (yellow trace), 2 = projects (cyan trace)
+   TO ADD A PROJECT: `python build.py new`, or copy a block.
    ═══════════════════════════════════════════════════════════ */
 
 const SITE = {
   name:    'Anmol Bhandohal',
-  role:    'Electrical Engineering Student',
+  role:    'Electrical Engineering · Co-op',
   location:'Edmonton, Alberta',
-  email:   'you@example.com',           // ← CHANGE
-  github:  'https://github.com/yourname',// ← CHANGE
-  linkedin:'https://linkedin.com/in/yourname', // ← CHANGE
-  resume:  '',                           // ← put 'resume.pdf' here once added
-  url:     'https://anmolbhandohal.com', // ← your domain when you have it
-  tagline: 'I build closed-loop hardware — circuits that measure the world and correct themselves.',
-  available:'Open to Summer 2027 co-op'
+  email:   'bhandoha@ualberta.ca',
+  github:  'https://github.com/AnmolBhandohal',
+  linkedin:'https://www.linkedin.com/in/anmol-bhandohal-904789305/',
+  resume:  'resume.pdf',
+  url:     'https://anmolbhandohal.com',
+  available:'Jan – Aug 2027',
+  availableLong:'January – August 2027 · one 8-month term or two 4-month terms',
+  rev:     '2.0',
+  updated: '2026-09'
 };
 
 const PROJECTS = [
+/* ─────────────────────────────────────────────── FIELD */
 {
-  id:'led-lamp',
-  n:'01',
-  title:'Adaptive Closed-Loop LED Lamp',
-  short:'Adaptive LED Lamp',
-  status:'Built & bench-tested',
-  live:false,
-  label:'CTRL-LOOP / REV B',
-  year:'2026',
-  role:'Everything — schematic, PCB, firmware',
+  id:'field', n:'01', ch:1,
+  title:'Electrical Apprentice — Powerworks',
+  short:'Field record · Powerworks',
+  status:'Summer 2026', live:false,
+  label:'FIELD RECORD / SUMMER 2026',
+  year:'Summer 2026',
+  role:'Electrical apprentice · commercial & residential',
 
-  /* ── the 7-second layer ── */
-  problem:'Every dimmable lamp I owned changed brightness when the room did. Open the blinds, the desk gets washed out. Sun goes behind a cloud, everything dims.',
-  approach:'Closed the loop. A photoresistor measures actual light at the work surface, an ESP32 runs a PI controller, and a MOSFET switches the LED at 5&nbsp;kHz.',
-  result:'Holds setpoint within <b>±7 lux</b> through full ambient swings. No visible flicker, no audible whine.',
-  metric:{ value:'±7', unit:'lux', label:'Setpoint accuracy' },
+  problem:'A $9.6M three-storey commercial building needed its addressable fire alarm programmed — including the logic that tells the elevators what to do when it goes off.',
+  approach:'Programmed a Mircom FX-3500: pull stations, smoke and heat detectors, and the relay outputs that drive Phase I elevator recall.',
+  result:'Walked the finished building with the consulting engineer for verification and acceptance, and cleared deficiencies before sign-off.',
+  metric:{ value:'7', unit:'sites', label:'Completed in one term' },
 
-  body:`A lamp that refuses to change brightness. Photoresistor feedback closes the loop and
-        holds the setpoint no matter what the room does — blinds open, cloud passes, overhead
-        switched on. The loop was the easy half. The real fight was PWM frequency.`,
+  body:`A summer on construction sites: 347&nbsp;V and 120/208&nbsp;V services, conduit and feeders,
+        and an addressable fire alarm system on a <strong>$9.6M three-storey commercial build</strong>
+        — plus a ground fault I tracked down by halving the circuit.`,
 
-  specs:[['Board','Custom 2-layer · Altium'],['Control','PI feedback · <b>±7 lux</b>'],
-         ['Drive','5 kHz PWM · logic-level MOSFET'],['MCU','ESP32']],
-  tags:['Altium','Analog design','PWM','Control theory','ESP32'],
-  stack:['Altium Designer','ESP32','C/C++','PI control','MOSFET switching'],
-  photo:null,
-  repo:null,
+  specs:[['Sites','7 · 3 commercial, 4 residential'],['Services','<b>347 V</b> · 120/208 V'],
+         ['Fire alarm','Mircom FX-3500 · addressable'],['Acceptance','Verification walk · CAN/ULC-S537']],
+  tags:['CEC','Fire alarm','Relay logic','Three-phase','Blueprints','Fault finding'],
+  stack:['Canadian Electrical Code','Mircom FX-3500','Multimeter','Single-line diagrams','Conduit','BX / TECK'],
+  photo:null, repo:null,
 
-  /* ── the depth layer (case study page) ── */
   study:[
-    { h:'Why this exists',
-      p:`I have a desk lamp and a window. Those two things fight each other all day. Every
-         "dimmable" lamp on the market is <em>open-loop</em> — you set a brightness and it
-         holds that <em>output</em>, not that <em>result</em>. Nothing measures whether the
-         light landing on your desk actually stayed constant.<br><br>
-         That's a control problem, and control problems have a known shape: measure the thing
-         you actually care about, compare it to what you want, correct the difference. So I
-         built the version that does that.` },
+    { h:'What the summer actually was',
+      p:`Seven sites in one term: a retail plaza, a daycare, 15-unit townhouse duplexes, 6-plexes,
+         single-family homes, a hockey arena power upgrade, and temporary generator distribution that
+         kept a commercial site energized through construction.<br><br>
+         The daily work was the part nobody puts on a portfolio: installing and terminating
+         <strong>347&nbsp;V and 120/208&nbsp;V services</strong>, disconnects and multi-meter stacks;
+         bending and running conduit; pulling feeders with fish tape and a vacuum; strapping BX and
+         TECK; and installing lighting, HRV and heater fans, receptacles and low-voltage data to the
+         Canadian Electrical Code.` },
 
-    { h:'The switching decision',
-      p:`The obvious way to dim an LED is to vary the current through it. That means running
-         the transistor half-on, as a variable resistor — and a resistor with both current
-         <em>and</em> voltage across it burns power as heat.<br><br>
-         Switching avoids this entirely. The MOSFET is only ever fully on or fully off. When
-         it's off there's no current; when it's on there's almost no voltage across it. Power
-         is I×V and one of them is always near zero, so the transistor stays cool and the
-         efficiency stays high. Brightness comes from the <em>fraction of time</em> it's on,
-         not from throttling.`,
-      code:`// LEDC hardware PWM — 5 kHz, 12-bit resolution
-ledcSetup(CH, 5000, 12);
-ledcAttachPin(GATE_PIN, CH);
+    { h:'Elevator recall is a truth table',
+      p:`The most interesting job was the fire alarm on the <strong>Caishen at Windermere</strong>
+         building — a Mircom FX-3500 addressable panel. Beyond the pull stations and detectors, the
+         panel has to tell the elevator controller what to do in an alarm.<br><br>
+         The rule is simple to say: on any alarm, send the car to the designated recall floor and
+         hold it there with the doors open. Unless the alarm started <em>on</em> the recall floor —
+         then send it to the alternate, because you don't deliver people to the fire.
+         Written out, it's a truth table: inputs are the alarm points, outputs are relays.`,
+      code:`// Phase I recall, written as logic. (The panel is configured,
+// not coded — this is the behaviour the relay mapping produces.)
+if (alarm.any) {
+  const floor = alarm.at(MAIN) ? ALTERNATE : MAIN;
+  relay.recall(floor);       // car returns, no stops
+  relay.hold(DOORS_OPEN);    // and stays there for fire crews
+}` },
 
-// perceived brightness is not linear — gamma correct
-uint16_t duty = pow(level / 4095.0, 2.2) * 4095;
-ledcWrite(CH, duty);` },
+    { h:'Finding a ground fault by halving the circuit',
+      p:`An intermittent ground fault showed up on a live fire alarm circuit. Checking every device
+         one by one is slow, and "intermittent" means it might not show up on the device you
+         happen to be checking.<br><br>
+         So I split the problem instead. The panel's terminal blocks are pluggable: pull one and
+         you've cut the circuit in half. Ohm out each half, keep the one with the fault, and split
+         again. That's a binary search — a circuit with 16 segments needs about
+         <strong>4 checks instead of up to 16</strong>.<br><br>
+         It localized the faulted segment and restored service <strong>without pulling new
+         cable</strong>.` },
 
-    { h:'Why 5 kHz specifically',
-      p:`This was the part that actually took iteration.<br><br>
-         Below roughly 200&nbsp;Hz the flicker is visible, especially in peripheral vision —
-         you catch it when you move your eyes past the lamp. Push up to about 1&nbsp;kHz and
-         the flicker disappears, but the ceramic capacitors and the LED strip start to sing:
-         a faint whine right in the most annoying part of human hearing.<br><br>
-         Going higher solves both, but switching losses scale with frequency. Every transition
-         has a moment where the MOSFET is <em>partly</em> on, with both current and voltage
-         present — that's the lossy region, and more transitions per second means more time
-         spent in it.<br><br>
-         5&nbsp;kHz sits in the gap: fast enough to be invisible and inaudible, slow enough
-         that switching loss stays negligible.` },
+    { h:'Reading the prints, running the order',
+      p:`Commercial jobs run on drawings: single-line diagrams, panel schedules, and device layouts
+         spread across three levels. I worked from those to set the install sequence and circuit
+         routing for the crew.<br><br>
+         A drawing is a promise the building has to keep. Learning to read one well — and to spot
+         where it can't physically be built as drawn — turned out to be the most transferable skill
+         of the summer.` },
 
-    { h:'The feedback trap',
-      p:`Here's the failure mode I didn't anticipate: <strong>the lamp illuminates the sensor
-         that controls the lamp.</strong><br><br>
-         That's a positive feedback path. Sample too fast or set the gains too high and the
-         loop oscillates — the lamp visibly pulses, hunting for a setpoint it keeps
-         overshooting. It looks broken because it <em>is</em> broken.<br><br>
-         Two fixes. First, slow the loop down deliberately: sample at 10–20&nbsp;Hz, not once
-         per PWM cycle. The physical system doesn't change fast, so the controller shouldn't
-         either. Second, position the sensor so it sees ambient light preferentially over the
-         lamp's own output — reducing the loop gain in hardware rather than fighting it in
-         software.` },
+    { h:'Verification & acceptance',
+      p:`At the end, I walked the completed building with the consulting engineer for verification
+         and acceptance: confirming each device operated as designed, and clearing deficiencies
+         before sign-off.<br><br>
+         It's the same idea as a design review, except the design is made of drywall and conduit and
+         can't be recompiled.` },
 
-    { h:'The gate network',
-      p:`Two resistors that look trivial and aren't.<br><br>
-         <strong>R1, 100&nbsp;Ω in series with the gate.</strong> A MOSFET gate is a capacitor
-         — around 1&nbsp;nF. Driving a capacitor from a voltage source means an instantaneous
-         current spike limited only by parasitics. R1 caps that at 33&nbsp;mA, protecting the
-         GPIO, and damps the ringing formed by gate capacitance against trace inductance.<br><br>
-         <strong>R2, 100&nbsp;kΩ gate to ground.</strong> This one is easy to omit and painful
-         to debug. The gate holds charge — it's capacitive and essentially leak-free. When the
-         ESP32 pin goes high-impedance during boot, reset, or reflash, the gate keeps whatever
-         charge it had and the LED does something undefined. R2 bleeds it to ground so
-         <em>undefined means off</em>.` },
-
-    { h:'What I would do differently',
-      p:`The board back-feeds 3.3&nbsp;V from the ESP32's onboard regulator, which means it
-         needs USB attached to run. For a bench prototype that's fine, but it isn't a product.
-         The next revision gets a proper 12&nbsp;V→5&nbsp;V buck converter so the barrel jack
-         is the only thing it needs.<br><br>
-         I'd also add a series resistor option on the LED output. Right now it assumes a
-         12&nbsp;V strip with built-in current limiting — hand it a bare high-power LED and
-         the MOSFET will happily let it destroy itself.` }
+    { h:'What it changed',
+      p:`I came back to school thinking differently about my own boards. A connector that's easy to
+         crimp can be impossible to reach in the finished install. A fault that only appears live
+         won't show up on the bench. It's why my ARVP work leans on keyed connectors, and why
+         I size a logger's buffer for the whole test, not the demo.` }
   ],
 
   viz:`<svg viewBox="0 0 400 300" fill="none">
-    <g stroke="#00E5FF" stroke-width="1.5">
-      <path class="draw" d="M30 150h58"/><circle class="draw" cx="100" cy="150" r="12"/>
-      <path class="draw" d="M112 150h50"/><rect class="draw" x="162" y="130" width="70" height="40" rx="2"/>
-      <path class="draw" d="M232 150h48"/><rect class="draw" x="280" y="132" width="46" height="36" rx="2"/>
-      <path class="draw" d="M326 150h34v92H150v-42" stroke-dasharray="4 4" opacity=".65"/>
-      <rect class="draw" x="112" y="222" width="76" height="38" rx="2" opacity=".8"/>
-      <path class="draw" d="M112 241H62v-79" stroke-dasharray="4 4" opacity=".65"/>
+    <g stroke="currentColor" stroke-width="1.5">
+      <path class="draw" d="M40 44v214M360 44v214"/>
+      <path class="draw" d="M40 100h72M128 100h52M196 100h74M310 100h50"/>
+      <path class="draw" d="M112 88v24M128 88v24M180 88v24M196 88v24M178 114l20-28"/>
+      <path class="draw" d="M276 88a16 16 0 0 0 0 24M304 88a16 16 0 0 1 0 24"/>
+      <path class="draw" d="M40 168h72M128 168h142M310 168h50"/>
+      <path class="draw" d="M112 156v24M128 156v24"/>
+      <path class="draw" d="M276 156a16 16 0 0 0 0 24M304 156a16 16 0 0 1 0 24"/>
+      <path class="draw" d="M40 232h72M128 232h142M310 232h50"/>
+      <path class="draw" d="M112 220v24M128 220v24"/>
+      <path class="draw" d="M276 220a16 16 0 0 0 0 24M304 220a16 16 0 0 1 0 24"/>
     </g>
-    <path d="M95 144l5 6-5 6M100 144v12" stroke="#00E5FF" stroke-width="1.2"/>
-    <g fill="#00E5FF" opacity=".55" font-family="JetBrains Mono" font-size="8.5">
-      <text x="28" y="140">SETPOINT</text><text x="176" y="154">PWM 5kHz</text>
-      <text x="292" y="154">LED</text><text x="120" y="245">PHOTO-R</text>
-      <text x="252" y="272">FEEDBACK</text></g>
-    <g stroke="#7C5CFF" stroke-width="1.2" opacity=".55">
-      <path class="draw" d="M40 60c22 0 22-26 44-26s22 26 44 26 22-13 44-13"/></g>
-    <text x="40" y="46" fill="#7C5CFF" opacity=".6" font-family="JetBrains Mono" font-size="8">AMBIENT DRIFT</text>
+    <g fill="currentColor" font-family="JetBrains Mono" font-size="8.5" opacity=".85">
+      <text x="34" y="36">L1</text><text x="354" y="36">L2</text>
+      <text x="96" y="80">ALARM</text><text x="166" y="80">@MAIN</text><text x="258" y="80">RECALL MAIN</text>
+      <text x="96" y="148">@MAIN</text><text x="258" y="148">RECALL ALT</text>
+      <text x="96" y="212">ALARM</text><text x="252" y="212">HOLD · DOORS</text>
+    </g>
+    <text x="40" y="284" fill="#5C6878" font-family="JetBrains Mono" font-size="8">PHASE I RECALL — LADDER VIEW</text>
   </svg>`
 },
+
+/* ─────────────────────────────────────────────── ARVP */
 {
-  id:'env-monitor',
-  n:'02',
-  title:'ESP32 Environmental Monitor',
-  short:'Environmental Monitor',
-  status:'Shipped',
-  live:false,
-  label:'IOT-TELEMETRY / REV A',
-  year:'2025',
-  role:'Firmware, hardware, dashboard',
-
-  problem:'Anyone can wire a sensor and print one reading. Almost nothing survives a month on a shelf without a human rescuing it.',
-  approach:'Built the boring parts properly: reconnect state machine, watchdog timer, and current-draw budgeting rather than sensor polling.',
-  result:'Ran <b>weeks unattended</b> through router reboots and Wi-Fi dropouts with no manual intervention.',
-  metric:{ value:'40+', unit:'days', label:'Longest unattended run' },
-
-  body:`Temperature, humidity and air quality streamed to a live dashboard. Anyone can take
-        one reading — the project is <strong>the other 40 days</strong>.`,
-
-  specs:[['MCU','ESP32 · C/C++'],['Link','Wi-Fi · auto-reconnect'],
-         ['Uptime','<b>Weeks unattended</b>'],['Output','Live web dashboard']],
-  tags:['ESP32','C/C++','Wi-Fi','I²C','Embedded'],
-  stack:['ESP32','C/C++','I²C','Wi-Fi','Web dashboard'],
-  photo:null,
-  repo:null,
-
-  study:[
-    { h:'The real problem',
-      p:`The tutorial version of this project takes an afternoon: wire up a sensor, call
-         <code>Wire.read()</code>, print a number. Done.<br><br>
-         Then you leave it running and come back in three days to a dead device. The router
-         rebooted at 4&nbsp;a.m. and it never reconnected. Or the sensor glitched and the I²C
-         bus locked up. Or it just quietly stopped and nothing noticed.<br><br>
-         <strong>Getting one reading is the demo. Getting every reading for a month is the
-         project.</strong>` },
-
-    { h:'Reconnect as a state machine',
-      p:`The naive reconnect is a blocking retry loop. It works until the outage lasts longer
-         than the watchdog timeout, then the device resets mid-recovery and you get a boot
-         loop.<br><br>
-         I rewrote it as a non-blocking state machine with exponential backoff. The main loop
-         never blocks, the watchdog stays fed, and reconnect attempts space out instead of
-         hammering a router that isn't there yet.`,
-      code:`// non-blocking reconnect — never stalls the main loop
-if (WiFi.status() != WL_CONNECTED) {
-  if (millis() - lastAttempt > backoff) {
-    WiFi.reconnect();
-    lastAttempt = millis();
-    backoff = min(backoff * 2, MAX_BACKOFF);   // 1s → 2s → 4s … 60s
-  }
-  return;              // fall through, keep feeding the watchdog
-}
-backoff = 1000;        // reset on success` },
-
-    { h:'What weeks of uptime actually requires',
-      p:`Three things, none of them glamorous:<br><br>
-         <strong>A hardware watchdog</strong>, fed from the main loop only. If any path hangs,
-         the chip resets itself and comes back. Software watchdogs can't save you from a
-         locked peripheral.<br><br>
-         <strong>Bounded buffers everywhere.</strong> A logger that grows a buffer per reading
-         will eventually exhaust heap. On a device meant to run for a month, "eventually" is
-         a guarantee, not a risk.<br><br>
-         <strong>I²C bus recovery.</strong> A glitched sensor can hold SDA low and wedge the
-         bus permanently. Detect it and clock the bus manually to free it.` },
-
-    { h:'What I learned',
-      p:`Reliability isn't a feature you add at the end — it's a set of decisions that have to
-         be made while you're writing the first version. Every blocking call is a future hang.
-         Every unbounded allocation is a future crash.<br><br>
-         It changed how I write firmware generally. I now assume the network will fail, the
-         sensor will glitch, and the device will run far longer than I tested it for.` }
-  ],
-
-  viz:`<svg viewBox="0 0 400 300" fill="none">
-    <g stroke="#00E5FF" stroke-width="1.5">
-      <rect class="draw" x="34" y="110" width="86" height="76" rx="3"/>
-      <path class="draw" d="M120 130h44M120 148h44M120 166h44"/>
-      <circle class="draw" cx="180" cy="130" r="11"/><circle class="draw" cx="180" cy="148" r="11"/>
-      <circle class="draw" cx="180" cy="166" r="11"/><path class="draw" d="M196 148h44"/>
-      <rect class="draw" x="240" y="104" width="120" height="88" rx="3"/>
-      <path class="draw" d="M252 172l22-26 20 16 22-34 20 22" stroke-width="1.8"/></g>
-    <g stroke="#00E5FF" stroke-width="1.3" opacity=".75">
-      <path class="draw" d="M77 110V78M64 88c8-9 18-9 26 0M54 76c14-15 32-15 46 0"/></g>
-    <g fill="#00E5FF" opacity=".6" font-family="JetBrains Mono" font-size="8.5">
-      <text x="46" y="154">ESP32</text><text x="176" y="133">T</text><text x="174" y="151">RH</text>
-      <text x="174" y="169">AQ</text><text x="250" y="124">LIVE DASHBOARD</text></g>
-    <text x="34" y="228" fill="#7C5CFF" opacity=".6" font-family="JetBrains Mono" font-size="8">RUNS UNATTENDED — WEEKS</text>
-    <path class="draw" d="M34 238h326" stroke="#7C5CFF" stroke-width="1" opacity=".3"/>
-  </svg>`
-},
-{
-  id:'arvp-auv',
-  n:'03',
+  id:'arvp-auv', n:'02', ch:2,
   title:'ARVP — Autonomous Underwater Vehicle',
-  short:'ARVP Underwater Vehicle',
-  status:'Active',
-  live:true,
-  label:'SUBSEA-PWR / REV C',
-  year:'2025 — present',
-  role:'Electrical subsystems',
+  short:'ARVP underwater vehicle',
+  status:'Active', live:true,
+  label:'SUBSEA / COMMS HUB REV C',
+  year:'Sept 2025 — present',
+  role:'Electrical subsystem',
 
-  problem:'Once the pressure hull is sealed and the vehicle is in the water, no connection can be reached, inspected, or repaired.',
-  approach:'Treated every joint as unrepairable: documented harness, continuity-tested twice, and designed power distribution for graceful failure.',
-  result:'Zero in-water electrical failures across the test campaign.',
-  metric:{ value:'0', unit:'failures', label:'In-water electrical faults' },
+  problem:'Once the hull is sealed and the vehicle is in the water, no connector can be reached, reseated, or reworked.',
+  approach:'Took failure modes out on the bench: keyed connectors that can\'t be plugged in backwards, CAN for the vehicle bus, and a 4-layer board checked against the manufacturer\'s rules.',
+  result:'4-layer stackup cleared a full design-rule check with <b>zero violations</b> before sign-off.',
+  metric:{ value:'0', unit:'violations', label:'Full DRC, 4-layer' },
 
-  body:`Electrical subsystem work on UAlberta's autonomous underwater vehicle. Power
-        distribution and sensor wiring on a system with <strong>zero tolerance for a bad
-        joint</strong>.`,
+  body:`Electrical subsystem work on the University of Alberta's autonomous sub. When the hull is
+        sealed there's no reaching back in — so the work is making the wrong thing
+        <strong>physically impossible</strong> before it ever gets wet.`,
 
-  specs:[['Scope','Power distribution · sensor harness'],['Team','Multidisciplinary student team'],
-         ['Constraint','<b>Sealed — no rework</b>'],['Status','Ongoing']],
-  tags:['Power distribution','Harness design','Integration test','Teamwork'],
-  stack:['Power distribution','Harness design','Continuity testing','Documentation'],
-  photo:null,
-  repo:null,
+  specs:[['Comms Hub','Revised in Altium · CAN transceivers'],['Stackup','4-layer · signal / GND / power'],
+         ['DRC','<b>0 violations</b> · mfr. clearances'],['Filter','Active LPF · 1 kHz vs 15 kHz noise']],
+  tags:['Altium','4-layer PCB','CAN bus','LTspice','Integration test'],
+  stack:['Altium Designer','LTspice','CAN bus','Op-amp filters','Harness & connectors'],
+  photo:null, repo:null,
 
   study:[
     { h:'A different kind of constraint',
-      p:`Most electronics you build are reachable. Something misbehaves, you probe it, you
-         resolder a joint, you move on. That assumption is so fundamental you don't notice
-         you're making it.<br><br>
-         An AUV deletes it. The hull gets sealed, the vehicle goes in the water, and every
-         connection inside becomes permanently unreachable. A single cold joint means the run
-         is scrubbed, the vehicle comes out, the hull is opened, and the team loses the day.` },
+      p:`Most electronics are reachable. Something misbehaves, you probe it, you resolder a joint.
+         That assumption is so basic you don't notice you're making it.<br><br>
+         An AUV deletes it. Once the hull is sealed, every connection inside is out of reach, and a
+         bad one means the vehicle comes out, the hull comes open, and the team loses the run. It
+         moves the whole effort <em>earlier</em>: you can't fix it later, so you design it so it
+         can't go wrong.` },
 
-    { h:'How that changes the work',
-      p:`It moves the entire effort <em>earlier</em>. When rework is free you can be
-         iterative — build, test, fix. When rework costs half a day of six people's time, you
-         front-load verification instead.<br><br>
-         Every joint gets continuity-tested twice: once when made, once after the harness is
-         dressed and strain-relieved, because the second test catches what the first can't —
-         damage caused by routing. Connectors get chosen for retention, not convenience.
-         Everything is labelled at both ends, because "obvious" wiring stops being obvious
-         when someone else is holding it at 7&nbsp;a.m. on competition day.` },
+    { h:'Connectors that can\'t go in backwards',
+      p:`The Comms Hub board used bare pin headers. A pin header will happily accept a connector
+         rotated 180°, and on a power connector that's reverse polarity: best case a blown fuse,
+         worst case a dead board inside a sealed hull.<br><br>
+         I revised the board in Altium to use <strong>keyed, shrouded connectors</strong>. The key
+         makes the wrong orientation physically impossible — no label to read, no care required at
+         7&nbsp;a.m. on test day. It's the cheapest reliability upgrade there is.` },
 
-    { h:'Working on a real team',
-      p:`This is the project here that isn't mine. It's a multidisciplinary student team, and
-         the electrical subsystem has to interface with mechanical and software people whose
-         constraints I don't fully see.<br><br>
-         The thing I actually learned wasn't technical — it was that a design decision I make
-         in isolation becomes someone else's problem downstream. A connector I chose because
-         it was easy to crimp is a connector someone else has to fit inside a hull I didn't
-         design. Asking first is cheaper than discovering later.` }
+    { h:'Bringing up CAN',
+      p:`The same revision activated the board's <strong>CAN bus transceivers</strong> for vehicle
+         communications. CAN suits a vehicle like this: it's differential, so noise from thrusters
+         and power switching hits both wires equally and cancels, and it's multi-drop, so many
+         boards share one bus instead of a star of point-to-point links.` },
+
+    { h:'A 4-layer stackup, checked before fabrication',
+      p:`I designed a 4-layer stackup with dedicated signal, ground and power planes. The solid
+         ground plane is the point: every signal gets a return path directly beneath it, which keeps
+         loop area small and noise down.<br><br>
+         I set the manufacturer's clearance constraints as design rules and cleared a full DRC with
+         <strong>zero violations</strong> before sign-off. A rule violation found in Altium costs a
+         minute; one found on a fabricated board costs a re-spin.` },
+
+    { h:'Pulling 1 kHz out of 15 kHz noise',
+      p:`A sensor signal at 1&nbsp;kHz shared its line with 15&nbsp;kHz noise. The two are
+         log<sub>10</sub>(15) ≈ <strong>1.2 decades</strong> apart, and that gap sets how steep a
+         low-pass filter has to be to pass one and crush the other.<br><br>
+         I designed an active op-amp low-pass filter in LTspice and checked its frequency response
+         in simulation before anything was built — so the first physical version started from a
+         response I'd already seen.` },
+
+    { h:'In the water',
+      p:`I supported in-water testing of the vehicle, diagnosing and resolving hardware faults on
+         site as they came up. Poolside debugging has one rule: find it fast, because the pool time
+         is booked and the whole team is waiting.` }
   ],
 
   viz:`<svg viewBox="0 0 400 300" fill="none">
-    <g stroke="#00E5FF" stroke-width="1.5">
+    <g stroke="currentColor" stroke-width="1.5">
       <path class="draw" d="M70 150c0-30 34-48 78-48h116c44 0 78 18 78 48s-34 48-78 48H148c-44 0-78-18-78-48z"/>
-      <path class="draw" d="M70 150H30"/><rect class="draw" x="126" y="130" width="54" height="40" rx="3"/>
-      <circle class="draw" cx="232" cy="150" r="15"/><circle class="draw" cx="232" cy="150" r="5" fill="#00E5FF"/>
-      <path class="draw" d="M286 126v48M304 126v48"/><path class="draw" d="M342 134v32h26"/></g>
-    <g stroke="#7C5CFF" stroke-width="1" opacity=".45"><path class="draw" d="M20 60h360M20 250h360"/></g>
-    <g fill="#00E5FF" opacity=".6" font-family="JetBrains Mono" font-size="8.5">
-      <text x="132" y="154">PWR PCB</text><text x="270" y="196">THRUSTERS</text>
-      <text x="126" y="96">PRESSURE HULL</text></g>
-    <text x="20" y="52" fill="#7C5CFF" opacity=".55" font-family="JetBrains Mono" font-size="8">WATERLINE</text>
+      <path class="draw" d="M70 150H30"/><rect class="draw" x="126" y="130" width="54" height="40" rx="2"/>
+      <circle class="draw" cx="232" cy="150" r="15"/><circle class="draw" cx="232" cy="150" r="5"/>
+      <path class="draw" d="M286 126v48M304 126v48"/><path class="draw" d="M342 134v32h26"/>
+      <path class="draw" d="M180 150h37" stroke-dasharray="3 3"/>
+    </g>
+    <g stroke="#5C6878" stroke-width="1"><path class="draw" d="M20 60h360M20 250h360" stroke-dasharray="6 6"/></g>
+    <g fill="currentColor" opacity=".8" font-family="JetBrains Mono" font-size="8.5">
+      <text x="130" y="154">COMMS HUB</text><text x="270" y="214">THRUSTERS</text>
+      <text x="126" y="96">PRESSURE HULL</text><text x="188" y="144">CAN</text></g>
+    <text x="20" y="52" fill="#5C6878" font-family="JetBrains Mono" font-size="8">WATERLINE</text>
   </svg>`
 },
+
+/* ─────────────────────────────────────────────── ESP32 */
 {
-  id:'momentum',
-  n:'04',
-  title:'Momentum — Focus App',
+  id:'env-monitor', n:'03', ch:2,
+  title:'ESP32 Environmental Monitor',
+  short:'Environmental monitor',
+  status:'Built', live:false,
+  label:'IOT-LOGGER / REV A',
+  year:'Fall 2025',
+  role:'Firmware, hardware, dashboard',
+
+  problem:'One sensor reading tells you almost nothing. Comparing two rooms fairly takes hours of data captured the same way, labelled so you can tell the runs apart.',
+  approach:'Four sensors on one I²C bus, a rolling buffer sized for a full six-hour capture, and a dashboard that tags each run by room.',
+  result:'A <b>720-point</b> rolling buffer — one sample every 30 s for 6 h — served live as JSON and exported as CSV.',
+  metric:{ value:'720', unit:'points', label:'Buffer = one 6 h capture' },
+
+  body:`A logger built for comparing rooms, not for taking one reading. Temperature, humidity,
+        pressure and light on a shared I²C bus, with every capture run <strong>tagged and reset
+        from the dashboard</strong> so two rooms are compared on equal terms.`,
+
+  specs:[['Sensing','Temp · RH · pressure · light — I²C'],['Buffer','<b>720 points</b> · 6 h rolling'],
+         ['Interface','Live dashboard · REST / JSON · CSV'],['Sessions','/setroom tags each run']],
+  tags:['ESP32','C++','I²C','REST API','JSON'],
+  stack:['ESP32','C++','I²C','HTTP server','REST / JSON','CSV export'],
+  photo:null, repo:null,
+
+  study:[
+    { h:'A logger, not a reading',
+      p:`The tutorial version of this project reads a sensor and prints a number. That answers
+         nothing. The question I wanted to answer was comparative — <em>is this room behaving
+         differently from that one?</em> — and a comparison is only fair if both sides were measured
+         the same way, for the same length of time.<br><br>
+         So the design target was a <strong>six-hour capture</strong>, run identically in each room.` },
+
+    { h:'Sizing the buffer from the question',
+      p:`Six hours at one sample every 30 seconds is 6 × 3600 / 30 = <strong>720 samples</strong>.
+         That's the buffer: a fixed 720-point ring. When it's full, the newest sample overwrites the
+         oldest, so memory use is constant no matter how long the device runs — there's no
+         "eventually runs out of heap."`,
+      code:`// fixed-size ring buffer — the idea, simplified
+constexpr size_t N = 720;          // 6 h × 3600 s / 30 s
+Sample buf[N];
+size_t head = 0, count = 0;
+
+void push(const Sample& s) {
+  buf[head] = s;
+  head = (head + 1) % N;          // wrap: overwrite the oldest
+  if (count < N) count++;
+}` },
+
+    { h:'Four sensors, one bus',
+      p:`Temperature, humidity, pressure and ambient light all sit on a single I²C bus — two wires,
+         each sensor at its own address. It keeps the wiring trivial and leaves the rest of the
+         ESP32's pins free.` },
+
+    { h:'Labelled sessions',
+      p:`The part that makes the data usable is the <code>/setroom</code> endpoint. It tags the
+         current capture with a room name and resets the buffer, so each run starts clean and is
+         labelled at the source — instead of being reconstructed from memory and timestamps
+         afterwards.<br><br>
+         The ESP32 also runs an HTTP server: a live, auto-refreshing dashboard, REST endpoints
+         serving the current readings as JSON, and a CSV export for analysis offline.` },
+
+    { h:'What\'s next',
+      p:`The firmware and hardware are built. <strong>The multi-room trial itself hasn't been run
+         yet</strong> — when it has, the plots go on this page. Until then, this page describes the
+         instrument, not a result.` }
+  ],
+
+  viz:`<svg viewBox="0 0 400 300" fill="none">
+    <g stroke="currentColor" stroke-width="1.5">
+      <rect class="draw" x="34" y="110" width="86" height="76" rx="2"/>
+      <path class="draw" d="M120 124h40M120 142h40M120 160h40M120 178h40"/>
+      <rect class="draw" x="160" y="116" width="34" height="16"/><rect class="draw" x="160" y="134" width="34" height="16"/>
+      <rect class="draw" x="160" y="152" width="34" height="16"/><rect class="draw" x="160" y="170" width="34" height="16"/>
+      <rect class="draw" x="240" y="104" width="120" height="88" rx="2"/>
+      <path class="draw" d="M252 172l22-26 20 16 22-34 20 22"/>
+      <path class="draw" d="M77 110V84M64 92c8-9 18-9 26 0M54 80c14-15 32-15 46 0"/>
+      <path class="draw" d="M104 92h136v12" stroke-dasharray="3 4"/>
+    </g>
+    <g fill="currentColor" opacity=".8" font-family="JetBrains Mono" font-size="8">
+      <text x="50" y="152">ESP32</text><text x="165" y="127">T</text><text x="164" y="145">RH</text>
+      <text x="164" y="163">hPa</text><text x="164" y="181">lx</text><text x="250" y="124">/setroom · JSON</text></g>
+    <text x="34" y="228" fill="#5C6878" font-family="JetBrains Mono" font-size="8">I²C BUS · 720-POINT RING · 6 H</text>
+  </svg>`
+},
+
+/* ─────────────────────────────────────────────── LAMP */
+{
+  id:'led-lamp', n:'04', ch:2,
+  title:'Adaptive Closed-Loop LED Lamp',
+  short:'Adaptive LED lamp',
+  status:'In development', live:true,
+  label:'CTRL-LOOP / REV A',
+  year:'2026 — in development',
+  role:'Schematic, PCB, firmware',
+
+  problem:'Normal dimmable lamps set their output, not how bright the desk actually is — so the brightness drifts whenever the room changes.',
+  approach:'Measure the light at the desk and close the loop: an ESP32 reads a light sensor and PWM-drives a 12 V strip through a low-side MOSFET.',
+  result:'Breadboard proven; 2-layer PCB in layout. Target: <b>5 kHz</b> PWM — above visible flicker, below meaningful switching loss. Step-response numbers go here once they\'re measured.',
+  metric:{ value:'5', unit:'kHz', label:'PWM design target' },
+
+  body:`A lamp that holds <em>brightness at the desk</em> instead of its own output. The control
+        loop is the easy half — the interesting decisions are the PWM frequency and a gate network
+        that fails <strong>safe</strong>. The hero at the top of this page simulates its gate drive.`,
+
+  specs:[['Drive','Low-side MOSFET · 12 V strip'],['Target','<b>5 kHz</b> PWM (design)'],
+         ['Board','2-layer · Altium · full GND plane'],['Status','Breadboard → PCB layout']],
+  tags:['Altium','PWM','MOSFET','Control','ESP32'],
+  stack:['Altium Designer','ESP32','C++','PWM','MOSFET switching','I²C'],
+  photo:null, repo:null,
+
+  study:[
+    { h:'Why this exists',
+      p:`Every "dimmable" lamp is <em>open-loop</em>: you set a brightness and it holds that
+         <em>output</em>, not that <em>result</em>. Open the blinds and the desk gets washed out;
+         a cloud passes and everything dims. Nothing is measuring the thing you actually care about.
+         <br><br>
+         That's a control problem with a known shape: measure the result, compare it to what you
+         want, correct the difference. So that's what this is.` },
+
+    { h:'Switch, don\'t throttle',
+      p:`The obvious way to dim an LED is to run the transistor half-on, as a variable resistor.
+         But then it has current through it <em>and</em> voltage across it at the same time, and
+         power is I × V — it turns into a heater.<br><br>
+         Switching avoids that. The MOSFET is only ever fully on (almost no voltage across it) or
+         fully off (no current through it), so it stays cool. Brightness comes from the
+         <em>fraction of time</em> it's on — the duty cycle. Your eye averages it.<br><br>
+         Perception isn't linear, though: 50% duty looks far brighter than "half". The firmware
+         plan applies gamma correction so the dimming feels even.`,
+      code:`// LEDC hardware PWM — 5 kHz target, 12-bit
+ledcSetup(CH, 5000, 12);
+ledcAttachPin(GATE_PIN, CH);
+
+// perceived brightness isn't linear — gamma-correct
+uint16_t duty = pow(level / 4095.0, 2.2) * 4095;
+ledcWrite(CH, duty);` },
+
+    { h:'Why 5 kHz',
+      p:`Below roughly 200&nbsp;Hz, flicker is visible, especially in peripheral vision. Around
+         1&nbsp;kHz it disappears, but ceramic capacitors and magnetics can start to whine audibly.
+         Higher still fixes both — but every switching edge passes through a lossy moment where the
+         MOSFET is partly on, and more edges per second means more loss.<br><br>
+         5&nbsp;kHz sits in the gap: a 200&nbsp;µs period, invisible, above the whine, with switching
+         loss that stays small. It's the design target; the scope capture will confirm it.` },
+
+    { h:'Two resistors that fail safe',
+      p:`<strong>R1, 100&nbsp;Ω in series with the gate.</strong> A MOSFET gate is a capacitor.
+         Driving one straight from a pin means a current spike limited only by parasitics. R1 caps it
+         at 3.3&nbsp;V / 100&nbsp;Ω = 33&nbsp;mA and damps ringing.<br><br>
+         <strong>R2, 100&nbsp;kΩ from gate to ground.</strong> A gate holds charge. During boot, reset
+         or reflash, the ESP32 pin floats — and without R2 the gate keeps whatever charge it had, so
+         the LED does something undefined. R2 bleeds it off, so <em>undefined means off</em>.` },
+
+    { h:'What review caught before a board was ordered',
+      p:`A schematic review before fabrication flagged real problems — which is exactly when you
+         want to find them:<br><br>
+         <strong>MOSFET pinout.</strong> Depending on the package, drain and source can be swapped.
+         Backwards, the body diode conducts and the LED sits permanently on with the gate doing
+         nothing. Check the datasheet pinout, not the symbol.<br>
+         <strong>Logic-level gate.</strong> A 3.3&nbsp;V gate needs a part rated at that
+         V<sub>GS</sub>; a standard MOSFET barely turns on and cooks.<br>
+         <strong>No 3.3&nbsp;V source on board.</strong> Logic was back-fed from the dev board's
+         regulator, so the lamp needed USB <em>and</em> the barrel jack. Rev B adds a 12→5&nbsp;V buck.<br>
+         <strong>SDA/SCL swapped</strong> against the ESP32 default — a one-line software fix, but
+         swapped back in the schematic so no future library trips on it.` },
+
+    { h:'The feedback trap (designing for it now)',
+      p:`The lamp lights the sensor that controls the lamp. Sample too fast or set the gains too high
+         and the loop will hunt — the light visibly pulses around the setpoint.<br><br>
+         The plan: run the loop at 10–20&nbsp;Hz rather than per PWM cycle (the room doesn't change
+         in microseconds), start with conservative gains, and position the sensor to see ambient
+         light more than the lamp's own output — reducing the loop gain in hardware instead of
+         fighting it in software. The step-response test will show whether that was enough.` }
+  ],
+
+  viz:`<svg viewBox="0 0 400 300" fill="none">
+    <g stroke="currentColor" stroke-width="1.5">
+      <path class="draw" d="M30 150h58"/><circle class="draw" cx="100" cy="150" r="12"/>
+      <path class="draw" d="M112 150h50"/><rect class="draw" x="162" y="130" width="70" height="40" rx="2"/>
+      <path class="draw" d="M232 150h48"/><rect class="draw" x="280" y="132" width="46" height="36" rx="2"/>
+      <path class="draw" d="M326 150h34v92H188v-4" stroke-dasharray="4 4"/>
+      <rect class="draw" x="112" y="222" width="76" height="38" rx="2"/>
+      <path class="draw" d="M112 241H100v-79" stroke-dasharray="4 4"/>
+      <path class="draw" d="M162 90h10v-20h14v20h10v-20h14v20h10v-20h14v20h10"/>
+    </g>
+    <g fill="currentColor" opacity=".8" font-family="JetBrains Mono" font-size="8.5">
+      <text x="26" y="140">SETPOINT</text><text x="172" y="154">PWM 5kHz</text>
+      <text x="290" y="154">LED</text><text x="122" y="245">SENSOR</text>
+      <text x="236" y="272">FEEDBACK</text><text x="180" y="60">V_GS</text></g>
+    <text x="96" y="172" fill="currentColor" font-family="JetBrains Mono" font-size="10">−</text>
+    <text x="30" y="284" fill="#5C6878" font-family="JetBrains Mono" font-size="8">DESIGN — NOT YET MEASURED</text>
+  </svg>`
+},
+
+/* ─────────────────────────────────────────────── MOMENTUM */
+{
+  id:'momentum', n:'05', ch:2,
+  title:'Momentum — a focus app',
   short:'Momentum',
-  status:'Active',
-  live:true,
+  status:'Active', live:true,
   label:'REACT-APP / REV D',
   year:'2026',
   role:'Design and build',
 
-  problem:'Pomodoro timers interrupt you every 25 minutes. For an ADHD brain, getting pulled out of hyperfocus is the failure mode, not the feature.',
-  approach:'Inverted the incentive: score streaks for completing self-defined blocks instead of enforcing fixed breaks.',
-  result:'Replaced every timer app I was using. Still my daily driver.',
-  metric:{ value:'Daily', unit:'', label:'Still in use' },
+  problem:'Pomodoro timers interrupt you every 25 minutes. For an ADHD brain mid-hyperfocus, the interruption is the failure mode, not the feature.',
+  approach:'Inverted the incentive: score streaks for finishing self-defined blocks instead of enforcing fixed breaks.',
+  result:'A React app that rewards finishing what you started — with <b>no forced breaks</b>.',
+  metric:{ value:'0', unit:'forced breaks', label:'By design' },
 
-  body:`Pomodoro timers don't survive contact with an ADHD brain. Getting interrupted every
-        25 minutes mid-flow is <strong>the failure mode, not the feature</strong>.`,
+  body:`Pomodoro timers don't survive contact with an ADHD brain. Getting pulled out of deep focus
+        every 25 minutes is <strong>the failure mode, not the feature</strong>.`,
 
-  specs:[['Stack','React'],['Core','Session modes · per-block timers'],
+  specs:[['Stack','React · local storage'],['Core','Session modes · per-block timers'],
          ['System','<b>Streak scoring</b>'],['Origin','Built for my own use']],
   tags:['React','JavaScript','UI design','Product thinking'],
   stack:['React','JavaScript','CSS','Local storage'],
-  photo:null,
-  repo:null,
+  photo:null, repo:null,
 
   study:[
     { h:'Built for a specific brain',
-      p:`The Pomodoro technique assumes that focus is scarce and needs to be rationed —
-         work 25 minutes, break 5, repeat. That's a reasonable model for a lot of people.<br><br>
-         It's actively wrong for mine. Getting into deep focus takes me a while and isn't fully
-         under my control. When it happens, an alarm telling me to stop is destroying the
-         thing I was trying to produce. The timer is optimising for the wrong variable.` },
+      p:`The Pomodoro technique assumes focus is scarce and needs rationing: 25 minutes on, 5 off,
+         repeat. That works for a lot of people.<br><br>
+         It's wrong for mine. Getting into deep focus takes a while and isn't fully under my control.
+         When it arrives, an alarm telling me to stop destroys the thing I was trying to produce. The
+         timer is optimizing the wrong variable.` },
 
     { h:'Inverting the incentive',
       p:`So Momentum doesn't enforce breaks. It scores <em>streaks</em> — consecutive completed
-         blocks — where you define the block length yourself.<br><br>
-         The behavioural difference is the whole point. A Pomodoro timer's reward is
-         <em>obeying the clock</em>. Momentum's reward is <em>finishing what you started</em>.
-         Those pull in different directions, and only one of them survives contact with
-         hyperfocus.` },
+         blocks, where you set the block length yourself.<br><br>
+         A Pomodoro timer rewards <em>obeying the clock</em>. Momentum rewards <em>finishing what you
+         started</em>. Only one of those survives contact with hyperfocus.` },
 
-    { h:'Why this is on an engineering portfolio',
-      p:`Because the interesting part was diagnosis, not implementation. React and a timer are
-         not hard. Working out <em>why</em> every existing app failed for me — and that the
-         problem was the incentive model rather than the interface — is the part that took
-         actual thought.<br><br>
-         That's the same skill as debugging hardware: the visible symptom is rarely the
-         actual fault. You have to keep asking why until you hit something structural.` }
+    { h:'Why it\'s on an engineering portfolio',
+      p:`Because the interesting part was diagnosis, not implementation. React and a timer aren't
+         hard. Working out <em>why</em> every existing app failed me — that the fault was the
+         incentive model, not the interface — is the same skill as debugging hardware: the visible
+         symptom is rarely the actual fault.` }
   ],
 
   viz:`<svg viewBox="0 0 400 300" fill="none">
-    <g stroke="#00E5FF" stroke-width="1.5">
-      <circle class="draw" cx="112" cy="150" r="56"/>
-      <circle class="draw" cx="112" cy="150" r="40" stroke-dasharray="5 6" opacity=".45"/>
-      <path class="draw" d="M112 150V104M112 150l30 21"/>
-      <path class="draw" d="M204 208h44v-38h40v-58h42v82h40v-56h30" stroke-width="1.8"/></g>
-    <g stroke="#7C5CFF" stroke-width="1.2" opacity=".5"><path class="draw" d="M204 232h196"/></g>
-    <g fill="#00E5FF" opacity=".6" font-family="JetBrains Mono" font-size="8.5">
-      <text x="204" y="98">FOCUS BLOCKS</text><text x="88" y="228">SESSION</text></g>
-    <text x="204" y="250" fill="#7C5CFF" opacity=".6" font-family="JetBrains Mono" font-size="8">STREAK SCORED · FLOW UNBROKEN</text>
+    <g stroke="#5C6878" stroke-width="1.2">
+      <path class="draw" d="M40 120h40v-40h40v40h40v-40h40v40h40v-40h40v40h40"/></g>
+    <g stroke="currentColor" stroke-width="1.8">
+      <path class="draw" d="M40 220h30v-60h260v60h30"/></g>
+    <g fill="currentColor" font-family="JetBrains Mono" font-size="8.5" opacity=".85">
+      <text x="40" y="66" fill="#5C6878">POMODORO — CHOPPED</text>
+      <text x="40" y="150">MOMENTUM — ONE BLOCK, UNBROKEN</text>
+      <circle cx="130" cy="160" r="3"/><circle cx="200" cy="160" r="3"/><circle cx="270" cy="160" r="3"/></g>
+    <text x="40" y="256" fill="#5C6878" font-family="JetBrains Mono" font-size="8">● STREAK POINTS · SAME TIME AXIS</text>
   </svg>`
 }
 ];
 
+/* [name, where it was actually used] */
 const SKILLS = [
-  { g:'Hardware',    items:[['Altium Designer','PCB'],['Schematic capture',''],['Oscilloscope / DMM',''],['Soldering & rework',''],['Three-phase systems','']] },
-  { g:'Embedded',    items:[['ESP32','MCU'],['C / C++',''],['PWM & timers',''],['I²C / sensors',''],['Control loops','']] },
-  { g:'Software',    items:[['React','UI'],['JavaScript',''],['Python',''],['Git','']] },
-  { g:'Fabrication', items:[['Fusion 360','CAD'],['CNC machining',''],['3D printing',''],['DaVinci Resolve','']] }
+  { g:'Design & EDA', items:[['Altium Designer','ARVP · lamp'],['LTspice','ARVP'],['PCB, 2 & 4 layer','ARVP'],['Fusion 360',''],['STM32CubeIDE','']] },
+  { g:'Firmware & code', items:[['C / C++','ESP32'],['Python',''],['MATLAB',''],['VHDL','Zybo Z7'],['Git','']] },
+  { g:'Protocols', items:[['I²C','ESP32'],['CAN','ARVP'],['SPI',''],['UART',''],['PWM','lamp']] },
+  { g:'Bench', items:[['Oscilloscope',''],['Multimeter','field'],['Soldering, TH & SMD','rework'],['3D printing',''],['Zybo Z7 FPGA','']] },
+  { g:'Field & code', items:[['Canadian Electrical Code','field'],['Fire alarm programming','Mircom'],['347 V · 120/208 V','field'],['Conduit & termination','field'],['Blueprint reading','field']] }
 ];
 
 if (typeof module !== 'undefined') module.exports = { SITE, PROJECTS, SKILLS };

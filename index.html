@@ -3,54 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Anmol Bhandohal — Electrical Engineering Portfolio</title>
-<meta name="description" content="Electrical engineering student in Edmonton. Closed-loop hardware, embedded firmware, PCB design. Case studies on an adaptive LED lamp, an ESP32 environmental monitor, and an autonomous underwater vehicle.">
+<title>Anmol Bhandohal — Electrical Engineering Co-op</title>
+<meta name="description" content="Third-year electrical engineering co-op student at the University of Alberta. PCB design, embedded firmware, and a summer of commercial electrical field work. Available January–August 2027.">
 <link rel="canonical" href="https://anmolbhandohal.com/">
 <meta name="theme-color" content="#05070A">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Anmol Bhandohal — Electrical Engineering">
-<meta property="og:description" content="Closed-loop hardware, embedded firmware, PCB design. Circuits that measure the world and correct themselves.">
+<meta property="og:title" content="Anmol Bhandohal — Electrical Engineering Co-op">
+<meta property="og:description" content="Boards and firmware at school, 347 V services and fire alarm panels on site. Available Jan–Aug 2027.">
 <meta property="og:image" content="og.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2305070A'/><path d='M4 20 Q10 8 16 16 T28 12' stroke='%2300E5FF' stroke-width='2.5' fill='none'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2305070A'/><path d='M3 21h6V10h8v11h8V10h4' stroke='%2300E5FF' stroke-width='2.4' fill='none'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Anmol Bhandohal",
-"jobTitle":"Electrical Engineering Student","url":"https://anmolbhandohal.com",
+"jobTitle":"Electrical Engineering Co-op Student","email":"mailto:bhandoha@ualberta.ca",
 "address":{"@type":"PostalAddress","addressLocality":"Edmonton","addressRegion":"AB","addressCountry":"CA"},
 "alumniOf":{"@type":"CollegeOrUniversity","name":"University of Alberta"},
-"knowsAbout":["PCB Design","Embedded Systems","Control Theory","Altium Designer","ESP32","C++"]}
+"sameAs":["https://www.linkedin.com/in/anmol-bhandohal-904789305/","https://github.com/AnmolBhandohal"],
+"knowsAbout":["PCB Design","Altium Designer","Embedded Systems","CAN bus","Fire Alarm Systems","Canadian Electrical Code"]}
 </script>
 </head>
-<body class="lock">
+<body>
 
-<a href="#work" class="skip">Skip to work</a>
-
-<div id="load"><div class="n">INITIALISING</div><div class="bar"><i></i></div></div>
-<div class="cur"></div><div class="cur-r"></div>
-
-<canvas id="scope"></canvas>
-<div class="vig"></div>
-<div class="grain"></div>
+<a href="#glance" class="skip">Skip to the work</a>
 
 <nav>
-  <a href="#top" class="brand">ANMOL BHANDOHAL</a>
+  <a href="#top" class="brand">Anmol Bhandohal</a>
   <div class="nav-r">
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
-    <button class="kbd" id="openPal" aria-label="Open command palette">
-      <span>⌘</span>K
-    </button>
+    <a href="resume.pdf" class="nav-cv" download>Résumé</a>
+    <button class="kbd" id="openPal" aria-label="Open command palette"><span>⌘</span>K</button>
     <button class="tgl" id="motionTgl" aria-label="Toggle animation" title="Toggle animation">
       <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M1 7h3l2-5 3 10 2-5h2"/></svg>
+        <path d="M1 10h3V4h6v6h3"/></svg>
     </button>
     <span class="clock" id="clk">—</span>
   </div>
@@ -61,84 +54,119 @@
 <div class="wrap">
 
 <header class="hero" id="top">
-  <div class="tagrow">
-    <span class="dot"></span>
-    <span class="tag" id="availTag">Electrical Engineering · Edmonton</span>
-  </div>
-
-  <h1>
-    <span class="ln"><span>I build</span></span>
-    <span class="ln"><span>things that</span></span>
-    <span class="ln"><span><em>respond</em></span></span>
-  </h1>
-
-  <div class="hero-b">
-    <p class="lede">Closed-loop hardware, embedded firmware, and boards I designed because I
-       wanted to know whether I could. Circuits that measure the world and correct themselves.</p>
-    <div class="stats">
-      <div class="stat"><span>Projects</span><b id="pc">—</b></div>
-      <div class="stat"><span>Discipline</span><b>EE</b></div>
-      <div class="stat"><span>Status</span><b class="c" id="availStat">Open to co-op</b></div>
+  <div class="hero-l">
+    <div class="tagrow">
+      <span class="dot"></span>
+      <span class="tag" id="availTag">Available Jan – Aug 2027 · Edmonton, AB</span>
     </div>
+
+    <h1>
+      <span class="ln"><span>Anmol</span></span>
+      <span class="ln"><span>Bhandohal</span></span>
+    </h1>
+
+    <p class="lede">Third-year electrical engineering co-op student at the University of Alberta.
+      I design boards and firmware at school — and spent the summer wiring commercial buildings,
+      so I know what happens to a drawing once it leaves the screen.</p>
+
+    <div class="hero-cta">
+      <a class="btn pri" href="resume.pdf" download><span>Résumé · PDF</span></a>
+      <a class="btn" id="heroMail" href="mailto:bhandoha@ualberta.ca"><span>Email me</span></a>
+    </div>
+
+    <dl class="stats">
+      <div class="stat"><dt>Field</dt><dd><b class="y">7</b> sites · summer 2026</dd></div>
+      <div class="stat"><dt>ARVP board</dt><dd><b>0</b> DRC violations</dd></div>
+      <div class="stat"><dt>Program</dt><dd><b>5</b> of 8 terms</dd></div>
+    </dl>
   </div>
 
-  <div class="scroll-c"><i></i>Scroll</div>
+  <figure class="inst">
+    <div class="inst-top">
+      <span class="chn c1">CH1 V<sub>GS</sub> <i>2.00 V/div</i></span>
+      <span class="chn c2">CH2 V<sub>DS</sub> <i>5.00 V/div</i></span>
+      <span class="tb">H 50.0 µs/div</span>
+      <span class="run">Trig'd</span>
+    </div>
+    <div class="screen"><canvas id="scopeCv" aria-hidden="true"></canvas></div>
+    <div class="meas" aria-live="polite">
+      <div><span>Freq</span><b>5.000 kHz</b></div>
+      <div><span>+Duty</span><b id="mD">50.0 %</b></div>
+      <div><span>+Width</span><b id="mW">100.0 µs</b></div>
+      <div><span>LED avg</span><b id="mV">6.00 V</b></div>
+      <div class="lampcell"><span>Looks</span><b id="mP">73 %</b><i id="lampGlow"></i></div>
+    </div>
+    <label class="duty"><span>Duty cycle</span>
+      <input type="range" id="duty" min="5" max="95" step="0.5" value="50"></label>
+    <figcaption><b>FIG. 0</b> — Gate drive for the lamp in §04, simulated at its 5&nbsp;kHz design
+      target. Move across the screen to set the duty cycle. <em>Looks</em> is perceived brightness —
+      the eye isn't linear, so 50% duty reads as about 73%.</figcaption>
+  </figure>
 </header>
 
-<!-- 7-SECOND LAYER: what a recruiter sees before scrolling far -->
+<!-- 7-SECOND LAYER -->
 <section class="glance" id="glance">
   <div class="sh"><span class="k">/01</span><h3>At a glance</h3>
-    <span class="r">Problem → approach → result</span></div>
+    <span class="r">Problem → result · every number verified</span></div>
   <div class="gcards" id="gcards"></div>
 </section>
 
+<section class="sect sect-work" id="work-h">
+  <div class="sh"><span class="k">/02</span><h3>Field record &amp; projects</h3>
+    <span class="r"><i class="lg y"></i>CH1 field <i class="lg c"></i>CH2 projects</span></div>
+</section>
 <main id="work"></main>
 
 <section class="sect" id="about">
-  <div class="sh"><span class="k">/03</span><h3>About</h3><span class="r">Who's building this</span></div>
+  <div class="sh"><span class="k">/03</span><h3>About</h3><span class="r">Two kinds of electrical work</span></div>
   <div class="about-g">
     <div>
-      <p class="rv">I'm an electrical engineering student at the University of Alberta who
-        mostly learns by building the thing and finding out where it breaks.</p>
-      <p class="rv">The projects here weren't assignments. The lamp exists because flickering
-        PWM annoyed me. The environmental monitor exists because I wanted to know if I could
-        make something run for a month untouched. <strong>Momentum exists because every focus
-        app on the market was designed for a brain that isn't mine.</strong></p>
-      <p class="rv">What I actually enjoy is where the schematic meets reality — where the
-        datasheet said one thing and the oscilloscope says another, and you have to work out
-        which one is lying. I'd rather understand why a circuit works than memorise that it does.</p>
-      <p class="rv">Looking for a <strong>summer co-op</strong> where I can do more of that,
-        with people who are better at it than me.</p>
+      <p class="rv">I split my time between two versions of electrical work. At school it's op-amp
+        filters, VHDL and PCB stackups. On site it's conduit, feeders, and a fire alarm panel that
+        has to pass inspection.</p>
+      <p class="rv">Most students only get the first. The second taught me things a lab never does:
+        a connector that's easy to crimp can be impossible to reach in the finished install; a fault
+        can hide until the circuit is live; and a drawing is a promise the building then has to keep.
+        <strong>That's why my boards use connectors that can't go in backwards.</strong></p>
+      <p class="rv">One rule for this site: nothing on it I haven't actually done. The lamp isn't
+        finished, so it shows design targets, labelled as targets. Measured results go up when
+        they've been measured.</p>
     </div>
     <div class="now rv">
       <h4>Currently</h4>
       <ul>
-        <li>Third year EE — University of Alberta</li>
-        <li>Electrical subsystems on ARVP's underwater vehicle</li>
-        <li>Building an automated lighting system end-to-end</li>
-        <li>Learning more Altium than any course requires</li>
+        <li>Third-year EE, University of Alberta — 5 of 8 terms</li>
+        <li>Electrical subsystem, ARVP autonomous sub</li>
+        <li>Taking the lamp from breadboard to PCB</li>
+        <li>Looking for a Jan – Aug 2027 co-op</li>
+      </ul>
+      <h4>Recognition</h4>
+      <ul>
+        <li>GeoWall Design Competition — 1st place against 4th-year civil teams, plus Best Presentation</li>
+        <li>First Class Standing</li>
+        <li>EECERT Lab Certification</li>
       </ul>
     </div>
   </div>
 </section>
 
 <section class="sect" id="skills">
-  <div class="sh"><span class="k">/04</span><h3>Toolkit</h3><span class="r">What I reach for</span></div>
+  <div class="sh"><span class="k">/04</span><h3>Toolkit</h3><span class="r">And where each was used</span></div>
   <div class="caps" id="caps"></div>
 </section>
 
 <section class="cta" id="contact">
-  <span class="k">/05 — Get in touch</span>
-  <h3>Let's build<br><em>something</em></h3>
-  <p>Open to summer co-op roles and always happy to talk about a project that's misbehaving.
-     Email is fastest.</p>
+  <span class="k">/05 — Contact</span>
+  <h3>Hiring for<br><em>January?</em></h3>
+  <p>I'm looking for an 8-month co-op from January 2027 — or two 4-month terms. The résumé has
+     every detail; email is the fastest way to reach me.</p>
   <div class="btns" id="ctaBtns"></div>
 </section>
 
 <footer>
-  <span>© <b id="yr">2026</b> Anmol Bhandohal</span>
-  <span>Built by hand — no framework, no template</span>
-  <span id="upd">—</span>
+  <span>© <b id="yr">2026</b> Anmol Bhandohal · Edmonton, AB</span>
+  <span>Every number here is measured — or labelled as a target.</span>
+  <span id="upd">Rev 2.0</span>
 </footer>
 
 </div>
@@ -147,7 +175,7 @@
 <div class="pal" id="pal" hidden>
   <div class="pal-bg"></div>
   <div class="pal-box" role="dialog" aria-label="Command palette">
-    <input id="palIn" placeholder="Jump to a project, skill, or action…" autocomplete="off" spellcheck="false">
+    <input id="palIn" placeholder="Jump to a project, section, or action…" autocomplete="off" spellcheck="false">
     <div class="pal-list" id="palList"></div>
     <div class="pal-foot"><span><kbd>↑↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
   </div>
@@ -158,23 +186,14 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
 (function(){
-  function bail(why){
-    console.warn('[portfolio] motion off —',why);
-    var l=document.getElementById('load'); if(l)l.style.display='none';
-    document.body.classList.remove('lock');
-    document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});
-    document.querySelectorAll('.draw').forEach(function(e){e.style.strokeDasharray='none';e.style.strokeDashoffset=0});
-    document.querySelectorAll('h1 .ln>span,h2 .w>i').forEach(function(e){e.style.transform='none'});
+  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined'){
+    console.warn('[portfolio] animation library missing — static mode');
+    document.documentElement.classList.add('no-gsap');
   }
-  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined'){bail('GSAP missing');return;}
-  setTimeout(function(){
-    var l=document.getElementById('load');
-    if(l&&l.style.display!=='none'&&getComputedStyle(l).opacity>.9)bail('init timeout');
-  },4000);
 })();
 </script>
 <script src="js/content.js"></script>
-<script src="js/scope.js"></script>
+<script src="js/instrument.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
