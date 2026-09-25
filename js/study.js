@@ -67,7 +67,7 @@ root.innerHTML = `
 </div>
 
 <div class="cs-body">
-  <div class="cs-vis rv">${p.photo ? `<img src="${p.photo}" alt="${p.title}">` : p.viz}</div>
+  ${p.gallery ? '' : `<div class="cs-vis rv">${p.photo ? `<img src="${p.photo}" alt="${p.title}">` : p.viz}</div>`}
 
   ${p.study.map((s, i) => `
   <section class="cs-sec rv">
@@ -78,6 +78,7 @@ root.innerHTML = `
     ${s.bom && window.LAMP_BOM ? `<div class="bom-wrap"><table class="bom"><thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Job</th></tr></thead><tbody>
       ${LAMP_BOM.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</tbody></table></div>` : ''}
     ${s.lab ? `<div class="cs-lab" data-lab="${s.lab}"></div>` : ''}
+    ${s.gallery && window[s.gallery] ? `<div class="cs-gal" data-g="${s.gallery}">${viewerHTML(window[s.gallery])}</div>` : ''}
   </section>`).join('')}
 
   <section class="cs-sec rv">
@@ -97,6 +98,7 @@ root.innerHTML = `
 </div>`;
 
 window.mountLabs && window.mountLabs();
+document.querySelectorAll('.cs-gal').forEach(el => bindViewer(el.querySelector('.vw'), window[el.dataset.g]));
 
 /* reading progress */
 const bar = document.getElementById('progBar');
@@ -122,7 +124,7 @@ document.querySelectorAll('.cs-vis .draw').forEach(el => {
 gsap.timeline()
   .from('.cs-h1 .ln>span', { yPercent: 105, duration: .9, ease: 'expo.out' })
   .from('.cs-hero .s-meta,.cs-meta,.cs-sum', { y: 18, opacity: 0, duration: .7, stagger: .08, ease: 'power3.out' }, '-=.6');
-gsap.to('.cs-vis .draw', { strokeDashoffset: 0, duration: 1.4, stagger: .04, ease: 'power2.inOut',
+if (document.querySelector('.cs-vis .draw')) gsap.to('.cs-vis .draw', { strokeDashoffset: 0, duration: 1.4, stagger: .04, ease: 'power2.inOut',
   scrollTrigger: { trigger: '.cs-vis', start: 'top 85%', once: true } });
 gsap.utils.toArray('.cs-body .rv').forEach(el => gsap.to(el, { opacity: 1, y: 0, duration: .75,
   ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } }));

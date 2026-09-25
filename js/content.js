@@ -137,7 +137,7 @@ if (alarm.any) {
 
 /* ─────────────────────────────────────────────── ARVP */
 {
-  id:'arvp-auv', n:'02', ch:2, feature:'filter',
+  id:'arvp-auv', n:'02', ch:2, gallery:'ARVP_GALLERY',
   title:'ARVP — Autonomous Underwater Vehicle',
   short:'ARVP underwater vehicle',
   status:'Active', live:true,
@@ -150,15 +150,16 @@ if (alarm.any) {
   result:'4-layer stackup cleared a full design-rule check with <b>zero violations</b> before sign-off.',
   metric:{ value:'4', unit:'layers', label:'Stackup · DRC clean' },
 
-  body:`Electrical subsystem work on the University of Alberta's autonomous sub. When the hull is
-        sealed there's no reaching back in — so the work is making the wrong thing
-        <strong>physically impossible</strong> before it ever gets wet.`,
+  body:`Electrical subsystem work on the University of Alberta's autonomous sub — including a
+        Teensy 4.0 board I designed end to end in Altium, schematic to layout. When the hull is sealed
+        there's no reaching back in, so the work is making the wrong thing <strong>physically
+        impossible</strong> before it ever gets wet.`,
 
-  specs:[['Comms Hub','Revised in Altium · CAN transceivers'],['Stackup','4-layer · signal / GND / power'],
-         ['DRC','<b>0 violations</b> · mfr. clearances'],['Filter','Active LPF · 1 kHz vs 15 kHz noise']],
+  specs:[['Onboarding board','Teensy 4.0 carrier · <b>designed by me</b>'],['Comms Hub','Revised in Altium · CAN transceivers'],
+         ['Stackup','4-layer · signal / GND / power · DRC clean'],['Filter','Active LPF · 1 kHz vs 15 kHz noise']],
   tags:['Altium','4-layer PCB','CAN bus','LTspice','Integration test'],
   stack:['Altium Designer','LTspice','CAN bus','Op-amp filters','Harness & connectors'],
-  photo:null, repo:null,
+  photo:'img/arvp-onboard-3d.webp', repo:null,
 
   study:[
     { h:'A different kind of constraint',
@@ -168,6 +169,23 @@ if (alarm.any) {
          bad one means the vehicle comes out, the hull comes open, and the team loses the run. It
          moves the whole effort <em>earlier</em>: you can't fix it later, so you design it so it
          can't go wrong.` },
+
+    { h:'A board of my own: the onboarding carrier', gallery:'ARVP_GALLERY',
+      p:`ARVP's electrical onboarding asks you to take a board from schematic to layout. Mine is a
+         carrier for a <strong>Teensy 4.0</strong>, and I used it to put one of each thing the vehicle
+         actually needs onto a single board — the schematic is dated 28 December 2025.<br><br>
+         <strong>CAN.</strong> A TCAN1042 transceiver with a 120&nbsp;Ω termination resistor across
+         CANH/CANL. Without termination at each end of the bus, edges reflect and corrupt frames.<br>
+         <strong>Temperature over I²C.</strong> A TCN75A sensor, sharing SDA/SCL with the MCU through
+         4.02&nbsp;kΩ pull-ups, each IC with its own 100&nbsp;nF decoupling cap.<br>
+         <strong>A Hall-effect input.</strong> A DRV5033 switch whose output drives a BSS84 P-channel
+         MOSFET and an indicator LED — so you can <em>see</em> the magnet being detected without a
+         serial monitor.<br>
+         <strong>A buffered analog input.</strong> A 1&nbsp;kΩ / 100&nbsp;nF RC low-pass
+         (f<sub>c</sub> = 1/2πRC ≈ <strong>1.6&nbsp;kHz</strong>) ahead of an LMV321 op-amp wired as a
+         unity-gain buffer, so the ADC sees a low-impedance source.<br>
+         <strong>A payload header</strong> breaking out SPI, UART and I²C, and a keyed Molex power
+         input with bulk capacitance.` },
 
     { h:'Connectors that can\'t go in backwards',
       p:`The Comms Hub board used bare pin headers. A pin header will happily accept a connector
@@ -477,6 +495,17 @@ ledcWrite(CH, duty);` },
     <text x="40" y="256" fill="#5C6878" font-family="JetBrains Mono" font-size="8">● STREAK POINTS · SAME TIME AXIS</text>
   </svg>`
 }
+];
+
+
+/* ── ARVP onboarding board — Anmol's own Altium screenshots ── */
+var ARVP_GALLERY = [
+  { src:'img/arvp-onboard-3d.webp', label:'3D', plate:'linear-gradient(#fefefe,#dedede)', alt:'Altium 3D render of the ARVP electrical onboarding board: a Teensy 4.0 on a carrier with a CAN transceiver, temperature sensor, Hall sensor, analog input and payload header.',
+    cap:'<b>Electrical Onboarding · Rev A</b> — Altium 3D view. Teensy 4.0 carrier with CAN, I²C temperature, a Hall-effect input, a buffered analog input and a payload header.' },
+  { src:'img/arvp-onboard-layout.webp', label:'Layout', plate:'#000', alt:'Top-layer PCB layout in Altium: red top copper, blue bottom copper, footprints for U1 to U5, J1 to J4 and passives.',
+    cap:'Top-layer layout. Red is top copper, blue is bottom; the board also carries an internal GND layer. Silkscreen: “Electrical Onboarding Rev A — by Anmol”.' },
+  { src:'img/arvp-onboard-schematic.webp', label:'Schematic', plate:'#fffcf8', alt:'Altium schematic titled Phase 1 Teensy 4.0 Schematic, company ARVP, designed by Anmol, revision 1.0, dated 28 December 2025.',
+    cap:'Schematic — “Phase 1 Teensy 4.0”, ARVP, rev 1.0, 28 Dec 2025. Seven blocks: power, payload connector, magnetic sensor, MCU, temperature sensor, CAN, analog.' }
 ];
 
 /* [name, where it was actually used] */
