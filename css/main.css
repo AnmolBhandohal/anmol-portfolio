@@ -726,3 +726,42 @@ html.lb-open,html.lb-open body{overflow:hidden}
 @media (hover:none){ .sx-stage{cursor:pointer} }
 
 .sx-mag{left:auto;right:118px;top:10px;height:32px;display:flex;align-items:center;padding:0 10px}
+
+
+/* ── 3D board viewer ──────────────────────────────────── */
+.b3d{position:relative;width:100%;height:100%;min-height:320px;background:radial-gradient(120% 90% at 50% 20%,#1a1f27 0%,#0B0E13 70%);overflow:hidden;
+  --acc:var(--c2);user-select:none}
+.b3d-stage{position:absolute;inset:0}
+.b3d-stage canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;cursor:grab;touch-action:none;outline:none}
+.b3d-stage canvas:active{cursor:grabbing}
+.b3d-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--plate);transition:opacity .5s}
+.b3d.b3d-ready .b3d-poster{opacity:0;pointer-events:none}
+.b3d-ui{position:absolute;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;opacity:0;transition:opacity .3s}
+.b3d.b3d-ready .b3d-ui{opacity:1}
+.b3d-ui>*{pointer-events:auto}
+.b3d-views{display:inline-flex;border:1px solid rgba(255,255,255,.16);border-radius:var(--r);overflow:hidden;background:rgba(7,9,12,.8);backdrop-filter:blur(6px)}
+.b3d-views button,.b3d-spin{background:0;border:0;color:var(--fg-2);font-family:var(--mono);font-size:11px;padding:8px 11px;cursor:pointer;min-height:34px}
+.b3d-views button+button{border-left:1px solid rgba(255,255,255,.12)}
+.b3d-views button:hover,.b3d-spin:hover{color:var(--fg)}
+.b3d-views button[aria-pressed=true]{background:var(--acc);color:#000}
+.b3d-spin{border:1px solid rgba(255,255,255,.16);border-radius:var(--r);background:rgba(7,9,12,.8);font-size:15px;width:36px;padding:0}
+.b3d-spin[aria-pressed=true]{color:var(--acc);border-color:var(--acc)}
+.b3d-hint{position:absolute;left:12px;top:10px;font-family:var(--mono);font-size:10.5px;color:var(--fg-3);background:rgba(7,9,12,.7);
+  padding:4px 8px;border-radius:var(--r);pointer-events:none;opacity:0;transition:opacity .4s}
+.b3d.b3d-ready:not(.touched) .b3d-hint{opacity:1}
+.b3d-ht{display:none}
+@media (hover:none){.b3d-hm{display:none}.b3d-ht{display:inline}}
+.b3d-status{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:#333;
+  background:rgba(255,255,255,.8);padding:4px 9px;border-radius:var(--r);pointer-events:none}
+.b3d-status:empty{display:none}
+.b3d.b3d-fail .b3d-status{color:var(--fg-2);background:rgba(7,9,12,.8)}
+/* in the tab viewer */
+.vw-stage.is-3d{cursor:default;background:#0B0E13!important}
+.vw-3d{position:relative;width:100%;aspect-ratio:1/1}
+.vw-3d[hidden]{display:none}
+.cs-gal .vw-3d{aspect-ratio:3/2;max-height:680px}
+.vw-compact .vw-3d{aspect-ratio:1/1}
+/* in the explorer overview */
+.sx-board3d{flex:1;min-height:260px;display:flex;flex-direction:column;border-top:1px solid var(--bezel)}
+.sx-board3d .b3d{flex:1;min-height:240px;height:auto}
+.sx-b3cap{display:block;padding:9px 16px;border-top:1px solid var(--bezel);font-family:var(--mono);font-size:11px;color:var(--fg-3)}

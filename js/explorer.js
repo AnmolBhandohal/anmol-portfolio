@@ -40,8 +40,10 @@ window.explorerHTML = function (key) {
             ${d.blocks.map((b, i) => `<li><button data-b="${i}"><i>${String(i + 1).padStart(2, '0')}</i>
               <b>${b.label}</b><span>${b.short}</span></button></li>`).join('')}
           </ol>
-          ${d.board ? `<button class="sx-board" data-board style="background:${d.board.plate}" aria-label="Open the 3D board view full screen">
-            <img src="${d.board.src}" alt="${d.board.alt}" loading="lazy" decoding="async"><span>${d.board.cap} ⤢</span></button>` : ''}
+          ${d.board ? (d.board.model
+            ? `<div class="sx-board3d">${board3dHTML(d.board.model, d.board.src, d.board.alt, d.board.plate)}<span class="sx-b3cap">${d.board.cap} · interactive</span></div>`
+            : `<button class="sx-board" data-board style="background:${d.board.plate}" aria-label="Open the 3D board view full screen">
+            <img src="${d.board.src}" alt="${d.board.alt}" loading="lazy" decoding="async"><span>${d.board.cap} ⤢</span></button>`) : ''}
         </div>
         <div class="sx-zoom" data-v="z" hidden>
           <div class="sx-loupe" style="background-color:${d.plate.startsWith('#') ? d.plate : '#fff'}" tabindex="0"

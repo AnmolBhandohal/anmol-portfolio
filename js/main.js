@@ -83,6 +83,7 @@ rail.innerHTML = PROJECTS.map((p, i) =>
 const railBtns = [...rail.querySelectorAll('button')];
 window.mountLabs && window.mountLabs();
 window.mountExplorers && window.mountExplorers();
+window.mountBoards3D && window.mountBoards3D();
 document.querySelectorAll('.scene').forEach((sc, i) => {
   const p = PROJECTS[i], v = sc.querySelector('.vw');
   if (v && p.gallery) bindViewer(v, window[p.gallery]);

@@ -7,6 +7,22 @@
    ═══════════════════════════════════════════════════════════ */
 (function () {
 'use strict';
+/* 3D board viewer markup. The still render stays underneath as the fallback. */
+window.board3dHTML = function (model, poster, alt, plate) {
+  return `<div class="b3d" data-model="${model}" data-alt="${alt}" style="--plate:${plate || '#0A0D11'}">
+    <div class="b3d-stage"><img class="b3d-poster" src="${poster}" alt="${alt}" decoding="async"></div>
+    <div class="b3d-ui">
+      <div class="b3d-views" role="group" aria-label="Camera">
+        <button data-view="iso" aria-pressed="true">Iso</button><button data-view="top">Top</button>
+        <button data-view="bottom">Bottom</button><button data-view="side">Side</button>
+      </div>
+      <button class="b3d-spin" data-spin aria-pressed="true" title="Auto-rotate">⟳</button>
+    </div>
+    <span class="b3d-hint"><span class="b3d-hm">Drag to orbit · scroll to zoom · right-drag to pan</span><span class="b3d-ht">Drag to orbit · pinch to zoom</span></span>
+    <span class="b3d-status" aria-live="polite"></span>
+  </div>`;
+};
+
 let uid = 0;
 window.viewerHTML = function (g, opts = {}) {
   const id = 'vw' + (++uid);
@@ -16,8 +32,10 @@ window.viewerHTML = function (g, opts = {}) {
         <i>${String(i + 1).padStart(2, '0')}</i>${v.label}</button>`).join('')}
       <button class="vw-full" data-full aria-label="Open full screen">Full screen ⤢</button>
     </div>
-    <div class="vw-stage" style="background:${g[0].plate || '#0A0D11'}">
-      ${g.map((v, i) => `<img id="${id}-${i}" role="tabpanel" src="${v.src}" alt="${v.alt}"
+    <div class="vw-stage${g[0].model ? ' is-3d' : ''}" style="background:${g[0].plate || '#0A0D11'}">
+      ${g.map((v, i) => v.model
+        ? `<div id="${id}-${i}" role="tabpanel" class="vw-3d" ${i ? 'hidden' : ''}>${board3dHTML(v.model, v.src, v.alt, v.plate)}</div>`
+        : `<img id="${id}-${i}" role="tabpanel" src="${v.src}" alt="${v.alt}"
         loading="${i ? 'lazy' : 'eager'}" decoding="async" ${i ? 'hidden' : ''} data-full>`).join('')}
     </div>
     <figcaption class="vw-cap">${g[0].cap}</figcaption>
@@ -30,7 +48,8 @@ window.bindViewer = function (el, g) { G.set(el, g); };
 function show(fig, i) {
   const g = G.get(fig); if (!g) return;
   fig.querySelectorAll('[role=tab]').forEach((t, k) => t.setAttribute('aria-selected', k === i));
-  fig.querySelectorAll('.vw-stage img').forEach((im, k) => im.hidden = k !== i);
+  fig.querySelectorAll('.vw-stage > [role=tabpanel]').forEach((im, k) => im.hidden = k !== i);
+  fig.querySelector('.vw-stage').classList.toggle('is-3d', !!g[i].model);
   fig.querySelector('.vw-stage').style.background = g[i].plate || '#0A0D11';
   fig.querySelector('.vw-cap').innerHTML = g[i].cap;
   fig.dataset.cur = i;
@@ -76,6 +95,7 @@ document.addEventListener('click', e => {
   const fig = e.target.closest('.vw'); if (!fig) return;
   const tab = e.target.closest('[role=tab]');
   if (tab) return show(fig, +tab.dataset.i);
+  if (e.target.closest('.b3d')) return;
   if (e.target.closest('[data-full]')) { const g = G.get(fig); if (g) lbOpen(g, +(fig.dataset.cur || 0)); }
 });
 document.addEventListener('keydown', e => {

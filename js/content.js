@@ -587,7 +587,7 @@ ledcWrite(CH, duty);` },
 var STM32_SCH = {
   title:'Sheet2.SchDoc — “Altium STM32”. Three blocks: USB power, the STM32F411 with clock / reset / debug, and an MPU-6050 IMU.',
   full:'img/stm32-sch-full.webp', plate:'#fffcf8',
-  board:{ src:'img/stm32-3d.webp', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the finished STM32 board layout.', cap:'The board — PCB2.PcbDoc, Altium 3D view' },
+  board:{ model:'models/stm32.glb', src:'img/stm32-3d.webp', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the finished STM32 board layout.', cap:'The board — PCB2.PcbDoc' },
   fullAlt:'Full Altium schematic sheet titled Altium STM32, with three blocks: USB connector and LDO regulator, microcontroller STM32F4, and inertial measurement unit MPU-6050.',
   blocks:[
     { label:'USB power', src:'img/stm32-sch-power.webp', x:0.995, y:4.864, w:55.004, h:32.049, hdW:1898, hdH:707,
@@ -605,15 +605,15 @@ var STM32_SCH = {
   ]
 };
 var STM32_GALLERY = [
-  { src:'img/stm32-3d.webp', label:'3D', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the STM32 board: STM32 in the centre, MPU-6050 top left, micro-USB on the right, AMS1117 regulator and JST-GH connector along the bottom, four mounting holes.',
-    cap:'<b>PCB2.PcbDoc</b> — Altium 3D view. Four layers: signal / GND / GND / signal. USB comes in on the right, the regulator sits below it, the IMU is top-left.' },
+  { src:'img/stm32-3d.webp', model:'models/stm32.glb', label:'3D', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the STM32 board: STM32 in the centre, MPU-6050 top left, micro-USB on the right, AMS1117 regulator and JST-GH connector along the bottom, four mounting holes.',
+    cap:'<b>PCB2.PcbDoc</b> — interactive 3D model. Drag to orbit, scroll to zoom. Four layers: signal / GND / GND / signal. USB comes in on the right, the regulator sits below it, the IMU is top-left.' },
   { src:'img/stm32-sch-full.webp', label:'Schematic', plate:'#fffcf8', alt:'Full Altium schematic sheet for the STM32 board.', cap:'The full schematic sheet.' }
 ];
 
 /* ── ARVP onboarding board — Anmol's own Altium screenshots ── */
 var ARVP_GALLERY = [
-  { src:'img/arvp-onboard-3d.webp', label:'3D', plate:'linear-gradient(#fefefe,#dedede)', alt:'Altium 3D render of the ARVP electrical onboarding board: a Teensy 4.0 on a carrier with a CAN transceiver, temperature sensor, Hall sensor, analog input and payload header.',
-    cap:'<b>Electrical Onboarding · Rev A</b> — fabricated. Altium 3D view. Teensy 4.0 carrier with CAN, I²C temperature, a Hall-effect input, a buffered analog input and a payload header.' },
+  { src:'img/arvp-onboard-3d.webp', model:'models/arvp.glb', label:'3D', plate:'linear-gradient(#fefefe,#dedede)', alt:'Altium 3D render of the ARVP electrical onboarding board: a Teensy 4.0 on a carrier with a CAN transceiver, temperature sensor, Hall sensor, analog input and payload header.',
+    cap:'<b>Electrical Onboarding · Rev A</b> — fabricated. Interactive 3D model. Teensy 4.0 carrier with CAN, I²C temperature, a Hall-effect input, a buffered analog input and a payload header.' },
   { src:'img/arvp-onboard-layout.webp', label:'Layout', plate:'#000', alt:'Top-layer PCB layout in Altium: red top copper, blue bottom copper, footprints for U1 to U5, J1 to J4 and passives.',
     cap:'Top-layer layout. Red is top copper, blue is bottom; the board also carries an internal GND layer. Silkscreen: “Electrical Onboarding Rev A — by Anmol”.' },
   { src:'img/arvp-onboard-schematic.webp', label:'Schematic', plate:'#fffcf8', alt:'Altium schematic titled Phase 1 Teensy 4.0 Schematic, company ARVP, designed by Anmol, revision 1.0, dated 28 December 2025.',

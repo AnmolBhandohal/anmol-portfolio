@@ -100,6 +100,7 @@ root.innerHTML = `
 
 window.mountLabs && window.mountLabs();
 window.mountExplorers && window.mountExplorers();
+window.mountBoards3D && window.mountBoards3D();
 document.querySelectorAll('.cs-gal').forEach(el => bindViewer(el.querySelector('.vw'), window[el.dataset.g]));
 
 /* reading progress */
