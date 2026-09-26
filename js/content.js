@@ -239,9 +239,91 @@ if (alarm.any) {
   </svg>`
 },
 
+
+/* ─────────────────────────────────────────────── STM32 */
+{
+  id:'stm32', n:'03', ch:2, explore:'STM32_SCH', wide:true, gallery2:'STM32_GALLERY',
+  title:'STM32F411 IMU Board',
+  short:'STM32 sensor board',
+  status:'Altium design', live:false,
+  label:'MCU-IMU / PCB2',
+  year:'Dec 2025',
+  role:'Schematic, 4-layer layout',
+
+  problem:'Every other board here plugs a dev board in, which hides the hard parts. This one puts a bare STM32 on the PCB, so power, clock, reset and debug are all mine to get right.',
+  approach:'USB power through a ferrite bead and a 3.3 V LDO, an STM32F411 with its crystal, straps and SWD, and an MPU-6050 IMU on I²C — laid out on a 4-layer board with two ground planes.',
+  result:'A <b>36-part</b>, 4-layer design in Altium: signal / GND / GND / signal.',
+  metric:{ value:'36', unit:'parts', label:'4 layers · SIG/GND/GND/SIG' },
+
+  body:`A bare-silicon microcontroller board: an <strong>STM32F411</strong>, its own USB power stage,
+        a 24&nbsp;MHz clock, reset and boot straps, SWD debug, and an <strong>MPU-6050</strong>
+        motion sensor — on four layers with two solid ground planes. Hover the schematic to take it
+        apart block by block.`,
+
+  specs:[['MCU','STM32F411CEU6 · Cortex-M4'],['Sensor','MPU-6050 IMU · I²C 0x68'],
+         ['Power','USB → FB → AMS1117-3.3'],['Stackup','<b>4 layers</b> · SIG / GND / GND / SIG']],
+  tags:['Altium','STM32','4-layer','I²C','USB','SWD'],
+  stack:['Altium Designer','STM32F411','MPU-6050','AMS1117','SWD','4-layer stackup'],
+  photo:null, repo:null,
+
+  study:[
+    { h:'No dev board this time',
+      p:`The Teensy and ESP32 boards elsewhere on this page are <em>carriers</em> — a finished dev board
+         plugs into them and brings its own regulator, crystal, reset circuit and USB. That's the right
+         call for getting sensors working, but it means the most instructive parts of a microcontroller
+         design were somebody else's.<br><br>
+         This board puts the bare <strong>STM32F411CEU6</strong> on the PCB, so every one of those is on
+         me.` },
+
+    { h:'The schematic, block by block', explore:'STM32_SCH',
+      p:`Three functional blocks on one sheet. Hover one — or tap it on a phone — to zoom in.` },
+
+    { h:'Power: USB to 3.3 V',
+      p:`VBUS from the micro-USB passes through a <strong>120&nbsp;Ω ferrite bead</strong> before the
+         regulator. At DC the bead is almost a wire; at high frequency it's lossy, so switching noise
+         from whatever is on the other end of the cable is soaked up before it reaches the rail.<br><br>
+         An <strong>AMS1117-3.3</strong> linear regulator then drops 5&nbsp;V to 3.3&nbsp;V. A linear
+         regulator burns the difference as heat, so it's worth a sanity check: at an assumed
+         100&nbsp;mA load, (5 − 3.3)&nbsp;V × 0.1&nbsp;A ≈ <strong>0.17&nbsp;W</strong> — comfortable for its package.
+         Bulk and ceramic capacitance sit on both sides, with a power LED so you can see the rail is up.` },
+
+    { h:'Clock, reset, boot, debug',
+      p:`The four things a dev board quietly does for you:<br><br>
+         <strong>Clock.</strong> A 24&nbsp;MHz crystal with two 10&nbsp;pF load capacitors. They appear in
+         series across the crystal — 10 × 10 / (10 + 10) = 5&nbsp;pF — plus a few pF of board stray,
+         and that total has to match the crystal's rated load or it runs slightly off frequency.<br>
+         <strong>Reset.</strong> NRST has a 10&nbsp;kΩ pull-up and 100&nbsp;nF to ground, so it comes out
+         of reset cleanly at power-up.<br>
+         <strong>Boot.</strong> BOOT0 is pulled low through 10&nbsp;kΩ, so the chip runs from flash
+         rather than dropping into the bootloader.<br>
+         <strong>Debug.</strong> SWDIO, SWCLK, SWO and NRST go to a header (J2, marked do-not-populate)
+         for a programmer.<br><br>
+         Every supply pin gets its own 100&nbsp;nF, plus 2.2&nbsp;µF of bulk.` },
+
+    { h:'A motion sensor on I²C',
+      p:`The <strong>MPU-6050</strong> is a 6-axis accelerometer and gyroscope. It sits on the STM32's
+         I²C1 pins (PB6/PB7) with 2.2&nbsp;kΩ pull-ups, and AD0 is tied low, which fixes its address at
+         <strong>0x68</strong>. Its interrupt line goes to PB8 so firmware can react when new data is
+         ready instead of polling.<br><br>
+         The three odd-looking capacitors — CPOUT 2.2&nbsp;nF, REGOUT 100&nbsp;nF, VLOGIC 10&nbsp;nF —
+         are the ones the datasheet calls for to feed the part's internal charge pump and regulator.` },
+
+    { h:'Four layers, two grounds', gallery:'STM32_GALLERY',
+      p:`The stackup in the board file is <strong>signal / GND / GND / signal</strong>. Two inner ground
+         planes mean every trace on either outer layer has an unbroken return path directly beneath it —
+         the current comes back right under the signal, loop area stays small, and noise stays down.
+         In the board file, nearly all routing is on the top layer, which leaves the planes beneath it
+         unbroken.` }
+  ],
+
+  viz:`<svg viewBox="0 0 400 300" fill="none"><g stroke="currentColor" stroke-width="1.5">
+    <rect class="draw" x="150" y="100" width="100" height="100"/><rect class="draw" x="40" y="40" width="60" height="60"/>
+    <path class="draw" d="M100 70h50v40M250 150h110M200 200v60"/></g></svg>`
+},
+
 /* ─────────────────────────────────────────────── ESP32 */
 {
-  id:'env-monitor', n:'03', ch:2, feature:'ring',
+  id:'env-monitor', n:'04', ch:2, feature:'ring',
   title:'ESP32 Environmental Monitor',
   short:'Environmental monitor',
   status:'Built', live:false,
@@ -327,7 +409,7 @@ void push(const Sample& s) {
 
 /* ─────────────────────────────────────────────── LAMP */
 {
-  id:'led-lamp', n:'04', ch:2, featureFig:'LAMP_PCB',
+  id:'led-lamp', n:'05', ch:2, featureFig:'LAMP_PCB',
   title:'Adaptive Closed-Loop LED Lamp',
   short:'Adaptive LED lamp',
   status:'In development', live:true,
@@ -440,7 +522,7 @@ ledcWrite(CH, duty);` },
 
 /* ─────────────────────────────────────────────── MOMENTUM */
 {
-  id:'momentum', n:'05', ch:2,
+  id:'momentum', n:'06', ch:2,
   title:'Momentum — a focus app',
   short:'Momentum',
   status:'Active', live:true,
@@ -498,6 +580,34 @@ ledcWrite(CH, duty);` },
 ];
 
 
+
+/* ── STM32 board — Anmol's Altium screenshots (Sheet2.SchDoc / PCB2.PcbDoc) ── */
+var STM32_SCH = {
+  title:'Sheet2.SchDoc — “Altium STM32”. Three blocks: USB power, the STM32F411 with clock / reset / debug, and an MPU-6050 IMU.',
+  full:'img/stm32-sch-full.webp', plate:'#fffcf8',
+  board:{ src:'img/stm32-3d.webp', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the finished STM32 board layout.', cap:'The board — PCB2.PcbDoc, Altium 3D view' },
+  fullAlt:'Full Altium schematic sheet titled Altium STM32, with three blocks: USB connector and LDO regulator, microcontroller STM32F4, and inertial measurement unit MPU-6050.',
+  blocks:[
+    { label:'USB power', src:'img/stm32-sch-power.webp', x:0.8, y:3.7, w:55, h:33.3,
+      short:'Micro-B USB → ferrite bead → AMS1117 3.3 V LDO',
+      alt:'Close-up of the USB connector and LDO regulator block.',
+      cap:'<b>USB connector &amp; LDO</b> — Micro-B (Molex 47346-0001) VBUS through a 120 Ω ferrite bead into an AMS1117-3.3. 2.2 µF, 2.2 µF and 22 µF on the input, 22 µF on the output, and a green power LED (D1, 1 kΩ).' },
+    { label:'STM32F411', src:'img/stm32-sch-mcu.webp', x:8, y:39.5, w:55.1, h:60.1,
+      short:'Cortex-M4 · 24 MHz crystal · SWD · reset & boot straps',
+      alt:'Close-up of the STM32F411CEU6 microcontroller block with crystal, decoupling, reset, boot and SWD header.',
+      cap:'<b>STM32F411CEU6</b> — 24 MHz crystal with 10 pF load caps; 2.2 µF + five 100 nF across the supply pins; BOOT0 pulled down (10 kΩ) so it boots from flash; NRST with a 10 kΩ pull-up and 100 nF; USB on PA11/PA12; SPI (PA4–PA7) to a 6-pin JST-GH; SWD header J2 (not fitted); user LED on PB13.' },
+    { label:'MPU-6050 IMU', src:'img/stm32-sch-imu.webp', x:64.6, y:8.9, w:27.9, h:31.8,
+      short:'6-axis IMU on I²C at 0x68, interrupt to PB8',
+      alt:'Close-up of the MPU-6050 inertial measurement unit block.',
+      cap:'<b>MPU-6050</b> — 6-axis IMU on I²C1 (PB6/PB7) with 2.2 kΩ pull-ups; AD0 tied low for address 0x68; INT to PB8. CPOUT 2.2 nF, REGOUT 100 nF, VLOGIC 10 nF and VDD 100 nF, as the datasheet specifies.' }
+  ]
+};
+var STM32_GALLERY = [
+  { src:'img/stm32-3d.webp', label:'3D', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the STM32 board: STM32 in the centre, MPU-6050 top left, micro-USB on the right, AMS1117 regulator and JST-GH connector along the bottom, four mounting holes.',
+    cap:'<b>PCB2.PcbDoc</b> — Altium 3D view. Four layers: signal / GND / GND / signal. USB comes in on the right, the regulator sits below it, the IMU is top-left.' },
+  { src:'img/stm32-sch-full.webp', label:'Schematic', plate:'#fffcf8', alt:'Full Altium schematic sheet for the STM32 board.', cap:'The full schematic sheet.' }
+];
+
 /* ── ARVP onboarding board — Anmol's own Altium screenshots ── */
 var ARVP_GALLERY = [
   { src:'img/arvp-onboard-3d.webp', label:'3D', plate:'linear-gradient(#fefefe,#dedede)', alt:'Altium 3D render of the ARVP electrical onboarding board: a Teensy 4.0 on a carrier with a CAN transceiver, temperature sensor, Hall sensor, analog input and payload header.',
@@ -510,8 +620,8 @@ var ARVP_GALLERY = [
 
 /* [name, where it was actually used] */
 const SKILLS = [
-  { g:'Design & EDA', items:[['Altium Designer','ARVP · lamp'],['LTspice','ARVP'],['PCB, 2 & 4 layer','ARVP'],['Fusion 360',''],['STM32CubeIDE','']] },
-  { g:'Firmware & code', items:[['C / C++','ESP32'],['Python',''],['MATLAB',''],['VHDL','Zybo Z7'],['Git','']] },
+  { g:'Design & EDA', items:[['Altium Designer','ARVP · lamp'],['LTspice','ARVP'],['PCB, 2 & 4 layer','ARVP · STM32'],['Fusion 360',''],['STM32CubeIDE','']] },
+  { g:'Firmware & code', items:[['C / C++','ESP32'],['STM32F4','board design'],['Python',''],['MATLAB',''],['VHDL','Zybo Z7'],['Git','']] },
   { g:'Protocols', items:[['I²C','ESP32'],['CAN','ARVP'],['SPI',''],['UART',''],['PWM','lamp']] },
   { g:'Bench', items:[['Oscilloscope',''],['Multimeter','field'],['Soldering, TH & SMD','rework'],['3D printing',''],['Zybo Z7 FPGA','']] },
   { g:'Field & code', items:[['Canadian Electrical Code','field'],['Fire alarm programming','Mircom'],['347 V · 120/208 V','field'],['Conduit & termination','field'],['Blueprint reading','field']] }

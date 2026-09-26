@@ -67,7 +67,7 @@ root.innerHTML = `
 </div>
 
 <div class="cs-body">
-  ${p.gallery ? '' : `<div class="cs-vis rv">${p.photo ? `<img src="${p.photo}" alt="${p.title}">` : p.viz}</div>`}
+  ${p.gallery || p.explore ? '' : `<div class="cs-vis rv">${p.photo ? `<img src="${p.photo}" alt="${p.title}">` : p.viz}</div>`}
 
   ${p.study.map((s, i) => `
   <section class="cs-sec rv">
@@ -78,6 +78,7 @@ root.innerHTML = `
     ${s.bom && window.LAMP_BOM ? `<div class="bom-wrap"><table class="bom"><thead><tr><th>Ref</th><th>Value</th><th>Part</th><th>Job</th></tr></thead><tbody>
       ${LAMP_BOM.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</tbody></table></div>` : ''}
     ${s.lab ? `<div class="cs-lab" data-lab="${s.lab}"></div>` : ''}
+    ${s.explore && window[s.explore] ? `<div class="cs-exp">${explorerHTML(s.explore)}</div>` : ''}
     ${s.gallery && window[s.gallery] ? `<div class="cs-gal" data-g="${s.gallery}">${viewerHTML(window[s.gallery])}</div>` : ''}
   </section>`).join('')}
 
@@ -98,6 +99,7 @@ root.innerHTML = `
 </div>`;
 
 window.mountLabs && window.mountLabs();
+window.mountExplorers && window.mountExplorers();
 document.querySelectorAll('.cs-gal').forEach(el => bindViewer(el.querySelector('.vw'), window[el.dataset.g]));
 
 /* reading progress */

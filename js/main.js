@@ -51,7 +51,7 @@ document.getElementById('ctaBtns').innerHTML = `
 
 /* ── SCENES ───────────────────────────────────────── */
 document.getElementById('work').innerHTML = PROJECTS.map(p => `
-<section class="scene ${chCls(p)}${PROJECTS.indexOf(p) % 2 ? ' flip' : ''}" data-scene data-id="${p.id}" id="s-${p.id}">
+<section class="scene ${chCls(p)}${p.wide ? ' wide' : PROJECTS.indexOf(p) % 2 ? ' flip' : ''}" data-scene data-id="${p.id}" id="s-${p.id}">
   <div class="s-txt">
     <div class="s-meta">
       <span class="s-num">${p.n}</span>
@@ -66,7 +66,9 @@ document.getElementById('work').innerHTML = PROJECTS.map(p => `
     <div class="s-tags rv">${p.tags.map(t => `<span class="s-tag">${t}</span>`).join('')}</div>
     <a class="s-cta rv" href="project.html?p=${p.id}"><span>Read the ${p.ch === 1 ? 'field record' : 'case study'} ${arrow}</span></a>
   </div>
-  ${p.gallery && window[p.gallery]
+  ${p.explore && window[p.explore]
+    ? `<div class="s-exp">${explorerHTML(p.explore)}</div>`
+    : p.gallery && window[p.gallery]
     ? `<div class="s-gal">${viewerHTML(window[p.gallery], { compact: true })}</div>`
     : p.feature
     ? `<div class="s-lab" data-lab="${p.feature}"></div>`
@@ -80,6 +82,7 @@ rail.innerHTML = PROJECTS.map((p, i) =>
   `<button data-i="${i}" class="${chCls(p)}" title="${p.short}" aria-label="Jump to ${p.short}"><span>${p.n}</span><i></i></button>`).join('');
 const railBtns = [...rail.querySelectorAll('button')];
 window.mountLabs && window.mountLabs();
+window.mountExplorers && window.mountExplorers();
 document.querySelectorAll('.scene').forEach((sc, i) => {
   const p = PROJECTS[i], v = sc.querySelector('.vw');
   if (v && p.gallery) bindViewer(v, window[p.gallery]);
@@ -138,7 +141,7 @@ if (HAS_GSAP && motionOn) {
   scenes.forEach(sc => {
     const words = sc.querySelectorAll('h2 .w>i');
     const reveals = sc.querySelectorAll('.rv');
-    const vis = sc.querySelector('.s-vis,.s-lab,.s-gal');
+    const vis = sc.querySelector('.s-vis,.s-lab,.s-gal,.s-exp');
     primeDraw(sc);
     const draws = sc.querySelectorAll('.draw');
     const tl = gsap.timeline({ scrollTrigger: { trigger: sc, start: 'top 70%', once: true } })

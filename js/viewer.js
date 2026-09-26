@@ -58,6 +58,7 @@ function lbOpen(g, i) {
   document.documentElement.classList.add('lb-open'); lbShow(i);
   lb.querySelector('.lb-x').focus();
 }
+window.openLightbox = (g, i) => lbOpen(g, i || 0);
 function lbClose() { lb.hidden = true; document.documentElement.classList.remove('lb-open'); lastFocus && lastFocus.focus(); }
 lb.addEventListener('click', e => {
   if (e.target.closest('.lb-x') || e.target === lb || e.target.classList.contains('lb-stage')) lbClose();
