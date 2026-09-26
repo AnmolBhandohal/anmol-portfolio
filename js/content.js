@@ -155,7 +155,7 @@ if (alarm.any) {
         there's no reaching back in, so the work is making the wrong thing <strong>physically
         impossible</strong> before it ever gets wet.`,
 
-  specs:[['Onboarding board','Teensy 4.0 carrier · <b>designed by me</b>'],['Comms Hub','Revised in Altium · CAN transceivers'],
+  specs:[['Onboarding board','Teensy 4.0 carrier · <b>designed &amp; fabricated</b>'],['Comms Hub','Revised in Altium · CAN transceivers'],
          ['Stackup','4-layer · signal / GND / power · DRC clean'],['Filter','Active LPF · 1 kHz vs 15 kHz noise']],
   tags:['Altium','4-layer PCB','CAN bus','LTspice','Integration test'],
   stack:['Altium Designer','LTspice','CAN bus','Op-amp filters','Harness & connectors'],
@@ -171,7 +171,8 @@ if (alarm.any) {
          can't go wrong.` },
 
     { h:'A board of my own: the onboarding carrier', gallery:'ARVP_GALLERY',
-      p:`ARVP's electrical onboarding asks you to take a board from schematic to layout. Mine is a
+      p:`ARVP's electrical onboarding asks you to take a board all the way from schematic to layout to a
+         fabricated PCB. Mine was <strong>fabricated</strong>. It's a
          carrier for a <strong>Teensy 4.0</strong>, and I used it to put one of each thing the vehicle
          actually needs onto a single board — the schematic is dated 28 December 2025.<br><br>
          <strong>CAN.</strong> A TCAN1042 transceiver with a 120&nbsp;Ω termination resistor across
@@ -245,12 +246,12 @@ if (alarm.any) {
   id:'stm32', n:'03', ch:2, explore:'STM32_SCH', wide:true, gallery2:'STM32_GALLERY',
   title:'STM32F411 IMU Board',
   short:'STM32 sensor board',
-  status:'Altium design', live:false,
+  status:'Self-directed · design', live:false,
   label:'MCU-IMU / PCB2',
   year:'Dec 2025',
-  role:'Schematic, 4-layer layout',
+  role:'Self-directed · schematic & 4-layer layout',
 
-  problem:'Every other board here plugs a dev board in, which hides the hard parts. This one puts a bare STM32 on the PCB, so power, clock, reset and debug are all mine to get right.',
+  problem:'I wanted to learn the STM32, and plugging in a dev board would have hidden the parts worth learning. So this puts a bare STM32 on the PCB — power, clock, reset and debug are all mine to get right.',
   approach:'USB power through a ferrite bead and a 3.3 V LDO, an STM32F411 with its crystal, straps and SWD, and an MPU-6050 IMU on I²C — laid out on a 4-layer board with two ground planes.',
   result:'A <b>36-part</b>, 4-layer design in Altium: signal / GND / GND / signal.',
   metric:{ value:'36', unit:'parts', label:'4 layers · SIG/GND/GND/SIG' },
@@ -272,8 +273,9 @@ if (alarm.any) {
          plugs into them and brings its own regulator, crystal, reset circuit and USB. That's the right
          call for getting sensors working, but it means the most instructive parts of a microcontroller
          design were somebody else's.<br><br>
-         This board puts the bare <strong>STM32F411CEU6</strong> on the PCB, so every one of those is on
-         me.` },
+         I designed this one on my own to learn the STM32 family properly: the bare
+         <strong>STM32F411CEU6</strong> goes on the PCB, so every one of those is on me. It's a design
+         exercise — it hasn't been fabricated.` },
 
     { h:'The schematic, block by block', explore:'STM32_SCH',
       p:`Three functional blocks on one sheet. Hover one — or tap it on a phone — to zoom in.` },
@@ -588,15 +590,15 @@ var STM32_SCH = {
   board:{ src:'img/stm32-3d.webp', plate:'linear-gradient(#fdfdfd,#dfdfdf)', alt:'Altium 3D render of the finished STM32 board layout.', cap:'The board — PCB2.PcbDoc, Altium 3D view' },
   fullAlt:'Full Altium schematic sheet titled Altium STM32, with three blocks: USB connector and LDO regulator, microcontroller STM32F4, and inertial measurement unit MPU-6050.',
   blocks:[
-    { label:'USB power', src:'img/stm32-sch-power.webp', x:0.8, y:3.7, w:55, h:33.3,
+    { label:'USB power', src:'img/stm32-sch-power.webp', x:0.995, y:4.864, w:55.004, h:32.049, hdW:1898, hdH:707,
       short:'Micro-B USB → ferrite bead → AMS1117 3.3 V LDO',
       alt:'Close-up of the USB connector and LDO regulator block.',
       cap:'<b>USB connector &amp; LDO</b> — Micro-B (Molex 47346-0001) VBUS through a 120 Ω ferrite bead into an AMS1117-3.3. 2.2 µF, 2.2 µF and 22 µF on the input, 22 µF on the output, and a green power LED (D1, 1 kΩ).' },
-    { label:'STM32F411', src:'img/stm32-sch-mcu.webp', x:8, y:39.5, w:55.1, h:60.1,
+    { label:'STM32F411', src:'img/stm32-sch-mcu.webp', x:7.96, y:41.342, w:55.692, h:54.961, hdW:1585, hdH:1000,
       short:'Cortex-M4 · 24 MHz crystal · SWD · reset & boot straps',
       alt:'Close-up of the STM32F411CEU6 microcontroller block with crystal, decoupling, reset, boot and SWD header.',
       cap:'<b>STM32F411CEU6</b> — 24 MHz crystal with 10 pF load caps; 2.2 µF + five 100 nF across the supply pins; BOOT0 pulled down (10 kΩ) so it boots from flash; NRST with a 10 kΩ pull-up and 100 nF; USB on PA11/PA12; SPI (PA4–PA7) to a 6-pin JST-GH; SWD header J2 (not fitted); user LED on PB13.' },
-    { label:'MPU-6050 IMU', src:'img/stm32-sch-imu.webp', x:64.6, y:8.9, w:27.9, h:31.8,
+    { label:'MPU-6050 IMU', src:'img/stm32-sch-imu.webp', x:64.739, y:8.755, w:28.214, h:32.872, hdW:1070, hdH:797,
       short:'6-axis IMU on I²C at 0x68, interrupt to PB8',
       alt:'Close-up of the MPU-6050 inertial measurement unit block.',
       cap:'<b>MPU-6050</b> — 6-axis IMU on I²C1 (PB6/PB7) with 2.2 kΩ pull-ups; AD0 tied low for address 0x68; INT to PB8. CPOUT 2.2 nF, REGOUT 100 nF, VLOGIC 10 nF and VDD 100 nF, as the datasheet specifies.' }
@@ -611,7 +613,7 @@ var STM32_GALLERY = [
 /* ── ARVP onboarding board — Anmol's own Altium screenshots ── */
 var ARVP_GALLERY = [
   { src:'img/arvp-onboard-3d.webp', label:'3D', plate:'linear-gradient(#fefefe,#dedede)', alt:'Altium 3D render of the ARVP electrical onboarding board: a Teensy 4.0 on a carrier with a CAN transceiver, temperature sensor, Hall sensor, analog input and payload header.',
-    cap:'<b>Electrical Onboarding · Rev A</b> — Altium 3D view. Teensy 4.0 carrier with CAN, I²C temperature, a Hall-effect input, a buffered analog input and a payload header.' },
+    cap:'<b>Electrical Onboarding · Rev A</b> — fabricated. Altium 3D view. Teensy 4.0 carrier with CAN, I²C temperature, a Hall-effect input, a buffered analog input and a payload header.' },
   { src:'img/arvp-onboard-layout.webp', label:'Layout', plate:'#000', alt:'Top-layer PCB layout in Altium: red top copper, blue bottom copper, footprints for U1 to U5, J1 to J4 and passives.',
     cap:'Top-layer layout. Red is top copper, blue is bottom; the board also carries an internal GND layer. Silkscreen: “Electrical Onboarding Rev A — by Anmol”.' },
   { src:'img/arvp-onboard-schematic.webp', label:'Schematic', plate:'#fffcf8', alt:'Altium schematic titled Phase 1 Teensy 4.0 Schematic, company ARVP, designed by Anmol, revision 1.0, dated 28 December 2025.',

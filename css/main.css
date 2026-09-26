@@ -695,3 +695,34 @@ html.lb-open,html.lb-open body{overflow:hidden}
 .sx-body{align-items:stretch}
 .sx-stage{align-self:stretch;display:flex;align-items:flex-start}
 .sx-board img{max-height:240px}
+
+
+/* ── explorer v2: lens + loupe magnifier ───────────────── */
+.sx-stage{cursor:crosshair}
+.sx-hot{pointer-events:none}
+.sx-hot:focus-visible{pointer-events:auto}
+.sx-stage.has-active .sx-hot.on{box-shadow:0 0 0 999px rgba(7,9,12,.5);outline:1.5px solid var(--acc)}
+.sx-lens{position:absolute;left:0;top:0;border:2px solid var(--acc);background:rgba(0,229,255,.07);
+  box-shadow:0 0 0 1px rgba(0,0,0,.35),0 0 18px rgba(0,229,255,.35);pointer-events:none;opacity:0;transition:opacity .2s;will-change:transform}
+.sx-lens.show{opacity:1}
+.sx.pinned .sx-lens{border-style:solid;background:rgba(0,229,255,.12)}
+.sx-view{min-height:0}
+.sx-over{display:flex;flex-direction:column;flex:1}
+.sx-over[hidden]{display:none}
+.sx-zoom{flex:1;min-height:0}
+.sx-loupe{position:relative;flex:1;min-height:360px;overflow:hidden;cursor:grab;touch-action:none;outline:none}
+.sx-loupe:active{cursor:grabbing}
+.sx-loupe:focus-visible{box-shadow:inset 0 0 0 2px var(--acc)}
+.sx-tile{position:absolute;left:0;top:0;background-size:100% 100%;background-repeat:no-repeat;will-change:transform;image-rendering:auto}
+.sx-mag{position:absolute;left:10px;top:10px;font-family:var(--mono);font-size:11px;font-weight:500;background:rgba(7,9,12,.82);
+  color:var(--acc);padding:4px 8px;border-radius:var(--r);pointer-events:none}
+.sx-zbtn{position:absolute;right:10px;top:10px;display:flex;gap:4px}
+.sx-zbtn button{width:32px;height:32px;border:1px solid rgba(255,255,255,.18);background:rgba(7,9,12,.82);color:var(--fg);
+  font-family:var(--mono);font-size:15px;border-radius:var(--r);cursor:pointer}
+.sx-zbtn button:hover{border-color:var(--acc);color:var(--acc)}
+.sx-cap{flex:none}
+@container (min-width:861px){ .sx-body{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)} .sx-loupe{min-height:0} }
+@container (max-width:860px){ .sx-loupe{min-height:0;aspect-ratio:4/3} }
+@media (hover:none){ .sx-stage{cursor:pointer} }
+
+.sx-mag{left:auto;right:118px;top:10px;height:32px;display:flex;align-items:center;padding:0 10px}
