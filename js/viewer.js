@@ -14,7 +14,7 @@ window.board3dHTML = function (model, poster, alt, plate) {
     <div class="b3d-ui">
       <div class="b3d-views" role="group" aria-label="Camera">
         <button data-view="iso" aria-pressed="true">Iso</button><button data-view="top">Top</button>
-        <button data-view="bottom">Bottom</button><button data-view="side">Side</button>
+        <button data-view="side">Side</button>
       </div>
       <button class="b3d-spin" data-spin aria-pressed="true" title="Auto-rotate">⟳</button>
     </div>
