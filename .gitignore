@@ -1,3 +1,5 @@
 .vercel
+.env*
 NOTES_3D.md
 __pycache__/
+build.py
