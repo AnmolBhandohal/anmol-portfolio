@@ -19,7 +19,7 @@ const SITE = {
   github:  'https://github.com/AnmolBhandohal',
   linkedin:'https://www.linkedin.com/in/anmol-bhandohal-904789305/',
   resume:  'resume.pdf',
-  url:     'https://anmolbhandohal.com',
+  url:     'https://anmol-portfolio-omega.vercel.app',
   available:'Jan – Aug 2027',
   availableLong:'January – August 2027 · one 8-month term or two 4-month terms',
   rev:     '2.0',

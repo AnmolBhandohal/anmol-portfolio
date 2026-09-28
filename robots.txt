@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://anmolbhandohal.com/sitemap.xml
+Sitemap: https://anmol-portfolio-omega.vercel.app/sitemap.xml
