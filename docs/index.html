@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reading room · Anmol Bhandohal</title>
+<meta name="description" content="Slides, technical reports and Excel workbooks for Anmol Bhandohal's projects. Everything opens in the browser.">
+<meta property="og:title" content="Reading room · Anmol Bhandohal">
+<meta property="og:description" content="The slide deck, two technical reports and the Excel workbooks behind the projects. Opens in the browser.">
+<meta property="og:image" content="https://anmol-portfolio-omega.vercel.app/docs/slides/s01.webp">
+<meta name="theme-color" content="#11100e">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2311100e'/><circle cx='16' cy='16' r='7' fill='%23c4834f'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/museum.css">
+<link rel="stylesheet" href="reader.css">
+</head>
+<body>
+<header class="bar">
+  <a class="bar-name" href="../">Anmol Bhandohal</a>
+  <div class="bar-actions"><a class="bar-link" href="../">← Gallery</a><a class="bar-link" href="../resume.pdf" target="_blank" rel="noopener">Résumé</a></div>
+</header>
+
+<main class="rr">
+  <div class="rr-head">
+    <p class="kicker mono">Reading room</p>
+    <h1 class="rr-title">Pick one. It opens <em>right here.</em></h1>
+    <p class="rr-sub">The slides are the quick version. The reports and workbooks are the long version: methods, formulas and raw data, made in Word, PowerPoint and Excel.</p>
+  </div>
+
+  <div class="shelf">
+    <a class="book book-lead" href="#slides">
+      <div class="cover"><img src="slides/s01.webp" alt="Title slide of the project deck" width="1600" height="900"></div>
+      <div class="spine"><span class="fmt mono">PowerPoint <span class="start">Start here</span></span><h2>The presentation</h2><p>17 slides on both projects, including the lamp reacting to music on video. About six minutes.</p><span class="go">View slides →</span></div>
+    </a>
+    <a class="book" href="#report-cold">
+      <div class="cover page"><img src="report-cold/p01.webp" alt="Cover of the cold-room technical report" width="1275" height="1650" loading="lazy"></div>
+      <div class="spine"><span class="fmt mono">Word · 11 pages</span><h2>Why is one room colder?</h2><p>Technical report: RC thermal model, furnace cycles, ML forecast, decision rules.</p><span class="go">Read →</span></div>
+    </a>
+    <a class="book" href="#report-lamp">
+      <div class="cover page"><img src="report-lamp/p01.webp" alt="Cover of the LED lamp test report" width="1275" height="1650" loading="lazy"></div>
+      <div class="spine"><span class="fmt mono">Word · 8 pages</span><h2>Adaptive LED lamp</h2><p>Test report: linearity, closed-loop control, and four versions of the music mode.</p><span class="go">Read →</span></div>
+    </a>
+    <a class="book" href="#workbook">
+      <div class="cover sheet"><img src="sheets/Dashboard.webp" alt="Excel dashboard with four charts" width="2358" height="1366" loading="lazy"></div>
+      <div class="spine"><span class="fmt mono">Excel · 2 workbooks</span><h2>The workbooks</h2><p>Live formulas, PASS/FAIL checks, sheets waiting for new data, native charts.</p><span class="go">Open →</span></div>
+    </a>
+  </div>
+
+  <section class="files">
+    <h3 class="mono">Original files</h3>
+    <ul>
+      <li><a href="files/Projects_Deck.pptx" download>Projects_Deck.pptx</a><a href="files/Projects_Deck.pdf" target="_blank">PDF</a></li>
+      <li><a href="files/ColdRoom_Study_Report.docx" download>ColdRoom_Study_Report.docx</a><a href="files/ColdRoom_Study_Report.pdf" target="_blank">PDF</a></li>
+      <li><a href="files/LED_Lamp_Test_Report.docx" download>LED_Lamp_Test_Report.docx</a><a href="files/LED_Lamp_Test_Report.pdf" target="_blank">PDF</a></li>
+      <li><a href="files/EnvMonitor_Analysis.xlsx" download>EnvMonitor_Analysis.xlsx</a></li>
+      <li><a href="files/LED_Lamp_Characterization.xlsx" download>LED_Lamp_Characterization.xlsx</a></li>
+    </ul>
+  </section>
+</main>
+
+<div class="viewer" id="viewer" hidden>
+  <div class="v-top">
+    <button class="v-back" id="v-close">← Reading room</button>
+    <div class="v-title" id="v-title"></div>
+    <div class="v-tools" id="v-tools"></div>
+  </div>
+  <div class="v-body" id="v-body"></div>
+</div>
+
+<script src="reader.js"></script>
+</body>
+</html>

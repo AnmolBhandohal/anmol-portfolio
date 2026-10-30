@@ -15,9 +15,9 @@ if (!motion) document.documentElement.classList.add('no-motion');
 
 if (!p) {
   root.innerHTML = `<div class="cs-hero">
-    <a class="cs-back" href="index.html">← All work</a>
+    <a class="cs-back" href="classic.html">← All work</a>
     <h1>Not found</h1>
-    <p style="color:var(--fg-2)">That link doesn't match a project. <a href="index.html" style="color:var(--c2)">Back to the portfolio →</a></p></div>`;
+    <p style="color:var(--fg-2)">That link doesn't match a project. <a href="classic.html" style="color:var(--c2)">Back to the portfolio →</a></p></div>`;
   return;
 }
 
@@ -47,7 +47,7 @@ function hl(src) {
 const kind = p.ch === 1 ? 'Field record' : 'Case study';
 root.innerHTML = `
 <div class="cs-hero">
-  <a class="cs-back" href="index.html#s-${p.id}">← All work</a>
+  <a class="cs-back" href="classic.html#s-${p.id}">← All work</a>
   <div class="s-meta" style="--acc:var(${p.ch === 1 ? '--c1' : '--c2'})">
     <span class="s-num">${kind} · ${p.n}</span>
     <span class="s-stat ${p.live ? 'live' : ''}">${p.status}</span>
@@ -115,7 +115,7 @@ addEventListener('keydown', e => {
   if (/input|textarea/i.test(document.activeElement.tagName)) return;
   if (e.key === 'ArrowLeft' && prev) location.href = `project.html?p=${prev.id}`;
   if (e.key === 'ArrowRight' && next) location.href = `project.html?p=${next.id}`;
-  if (e.key === 'Escape') location.href = 'index.html#work';
+  if (e.key === 'Escape') location.href = 'classic.html#work';
 });
 
 if (!motion) return;

@@ -5,7 +5,7 @@
   "cleanUrls": false,
   "headers": [
     {
-      "source": "/(models|vendor|img)/(.*)",
+      "source": "/(models|vendor|img|media|docs/slides|docs/report-cold|docs/report-lamp|docs/sheets)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
