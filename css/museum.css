@@ -229,14 +229,6 @@ html[data-theme=paper]{
   --label:transparent; --label-ink:#15140f; --label-2:#6f6b62;
   --plaque:#15140f; --plaque-ink:#f4f2ed; --chip:rgba(255,255,255,.85); --scrim:rgba(244,242,237,.97); --grain:0;
 }
-html[data-theme=blueprint]{
-  --wall:#0b1b31; --wall-2:#10243f; --ink:#e7eefa; --ink-2:#a2b3cc; --ink-3:#6c80a0;
-  --copper:#ffb547; --copper-2:#ffc970; --line:rgba(160,195,240,.16); --on-acc:#1d1300;
-  --frame:#132a49; --frame-hi:#1a3660; --deep:#071426; --matte:#f6f8fc; --glow:150,200,255;
-  --label:transparent; --label-ink:#e7eefa; --label-2:#8ea3c2;
-  --plaque:#ffb547; --plaque-ink:#1d1300; --chip:rgba(7,20,38,.8); --scrim:rgba(5,14,28,.96); --grain:0;
-}
-html[data-theme=blueprint] body{background-image:linear-gradient(rgba(160,195,240,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(160,195,240,.06) 1px,transparent 1px);background-size:32px 32px}
 /* non-warm themes: plain text labels, no placards or spotlights */
 html:not([data-theme=warm]) .label{padding:0;box-shadow:none;max-width:400px}
 html:not([data-theme=warm]) .label-title{font-weight:600;letter-spacing:-.015em}
@@ -259,7 +251,7 @@ html[data-theme=paper] .hung .frame{filter:none}
 html[data-theme=paper] .work{filter:none}
 html[data-theme=paper] body::before{display:none}
 html[data-theme=paper] .bar-nav a.on{color:#fff}
-html[data-theme=paper] .b3d-views,html[data-theme=paper] .b3d-spin,html[data-theme=paper] .b3d-hint{background:rgba(255,255,255,.9);color:var(--ink-2);border-color:var(--line)}
+html[data-theme=paper] .b3d-views,html[data-theme=paper] .b3d-spin,html[data-theme=paper] .b3d-hint,html[data-theme=linen] .b3d-views,html[data-theme=linen] .b3d-spin,html[data-theme=linen] .b3d-hint{background:rgba(255,255,255,.9);color:var(--ink-2);border-color:var(--line)}
 
 /* board viewer */
 .bview{margin:0;display:flex;flex-direction:column}
@@ -301,3 +293,46 @@ html[data-theme=paper] .b3d-views,html[data-theme=paper] .b3d-spin,html[data-the
 .theme-pick button[aria-pressed=true]{background:var(--copper);color:var(--on-acc)}
 html:not([data-theme=warm]) .label-links a:first-child,html:not([data-theme=warm]) .label-links a:hover{color:var(--wall)}
 html:not([data-theme=warm]) .label-links a:first-child:hover{color:var(--on-acc)}
+
+/* ── added themes ── */
+/* linen: paper, dimmed and warmer */
+html[data-theme=linen]{
+  --wall:#e6e0d4; --wall-2:#ddd6c8; --ink:#1d1b17; --ink-2:#4f4a41; --ink-3:#7d776c;
+  --copper:#a9532c; --copper-2:#93451f; --line:rgba(29,27,23,.14); --on-acc:#fff;
+  --frame:#f3efe7; --frame-hi:#f3efe7; --deep:#d8d1c3; --matte:#f7f4ee; --glow:255,255,255;
+  --label:transparent; --label-ink:#1d1b17; --label-2:#6c665b;
+  --plaque:#1d1b17; --plaque-ink:#e6e0d4; --chip:rgba(243,239,231,.88); --scrim:rgba(230,224,212,.97); --grain:.35;
+}
+html[data-theme=linen] .work,html[data-theme=linen] .hung .frame{filter:none;box-shadow:0 0 0 1px var(--line),0 18px 40px -22px rgba(60,40,15,.4)}
+html[data-theme=linen] .bar-nav a.on{color:#fff}
+/* charcoal: graphite's darkness, warm's copper and serif */
+html[data-theme=charcoal]{
+  --wall:#121212; --wall-2:#1a1a19; --ink:#ece8e1; --ink-2:#a8a39b; --ink-3:#6e6a64;
+  --copper:#d08a52; --copper-2:#e6a676; --line:rgba(236,232,225,.11); --on-acc:#1a120b;
+  --frame:#1e1e1d; --frame-hi:#272726; --deep:#0a0a0a; --matte:#f4f2ee; --glow:255,230,200;
+  --label:transparent; --label-ink:#ece8e1; --label-2:#97928a;
+  --plaque:#ece8e1; --plaque-ink:#121212; --chip:rgba(18,18,18,.8); --scrim:rgba(8,8,8,.95); --grain:.3;
+}
+html[data-theme=charcoal] .entrance-title{font-weight:300;letter-spacing:-.025em}
+html[data-theme=charcoal] .entrance-title em{font-style:italic;font-weight:300}
+html[data-theme=charcoal] .label-title{font-weight:400}
+/* scope: oscilloscope black, phosphor green, a faint graticule */
+html[data-theme=scope]{
+  --wall:#0b0e0c; --wall-2:#111613; --ink:#e4ece6; --ink-2:#9fb0a5; --ink-3:#62746a;
+  --copper:#6ee39a; --copper-2:#9df0bb; --line:rgba(140,230,170,.13); --on-acc:#04140a;
+  --frame:#151b17; --frame-hi:#1c2520; --deep:#060807; --matte:#f4f7f5; --glow:120,255,170;
+  --label:transparent; --label-ink:#e4ece6; --label-2:#87998e;
+  --plaque:#151b17; --plaque-ink:#9df0bb; --chip:rgba(8,11,9,.82); --scrim:rgba(4,6,5,.96); --grain:.2;
+  --serif:'Instrument Sans',system-ui,sans-serif;
+}
+html[data-theme=scope] body{background-image:linear-gradient(rgba(140,230,170,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(140,230,170,.035) 1px,transparent 1px);background-size:48px 48px}
+html[data-theme=scope] .plaque{border:1px solid var(--line)}
+/* dusk: dark slate with a little violet, amber accent */
+html[data-theme=dusk]{
+  --wall:#1a1a20; --wall-2:#222229; --ink:#ecebf0; --ink-2:#a9a7b4; --ink-3:#716f7c;
+  --copper:#f0a64a; --copper-2:#f6bd72; --line:rgba(236,235,240,.11); --on-acc:#1e1203;
+  --frame:#25252d; --frame-hi:#2e2e38; --deep:#121217; --matte:#f6f5f8; --glow:255,210,160;
+  --label:transparent; --label-ink:#ecebf0; --label-2:#9896a3;
+  --plaque:#ecebf0; --plaque-ink:#1a1a20; --chip:rgba(22,22,28,.82); --scrim:rgba(14,14,18,.96); --grain:.25;
+}
+html[data-theme=dusk] .entrance-title em{font-style:italic;font-weight:300}

@@ -1,7 +1,7 @@
 /* museum.js: renders ROOMS from exhibits.js, lights exhibits as they enter view, lightbox. */
 (function () {
-  /* themes: ?theme=graphite|paper|blueprint|warm (remembered). ?pick shows the switcher. */
-  const THEMES = [['graphite', 'Graphite'], ['paper', 'Paper'], ['blueprint', 'Blueprint'], ['warm', 'Warm']];
+  /* themes: ?theme=<name> (remembered). ?pick shows the switcher. */
+  const THEMES = [['graphite', 'Graphite'], ['charcoal', 'Charcoal'], ['scope', 'Scope'], ['dusk', 'Dusk'], ['linen', 'Linen'], ['paper', 'Paper'], ['warm', 'Warm']];
   const qs = new URLSearchParams(location.search);
   const setTheme = t => { document.documentElement.dataset.theme = t; try { localStorage.setItem('ab_theme', t); } catch (_) {} document.querySelectorAll('.theme-pick button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t)); };
   if (qs.has('pick') || qs.has('theme')) {
