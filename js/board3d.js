@@ -83,6 +83,7 @@ async function mount(el) {
   const views = {
     iso:    new THREE.Vector3(R * 1.55, R * 1.75, R * 2.05),
     top:    new THREE.Vector3(0.0001, R * 3.5, 0.0001),
+    bottom: new THREE.Vector3(0.0001, -R * 3.5, 0.0001),
     side:   new THREE.Vector3(R * 3.3, R * 0.35, 0)
   };
   camera.position.copy(views.iso); controls.update();
@@ -92,9 +93,12 @@ async function mount(el) {
   function goTo(name) {
     const from = camera.position.clone(), to = views[name].clone(), t0 = performance.now(), dur = reduced() ? 1 : 700;
     controls.autoRotate = false; el.classList.add('touched');
+    const s0 = new THREE.Spherical().setFromVector3(from), s1 = new THREE.Spherical().setFromVector3(to);
+    let dth = s1.theta - s0.theta; if (dth > Math.PI) dth -= 2 * Math.PI; if (dth < -Math.PI) dth += 2 * Math.PI;
     tween = t => {
       const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-      camera.position.lerpVectors(from, to, e).setLength(from.length() + (to.length() - from.length()) * e);
+      camera.position.setFromSpherical(new THREE.Spherical(
+        s0.radius + (s1.radius - s0.radius) * e, s0.phi + (s1.phi - s0.phi) * e, s0.theta + dth * e));
       controls.target.set(0, 0, 0);
       if (k >= 1) tween = null;
     };
