@@ -10,7 +10,7 @@
       // videos placed exactly where they sit on slide 15 (inches on a 13.333 × 7.5 slide)
       videos: { 15: [{ src: '../media/lamp-music.mp4', poster: '../media/lamp-music-poster.jpg', x: .9, y: 1.55, w: 2.95, h: 5.25 },
                      { src: '../media/lamp-styles-compare.mp4', poster: '../media/lamp-styles-poster.jpg', x: 4.4, y: 1.55, w: 8.4, h: 4.725 }] } },
-    labs: { title: 'Lab highlights · 4 course labs, 7 slides', n: 7, dir: 'labs', videos: {},
+    labs: { title: 'Lab highlights · 4 course labs, 7 slides', n: 7, dir: 'labs', v: 2, videos: {},
       tools: [['Download .pptx', 'files/Lab_Highlights.pptx', 1], ['PDF', 'files/Lab_Highlights.pdf'], ['Data .xlsx', 'files/Lab_Highlights_Data.xlsx', 1], ['Open in PowerPoint Online', office('Lab_Highlights.pptx'), 0, 1]] },
     'report-cold': { title: 'Why is one room colder? · technical report', dir: 'report-cold', n: 11,
       tools: [['Download .docx', 'files/ColdRoom_Study_Report.docx', 1], ['PDF', 'files/ColdRoom_Study_Report.pdf'], ['Open in Word Online', office('ColdRoom_Study_Report.docx'), 0, 1]] },
@@ -42,12 +42,12 @@
     body.innerHTML = `<div class="sl"><div class="sl-stage"><button class="sl-nav sl-prev" aria-label="Previous slide">‹</button>
       <div class="sl-frame"><img alt=""></div><button class="sl-nav sl-next" aria-label="Next slide">›</button></div>
       <div class="sl-foot"><span class="sl-count"></span><div class="sl-strip">${Array.from({ length: d.n }, (_, k) =>
-        `<button data-i="${k + 1}" aria-label="Slide ${k + 1}"><img src="${dir}/s${pad(k + 1)}.webp" alt="" loading="lazy"></button>`).join('')}</div></div></div>`;
+        `<button data-i="${k + 1}" aria-label="Slide ${k + 1}"><img src="${dir}/s${pad(k + 1)}.webp?v=${d.v || 1}" alt="" loading="lazy"></button>`).join('')}</div></div></div>`;
     const frame = body.querySelector('.sl-frame'), im = frame.querySelector('img');
-    for (let k = 1; k <= d.n; k++) { const p = new Image(); p.src = `${dir}/s${pad(k)}.webp`; }
+    for (let k = 1; k <= d.n; k++) { const p = new Image(); p.src = `${dir}/s${pad(k)}.webp?v=${d.v || 1}`; }
     const go = n => {
       i = Math.min(Math.max(n, 1), d.n);
-      im.src = `${dir}/s${pad(i)}.webp`; im.alt = `Slide ${i} of ${d.n}`;
+      im.src = `${dir}/s${pad(i)}.webp?v=${d.v || 1}`; im.alt = `Slide ${i} of ${d.n}`;
       frame.querySelectorAll('video').forEach(v => v.remove());
       (d.videos[i] || []).forEach(o => {
         const v = document.createElement('video');
