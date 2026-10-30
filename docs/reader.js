@@ -10,7 +10,7 @@
       // videos placed exactly where they sit on slide 15 (inches on a 13.333 × 7.5 slide)
       videos: { 15: [{ src: '../media/lamp-music.mp4', poster: '../media/lamp-music-poster.jpg', x: .9, y: 1.55, w: 2.95, h: 5.25 },
                      { src: '../media/lamp-styles-compare.mp4', poster: '../media/lamp-styles-poster.jpg', x: 4.4, y: 1.55, w: 8.4, h: 4.725 }] } },
-    labs: { title: 'Lab highlights · 4 course labs, 6 slides', n: 6, dir: 'labs', videos: {},
+    labs: { title: 'Lab highlights · 4 course labs, 7 slides', n: 7, dir: 'labs', videos: {},
       tools: [['Download .pptx', 'files/Lab_Highlights.pptx', 1], ['PDF', 'files/Lab_Highlights.pdf'], ['Data .xlsx', 'files/Lab_Highlights_Data.xlsx', 1], ['Open in PowerPoint Online', office('Lab_Highlights.pptx'), 0, 1]] },
     'report-cold': { title: 'Why is one room colder? · technical report', dir: 'report-cold', n: 11,
       tools: [['Download .docx', 'files/ColdRoom_Study_Report.docx', 1], ['PDF', 'files/ColdRoom_Study_Report.pdf'], ['Open in Word Online', office('ColdRoom_Study_Report.docx'), 0, 1]] },
