@@ -91,3 +91,8 @@
   .sl-nav{display:none}
   .v-tools a.opt{display:none}
 }
+
+.shelf .book-labs{grid-column:1/-1;flex-direction:row}
+.shelf .book-labs .cover{flex:0 0 min(46%,560px);aspect-ratio:16/9}
+.shelf .book-labs .spine{flex:1;display:flex;flex-direction:column;justify-content:center}
+@media (max-width:980px){.shelf .book-labs{flex-direction:column}.shelf .book-labs .cover{flex:none;width:100%}}

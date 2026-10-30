@@ -1,4 +1,4 @@
-/* reader.js: in-page viewer. Deep links: #slides, #slides-13, #report-cold, #report-lamp, #workbook, #workbook-Music_Reactive */
+/* reader.js: in-page viewer. Deep links: #slides, #slides-13, #labs, #labs-3, #report-cold, #report-lamp, #workbook, #workbook-Music_Reactive */
 (function () {
   const $ = s => document.querySelector(s);
   const pad = n => String(n).padStart(2, '0');
@@ -10,6 +10,8 @@
       // videos placed exactly where they sit on slide 15 (inches on a 13.333 × 7.5 slide)
       videos: { 15: [{ src: '../media/lamp-music.mp4', poster: '../media/lamp-music-poster.jpg', x: .9, y: 1.55, w: 2.95, h: 5.25 },
                      { src: '../media/lamp-styles-compare.mp4', poster: '../media/lamp-styles-poster.jpg', x: 4.4, y: 1.55, w: 8.4, h: 4.725 }] } },
+    labs: { title: 'Lab highlights · 4 course labs, 6 slides', n: 6, dir: 'labs', videos: {},
+      tools: [['Download .pptx', 'files/Lab_Highlights.pptx', 1], ['PDF', 'files/Lab_Highlights.pdf'], ['Data .xlsx', 'files/Lab_Highlights_Data.xlsx', 1], ['Open in PowerPoint Online', office('Lab_Highlights.pptx'), 0, 1]] },
     'report-cold': { title: 'Why is one room colder? · technical report', dir: 'report-cold', n: 11,
       tools: [['Download .docx', 'files/ColdRoom_Study_Report.docx', 1], ['PDF', 'files/ColdRoom_Study_Report.pdf'], ['Open in Word Online', office('ColdRoom_Study_Report.docx'), 0, 1]] },
     'report-lamp': { title: 'Adaptive LED lamp · test report', dir: 'report-lamp', n: 8,
@@ -34,17 +36,18 @@
       `<a href="${h}" ${dl ? 'download' : 'target="_blank" rel="noopener"'} class="${opt ? 'opt' : ''}">${t}</a>`).join('');
   }
 
-  function slides(d, start) {
+  function slides(d, start, hk) {
+    const dir = d.dir || 'slides';
     let i = Math.min(Math.max(start || 1, 1), d.n);
     body.innerHTML = `<div class="sl"><div class="sl-stage"><button class="sl-nav sl-prev" aria-label="Previous slide">‹</button>
       <div class="sl-frame"><img alt=""></div><button class="sl-nav sl-next" aria-label="Next slide">›</button></div>
       <div class="sl-foot"><span class="sl-count"></span><div class="sl-strip">${Array.from({ length: d.n }, (_, k) =>
-        `<button data-i="${k + 1}" aria-label="Slide ${k + 1}"><img src="slides/s${pad(k + 1)}.webp" alt="" loading="lazy"></button>`).join('')}</div></div></div>`;
+        `<button data-i="${k + 1}" aria-label="Slide ${k + 1}"><img src="${dir}/s${pad(k + 1)}.webp" alt="" loading="lazy"></button>`).join('')}</div></div></div>`;
     const frame = body.querySelector('.sl-frame'), im = frame.querySelector('img');
-    for (let k = 1; k <= d.n; k++) { const p = new Image(); p.src = `slides/s${pad(k)}.webp`; }
+    for (let k = 1; k <= d.n; k++) { const p = new Image(); p.src = `${dir}/s${pad(k)}.webp`; }
     const go = n => {
       i = Math.min(Math.max(n, 1), d.n);
-      im.src = `slides/s${pad(i)}.webp`; im.alt = `Slide ${i} of ${d.n}`;
+      im.src = `${dir}/s${pad(i)}.webp`; im.alt = `Slide ${i} of ${d.n}`;
       frame.querySelectorAll('video').forEach(v => v.remove());
       (d.videos[i] || []).forEach(o => {
         const v = document.createElement('video');
@@ -55,7 +58,7 @@
       body.querySelector('.sl-count').textContent = `${i} / ${d.n}`;
       body.querySelectorAll('.sl-strip button').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
       const on = body.querySelector('.sl-strip button.on'); on && on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-      history.replaceState(null, '', i === 1 ? '#slides' : '#slides-' + i);
+      history.replaceState(null, '', i === 1 ? "#" + hk : "#" + hk + "-" + i);
     };
     body.querySelector('.sl-prev').onclick = () => go(i - 1);
     body.querySelector('.sl-next').onclick = () => go(i + 1);
@@ -96,12 +99,12 @@
   function route() {
     cleanup(); cleanup = () => {};
     const h = location.hash.slice(1);
-    const [key, arg] = h.startsWith('slides') ? ['slides', +(h.split('-')[1] || 1)] : h.startsWith('workbook') ? ['workbook', h.split('workbook-')[1]] : [h];
+    const [key, arg] = h.startsWith('slides') ? ['slides', +(h.split('-')[1] || 1)] : h.startsWith('labs') ? ['labs', +(h.split('-')[1] || 1)] : h.startsWith('workbook') ? ['workbook', h.split('workbook-')[1]] : [h];
     const d = DOCS[key];
     if (!d) { V.hidden = true; document.body.style.overflow = ''; return; }
     V.hidden = false; document.body.style.overflow = 'hidden';
     $('#v-title').textContent = d.title; tools(d);
-    key === 'slides' ? slides(d, arg) : key === 'workbook' ? workbook(d, arg) : report(d);
+    (key === 'slides' || key === 'labs') ? slides(d, arg, key) : key === 'workbook' ? workbook(d, arg) : report(d);
   }
   $('#v-close').onclick = () => { history.pushState(null, '', location.pathname); route(); };
   addEventListener('keydown', e => { if (e.key === 'Escape' && !V.hidden) $('#v-close').click(); });
