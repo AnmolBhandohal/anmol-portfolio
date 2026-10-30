@@ -1,7 +1,7 @@
 /* museum.js: renders ROOMS from exhibits.js, lights exhibits as they enter view, lightbox. */
 (function () {
   /* themes: ?theme=<name> (remembered). ?pick shows the switcher. */
-  const THEMES = [['graphite', 'Graphite'], ['charcoal', 'Charcoal'], ['scope', 'Scope'], ['dusk', 'Dusk'], ['linen', 'Linen'], ['paper', 'Paper'], ['warm', 'Warm']];
+  const THEMES = [['charcoal', 'Charcoal'], ['linen', 'Linen'], ['warm', 'Warm']];
   const qs = new URLSearchParams(location.search);
   const setTheme = t => { document.documentElement.dataset.theme = t; try { localStorage.setItem('ab_theme', t); } catch (_) {} document.querySelectorAll('.theme-pick button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t)); };
   if (qs.has('pick') || qs.has('theme')) {
@@ -10,7 +10,7 @@
     p.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setTheme(b.dataset.t); });
     document.body.appendChild(p);
   }
-  setTheme(document.documentElement.dataset.theme || 'graphite');
+  setTheme(document.documentElement.dataset.theme || 'charcoal');
   const $ = (s, el = document) => el.querySelector(s);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
