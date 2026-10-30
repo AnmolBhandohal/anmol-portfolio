@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
-   exhibits.js — THE ONLY FILE TO EDIT for the gallery.
-   Each room holds exhibits. To add one, copy a block inside `exhibits`.
+   exhibits.js — THE ONLY FILE TO EDIT for the site.
+   Each section holds projects. To add one, copy a block inside `exhibits`.
    Every claim here must be true and measured (see career/experience.json).
    kind: 'salon' (photo wall) · 'piece' (one large work + label) · 'pair' (two images)
    ═══════════════════════════════════════════════════════════════════ */
@@ -27,7 +27,7 @@ const WALL = [
 
 const ROOMS = [
 {
-  id: 'field', numeral: 'I', name: 'In the field',
+  id: 'field', numeral: '01', name: 'Field work',
   note: 'Electrical apprentice, Powerworks · Summer 2026',
   exhibits: [{
     kind: 'salon', no: '01',
@@ -46,8 +46,8 @@ const ROOMS = [
   }],
 },
 {
-  id: 'measure', numeral: 'II', name: 'Measured',
-  note: 'Things I built to answer a question with data',
+  id: 'measure', numeral: '02', name: 'Measured projects',
+  note: 'Built to answer a question with data',
   exhibits: [
   {
     kind: 'piece', no: '02',
@@ -71,8 +71,8 @@ const ROOMS = [
   }],
 },
 {
-  id: 'boards', numeral: 'III', name: 'Boards',
-  note: 'Printed circuit boards, schematic to layout',
+  id: 'boards', numeral: '03', name: 'Circuit boards',
+  note: 'Schematic, layout and 3D, all designed in Altium',
   exhibits: [{ kind: 'duo', items: [
   {
     kind: 'piece', no: '04',
@@ -80,6 +80,11 @@ const ROOMS = [
     year: '2025–', medium: 'Altium Designer · Teensy 4.0 · CAN bus · 4-layer PCB',
     text: 'Electrical work on the university\u2019s autonomous submarine (ARVP). Once the hull is sealed nothing can be reseated, so the job is making the wrong connection physically impossible. My onboarding board was fabricated.',
     img: { src: 'img/arvp-onboard-3d', w: 959, h: 962, light: true, cap: 'Teensy 4.0 carrier, designed end to end.' },
+    views: [
+      { label: '3D', model: 'models/arvp.glb', src: 'img/arvp-onboard-3d', cap: 'Rev A, fabricated. Drag to turn it; Top / Side snap the camera.' },
+      { label: 'Layout', src: 'img/arvp-onboard-layout', w: 932, h: 895, plate: '#000', cap: 'Top layer. Red is top copper, blue is bottom; an internal layer is GND.' },
+      { label: 'Schematic', src: 'img/arvp-onboard-schematic', w: 1497, h: 990, plate: '#fffcf8', cap: 'Seven blocks: power, payload connector, Hall sensor, MCU, temperature, CAN, analog.' },
+    ],
   },
   {
     kind: 'piece', no: '05', flip: true,
@@ -87,10 +92,17 @@ const ROOMS = [
     year: '2025', medium: 'STM32F411 · MPU-6050 · AMS1117 · 4 layers, two ground planes',
     text: 'A microcontroller board with nothing borrowed from a dev kit: USB power, clock, reset, boot straps and SWD debug, all mine to get right. 36 parts.',
     img: { src: 'img/stm32-3d', w: 998, h: 971, light: true, cap: 'STM32F411 IMU board in Altium 3D.' },
+    views: [
+      { label: '3D', model: 'models/stm32.glb', src: 'img/stm32-3d', cap: 'USB in on the right, regulator below it, IMU top left. Drag to turn it.' },
+      { label: 'Schematic', src: 'img/stm32-sch-full', w: 1608, h: 1028, plate: '#fffcf8', cap: 'Three blocks: USB power and LDO, the STM32F411 with clock / reset / SWD, and the MPU-6050.' },
+      { label: 'Power', src: 'img/stm32-sch-power', plate: '#fffcf8', cap: 'Micro-B USB, 120 \u03a9 ferrite bead, AMS1117-3.3, power LED.' },
+      { label: 'MCU', src: 'img/stm32-sch-mcu', plate: '#fffcf8', cap: '24 MHz crystal, decoupling on every supply pin, BOOT0 pulled down, NRST pull-up, SWD header.' },
+      { label: 'IMU', src: 'img/stm32-sch-imu', plate: '#fffcf8', cap: 'MPU-6050 on I\u00b2C at 0x68 with 2.2 k\u03a9 pull-ups, INT to PB8.' },
+    ],
   }] }],
 },
 {
-  id: 'software', numeral: 'IV', name: 'Tools',
+  id: 'software', numeral: '04', name: 'Software',
   note: 'Software I wrote because I needed it',
   exhibits: [
   {

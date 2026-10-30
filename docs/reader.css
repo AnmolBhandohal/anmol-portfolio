@@ -6,16 +6,16 @@
 .shelf{display:grid;grid-template-columns:1.35fr 1fr 1fr;grid-template-rows:auto auto;gap:20px;margin-top:32px}
 .book{display:flex;flex-direction:column;text-decoration:none;background:var(--wall-2);border:1px solid var(--line);border-radius:6px;overflow:hidden;
   transition:transform .35s var(--ease),border-color .3s,box-shadow .35s}
-.book:hover{transform:translateY(-4px);border-color:rgba(196,131,79,.6);box-shadow:0 30px 60px -30px rgba(0,0,0,.9)}
+.book:hover{transform:translateY(-4px);border-color:var(--copper);box-shadow:0 30px 60px -30px rgba(0,0,0,.9)}
 .book-lead{grid-row:span 2}
-.cover{background:#0b0a09;overflow:hidden;aspect-ratio:16/7}
+.cover{background:var(--deep);overflow:hidden;aspect-ratio:16/7}
 .cover img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease)}
 .book:hover .cover img{transform:scale(1.025)}
 .book-lead .cover{aspect-ratio:16/9}
 .book-lead .cover img{object-fit:contain}
 .book-lead .spine{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 30px}
 .book-lead .spine p{font-size:16px;max-width:46ch}
-.start{display:inline-block;margin-left:8px;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--copper);color:#1a120b;padding:3px 7px;border-radius:99px;vertical-align:2px}
+.start{display:inline-block;margin-left:8px;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--copper);color:var(--on-acc);padding:3px 7px;border-radius:99px;vertical-align:2px}
 .cover.page{background:#d9d4ca;padding:14px 14px 0}
 .cover.page img{box-shadow:0 8px 20px rgba(0,0,0,.25)}
 .cover.sheet{background:#fff}
@@ -39,9 +39,9 @@
 .files a:hover{color:var(--copper-2);border-color:var(--copper-2)}
 
 /* viewer */
-.viewer{position:fixed;inset:0;z-index:40;background:#0c0b0a;display:flex;flex-direction:column}
+.viewer{position:fixed;inset:0;z-index:40;background:var(--deep);display:flex;flex-direction:column}
 .viewer[hidden]{display:none}
-.v-top{display:flex;align-items:center;gap:16px;padding:12px clamp(12px,3vw,28px);border-bottom:1px solid var(--line);background:#11100e}
+.v-top{display:flex;align-items:center;gap:16px;padding:12px clamp(12px,3vw,28px);border-bottom:1px solid var(--line);background:var(--wall)}
 .v-back{background:none;border:1px solid var(--line);color:var(--ink);font:500 13px var(--sans);padding:9px 14px;border-radius:99px;cursor:pointer}
 .v-back:hover{border-color:var(--copper)}
 .v-title{font:400 18px var(--serif);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -56,7 +56,7 @@
 .sl-frame{position:relative;width:100%;max-width:calc((100vh - 230px) * 16 / 9);aspect-ratio:16/9;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 .sl-frame img{width:100%;height:100%}
 .sl-frame video{position:absolute;background:#000;object-fit:contain;cursor:pointer}
-.sl-nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:99px;border:1px solid var(--line);background:rgba(17,16,14,.7);color:var(--ink);font:300 30px var(--serif);cursor:pointer}
+.sl-nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:99px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:300 30px var(--serif);cursor:pointer}
 .sl-nav:hover{border-color:var(--copper);color:var(--copper-2)}
 .sl-prev{left:12px}.sl-next{right:12px}
 .sl-foot{display:flex;align-items:center;gap:14px;padding:10px clamp(12px,3vw,28px) 14px;min-width:0}
@@ -70,7 +70,7 @@
 /* report pages */
 .rp{position:absolute;inset:0;overflow-y:auto;padding:28px 16px 80px;scroll-behavior:smooth}
 .rp img{width:min(900px,100%);margin:0 auto 22px;background:#fff;box-shadow:0 20px 50px rgba(0,0,0,.55)}
-.rp-pg{position:fixed;right:22px;bottom:18px;font:400 12px var(--mono);color:var(--ink-2);background:rgba(17,16,14,.85);border:1px solid var(--line);padding:6px 10px;border-radius:99px}
+.rp-pg{position:fixed;right:22px;bottom:18px;font:400 12px var(--mono);color:var(--ink-2);background:var(--chip);border:1px solid var(--line);padding:6px 10px;border-radius:99px}
 
 /* workbook */
 .wb{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr}
