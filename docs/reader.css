@@ -56,6 +56,9 @@
 .sl-frame{position:relative;width:100%;max-width:calc((100vh - 230px) * 16 / 9);aspect-ratio:16/9;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 .sl-frame img{width:100%;height:100%}
 .sl-frame video{position:absolute;background:#000;object-fit:contain;cursor:pointer}
+.sl-watch{flex:none;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;white-space:nowrap;border-radius:99px;background:var(--copper);color:var(--on-acc);text-decoration:none;font:500 14px var(--sans)}
+.sl-watch:hover{transform:translateY(-1px)}
+.sl-watch svg{width:14px;height:14px}
 .sl-nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:99px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:300 30px var(--serif);cursor:pointer}
 .sl-nav:hover{border-color:var(--copper);color:var(--copper-2)}
 .sl-prev{left:12px}.sl-next{right:12px}
@@ -96,3 +99,12 @@
 .shelf .book-labs .cover{flex:0 0 min(46%,560px);aspect-ratio:16/9}
 .shelf .book-labs .spine{flex:1;display:flex;flex-direction:column;justify-content:center}
 @media (max-width:980px){.shelf .book-labs{flex-direction:column}.shelf .book-labs .cover{flex:none;width:100%}}
+
+/* playing a clip in place: invisible hit area over a play thumbnail, and the film overlay */
+.sl-hot{position:absolute;background:transparent;border:0;padding:0;cursor:pointer;border-radius:6px}
+.sl-hot:focus-visible{outline:2px solid var(--copper-2);outline-offset:2px}
+.film{position:fixed;inset:0;z-index:120;display:grid;place-items:center;background:rgba(8,7,6,.92);padding:clamp(12px,4vw,48px)}
+.film-in{position:relative;max-width:min(92vw,1100px);width:100%}
+.film video{width:100%;max-height:82vh;background:#000;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.film-x{position:absolute;top:-44px;right:0;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:8px 16px;font:500 14px var(--sans);cursor:pointer}
+.film-x:hover{border-color:var(--copper);color:var(--copper-2)}

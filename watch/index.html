@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Three builds in 44 seconds · Anmol Bhandohal</title>
+<meta name="description" content="A 44-second silent film of three measured builds: a closed-loop music-reactive LED lamp, an ESP32 room-temperature study, and a Python tool that counts electrical fixtures off drawings.">
+<meta property="og:title" content="Three builds in 44 seconds · Anmol Bhandohal">
+<meta property="og:description" content="The lamp, the room study and the drawing takeoff, in 44 silent seconds.">
+<meta property="og:image" content="https://anmol-portfolio-omega.vercel.app/media/lamp-anim-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#11100e">
+<link rel="canonical" href="https://anmol-portfolio-omega.vercel.app/watch/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2311100e'/><circle cx='16' cy='16' r='7' fill='%23c4834f'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/museum.css">
+<style>
+  .watch-wrap{max-width:1120px;margin:0 auto;padding:clamp(24px,5vh,56px) clamp(18px,4vw,40px) 64px}
+  .watch-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+  .watch-head h1{font:400 clamp(30px,4.6vw,54px)/1.06 var(--serif);letter-spacing:-.01em;margin:6px 0 0}
+  .watch-head h1 em{font-style:italic;color:var(--copper-2)}
+  .watch-back{font-family:var(--mono);font-size:13px;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .watch-back:hover{color:var(--copper-2)}
+  .player{position:relative;background:var(--deep);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .player video{width:100%;aspect-ratio:16/9;display:block;background:#000}
+  .bigplay{position:absolute;inset:0;display:grid;place-items:center;border:0;background:rgba(8,7,6,.35);cursor:pointer;transition:background .2s var(--ease)}
+  .bigplay:hover{background:rgba(8,7,6,.15)}
+  .bigplay span{display:grid;place-items:center;width:clamp(72px,11vw,116px);height:clamp(72px,11vw,116px);border-radius:50%;background:var(--ink);color:var(--on-acc)}
+  .bigplay svg{width:40%;height:40%;margin-left:6%}
+  .bigplay[hidden]{display:none}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,28px);margin:30px 0 0}
+  .fact{border-top:1px solid var(--line);padding-top:14px}
+  .fact b{display:block;font:500 clamp(26px,3.4vw,38px)/1 var(--sans);color:var(--copper-2)}
+  .fact p{margin:8px 0 0;color:var(--ink-2);font-size:15px}
+  .next{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:10px;text-decoration:none;font:500 16px var(--sans);border:1px solid var(--line);color:var(--ink);transition:transform .15s var(--ease),background .15s var(--ease)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary{background:var(--copper);color:var(--on-acc);border-color:transparent}
+  .note{margin-top:26px;color:var(--ink-3);font-family:var(--mono);font-size:12.5px}
+  @media(max-width:720px){.facts{grid-template-columns:1fr}.watch-head h1{font-size:34px}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="bar-name" href="../">Anmol Bhandohal</a>
+  <div class="bar-actions">
+    <a class="bar-link" href="../docs/">Reports &amp; slides</a>
+    <a class="bar-link" href="../resume.pdf" target="_blank" rel="noopener">Résumé</a>
+  </div>
+</header>
+
+<main class="watch-wrap">
+  <div class="watch-head">
+    <div>
+      <p class="kicker mono">44 seconds · no sound needed</p>
+      <h1>Three builds, <em>measured</em></h1>
+    </div>
+    <a class="watch-back" href="../">← back to the site</a>
+  </div>
+
+  <div class="player" id="player">
+    <video id="v" playsinline muted loop preload="auto" poster="../media/lamp-anim-poster.jpg"
+           src="../media/lamp-anim.mp4" aria-label="44-second film: a music-reactive lamp, an ESP32 room study, and a Python tool that counts electrical fixtures"></video>
+    <button class="bigplay" id="play" aria-label="Play the 44-second film">
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+    </button>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><b>R² = 0.9999</b><p>The lamp's light output against PWM duty, measured in a dark room.</p></div>
+    <div class="fact"><b>8 furnace cycles</b><p>Found automatically in 16 hours of ESP32 sensor data.</p></div>
+    <div class="fact"><b>96 fixtures</b><p>Counted off a 13-sheet electrical drawing set by a Python script.</p></div>
+  </div>
+
+  <div class="next">
+    <a class="btn primary" href="../docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">The 12-slide deck · PDF</a>
+    <a class="btn" href="../docs/">Reports &amp; slides</a>
+    <a class="btn" href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a>
+  </div>
+  <p class="note">Available January – August 2027 · BSc Electrical Engineering (Co-op), University of Alberta</p>
+</main>
+
+<script>
+(function(){
+  var v = document.getElementById('v'), b = document.getElementById('play');
+  function show(on){ b.hidden = !on; }
+  var p = v.play();
+  if (p && p.then) p.then(function(){ show(false); }).catch(function(){ show(true); });
+  b.addEventListener('click', function(){ v.play(); show(false); });
+  v.addEventListener('pause', function(){ if (!v.ended) show(true); });
+  v.addEventListener('ended', function(){ show(true); });
+  // click anywhere on the film to pause/play once it is running
+  v.addEventListener('click', function(){ v.paused ? v.play() : v.pause(); });
+})();
+</script>
+</body>
+</html>

@@ -5,9 +5,11 @@
   const ORIGIN = location.origin + location.pathname.replace(/[^/]*$/, '');
   const office = f => 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(ORIGIN + 'files/' + f);
   const DOCS = {
-    slides: { title: 'The presentation · 12 slides', n: 12, v: 3,
-      tools: [['Download .pptx', 'files/Projects_Deck.pptx', 1], ['PDF', 'files/Projects_Deck.pdf'], ['Open in PowerPoint Online', office('Projects_Deck.pptx'), 0, 1]],
-      // the deck has no embedded media player; the two videos open as links (slide 1 and slide 6)
+    slides: { title: 'The presentation · 12 slides', n: 12, v: 4, watch: { label: 'Watch the 44 s version', href: '../watch/' },
+      tools: [['▶ Watch the 44 s version', '../watch/'], ['Download .pptx', 'files/Projects_Deck.pptx', 1], ['PDF', 'files/Projects_Deck.pdf'], ['Open in PowerPoint Online', office('Projects_Deck.pptx'), 0, 1]],
+      // transparent hot-spots over the play thumbnails that are drawn on the slides; click opens the clip in place
+      hot: { 1: { x: 9.9, y: .62, w: 2.45, h: 4.35, src: '../media/lamp-music.mp4' },
+             6: { x: .75, y: 2.1, w: 4.31, h: 4.0, src: '../media/lamp-music.mp4' } },
       videos: {} },
     labs: { title: 'Lab highlights · 4 course labs, 7 slides', n: 7, dir: 'labs', v: 2, videos: {},
       tools: [['Download .pptx', 'files/Lab_Highlights.pptx', 1], ['PDF', 'files/Lab_Highlights.pdf'], ['Data .xlsx', 'files/Lab_Highlights_Data.xlsx', 1], ['Open in PowerPoint Online', office('Lab_Highlights.pptx'), 0, 1]] },
@@ -55,12 +57,28 @@
         frame.appendChild(v);
       });
       body.querySelector('.sl-count').textContent = `${i} / ${d.n}`;
+      spots.forEach(([k, b]) => b.style.display = k === i ? 'block' : 'none');
       body.querySelectorAll('.sl-strip button').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
       const on = body.querySelector('.sl-strip button.on'); on && on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
       history.replaceState(null, '', i === 1 ? "#" + hk : "#" + hk + "-" + i);
     };
     body.querySelector('.sl-prev').onclick = () => go(i - 1);
     body.querySelector('.sl-next').onclick = () => go(i + 1);
+    if (d.watch) {
+      const w = document.createElement('a');
+      w.className = 'sl-watch'; w.href = d.watch.href; w.target = '_blank'; w.rel = 'noopener';
+      w.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>' + d.watch.label;
+      body.querySelector('.sl-count').after(w);
+    }
+    // an invisible hit area over each play thumbnail drawn on the slide, so the picture itself plays
+    const spots = [];
+    for (const k in (d.hot || {})) {
+      const o = d.hot[k], b = document.createElement('button');
+      b.className = 'sl-hot'; b.setAttribute('aria-label', 'Play the lamp clip');
+      Object.assign(b.style, { left: o.x / 13.333 * 100 + '%', top: o.y / 7.5 * 100 + '%', width: o.w / 13.333 * 100 + '%', height: o.h / 7.5 * 100 + '%' });
+      b.onclick = e => { e.stopPropagation(); openFilm(o.src); };
+      frame.appendChild(b); spots.push([+k, b]);
+    }
     body.querySelector('.sl-strip').onclick = e => { const b = e.target.closest('button'); if (b) go(+b.dataset.i); };
     im.onclick = e => { const r = im.getBoundingClientRect(); go(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1); };
     const key = e => { if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(i + 1); } if (['ArrowLeft', 'PageUp'].includes(e.key)) go(i - 1); };
@@ -93,6 +111,19 @@
     };
     body.querySelector('.wb-tabs').onclick = e => { const b = e.target.closest('button'); if (b) show(b.dataset.s); };
     show(start);
+  }
+
+  function openFilm(src) {
+    const box = document.createElement('div');
+    box.className = 'film';
+    box.innerHTML = `<div class="film-in"><video src="${src}" controls autoplay playsinline></video>
+      <button class="film-x" aria-label="Close">Close ✕</button></div>`;
+    const close = () => { box.remove(); document.removeEventListener('keydown', esc); };
+    const esc = e => { if (e.key === 'Escape') close(); };
+    box.addEventListener('click', e => { if (e.target === box || e.target.closest('.film-x')) close(); });
+    document.addEventListener('keydown', esc);
+    document.body.appendChild(box);
+    const v = box.querySelector('video'); const p = v.play(); p && p.catch && p.catch(() => {});
   }
 
   function route() {
