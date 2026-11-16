@@ -5,11 +5,10 @@
   const ORIGIN = location.origin + location.pathname.replace(/[^/]*$/, '');
   const office = f => 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(ORIGIN + 'files/' + f);
   const DOCS = {
-    slides: { title: 'The presentation · 17 slides', n: 17,
+    slides: { title: 'The presentation · 12 slides', n: 12, v: 3,
       tools: [['Download .pptx', 'files/Projects_Deck.pptx', 1], ['PDF', 'files/Projects_Deck.pdf'], ['Open in PowerPoint Online', office('Projects_Deck.pptx'), 0, 1]],
-      // videos placed exactly where they sit on slide 15 (inches on a 13.333 × 7.5 slide)
-      videos: { 15: [{ src: '../media/lamp-music.mp4', poster: '../media/lamp-music-poster.jpg', x: .9, y: 1.55, w: 2.95, h: 5.25 },
-                     { src: '../media/lamp-styles-compare.mp4', poster: '../media/lamp-styles-poster.jpg', x: 4.4, y: 1.55, w: 8.4, h: 4.725 }] } },
+      // the deck has no embedded media player; the two videos open as links (slide 1 and slide 6)
+      videos: {} },
     labs: { title: 'Lab highlights · 4 course labs, 7 slides', n: 7, dir: 'labs', v: 2, videos: {},
       tools: [['Download .pptx', 'files/Lab_Highlights.pptx', 1], ['PDF', 'files/Lab_Highlights.pdf'], ['Data .xlsx', 'files/Lab_Highlights_Data.xlsx', 1], ['Open in PowerPoint Online', office('Lab_Highlights.pptx'), 0, 1]] },
     'report-cold': { title: 'Why is one room colder? · technical report', dir: 'report-cold', n: 11,
