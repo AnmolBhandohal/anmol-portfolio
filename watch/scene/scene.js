@@ -235,9 +235,13 @@ function lampCamera(t) {
 }
 
 // ---------------------------------------------------------------- glow from the real audio-reactive brightness
-let env = { fps: 30, wall: new Array(416).fill(0.5) };
+// env.json holds the lamp's own brightness for the exact window the film shows, indexed by
+// window-relative time, so the 3D glow and the real footage flash on the same frame.
+let env = { fps: 30, lamp: null };
 function brightness(t) {
-  const a = env.wall || env.whole, i = Math.round((4.6 + t) * (env.fps || 30));
+  const a = env.lamp || [];
+  if (!a.length) return 0.5;
+  const i = Math.round(t * (env.fps || 30));
   return Math.min(1, Math.max(0, a[Math.min(Math.max(i, 0), a.length - 1)] ?? 0.5));
 }
 function setGlow(v) {
