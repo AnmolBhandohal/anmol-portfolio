@@ -229,7 +229,7 @@ function heroCamera(t) {
   look(p, V(-0.10 + 0.03 * e, 0.94, -0.55));
 }
 function lampCamera(t) {
-  const a = -0.06 + 0.12 * Math.min(Math.max(t / 7.5, 0), 1);
+  const a = -0.06 + 0.12 * Math.min(Math.max(t / 13.87, 0), 1);
   const p = V(0.86 + Math.sin(a) * 1.30, 1.05 + 0.01 * Math.sin(t * 0.6), 1.42 + Math.cos(a) * 0.28);
   look(p, V(0.30, 0.92, -0.55));
 }
@@ -273,7 +273,7 @@ if (P.get('live')) {
   controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enableZoom = false;
   controls.maxPolarAngle = Math.PI * 0.53; controls.minAzimuthAngle = -0.45; controls.maxAzimuthAngle = 0.45;
   const loop = () => {
-    setGlow(brightness((performance.now() / 1000) % 7.5));
+    setGlow(brightness((performance.now() / 1000) % 13.87));
     controls.update(); composer.render(); requestAnimationFrame(loop);
   };
   loop();

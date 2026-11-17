@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Three builds in 30 seconds · Anmol Bhandohal</title>
-<meta name="description" content="A 30-second film of three measured builds: a music-reactive LED lamp, an ESP32 room-temperature study, and a Python tool that counts electrical fixtures off drawings. Then the 12-slide deck.">
-<meta property="og:title" content="Three builds in 30 seconds · Anmol Bhandohal">
-<meta property="og:description" content="Watch the 30-second film, then open the 12-slide deck.">
-<meta property="og:image" content="https://anmol-portfolio-omega.vercel.app/media/lamp-anim-poster.jpg?v=3307795">
+<title>Three builds in 35 seconds · Anmol Bhandohal</title>
+<meta name="description" content="A 35-second film of three measured builds: a music-reactive LED lamp, an ESP32 room-temperature study, and a Python tool that counts electrical fixtures off drawings. Then the 12-slide deck.">
+<meta property="og:title" content="Three builds in 35 seconds · Anmol Bhandohal">
+<meta property="og:description" content="Watch the 35-second film, then open the 12-slide deck.">
+<meta property="og:image" content="https://anmol-portfolio-omega.vercel.app/media/lamp-anim-poster.jpg?v=5343614">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#11100e">
 <link rel="canonical" href="https://anmol-portfolio-omega.vercel.app/watch/">
@@ -53,7 +53,6 @@
   .deck:hover{border-color:var(--copper)}
   .deck svg{width:18px;height:18px;flex:none}
   .below{grid-area:cta;display:grid;justify-items:start;gap:10px;margin:0}
-  .below .deck:not(.go){opacity:.45;pointer-events:none}
   .below small{font:400 13px var(--mono);color:var(--ink-3)}
   .foot{grid-area:foot;margin:0;padding-top:16px;border-top:1px solid var(--line);font:400 13px var(--sans);color:var(--ink-3)}
   .foot a{color:var(--ink-2)}
@@ -72,19 +71,19 @@
   </div>
 
   <div class="steps" aria-label="What to do on this page">
-    <span class="step on" id="s1"><i>1</i><b>Watch the film · 30 seconds</b></span>
+    <span class="step on" id="s1"><i>1</i><b>Watch the film · 35 seconds</b></span>
     <span class="arrow" aria-hidden="true">→</span>
     <span class="step" id="s2"><i>2</i><b>Then open the 12-slide deck</b></span>
   </div>
 
   <div class="player">
-    <video id="v" playsinline preload="auto" poster="/media/lamp-anim-poster.jpg?v=3307795" src="/media/lamp-anim.mp4?v=3307795"
-           aria-label="30-second film: a music-reactive lamp, an ESP32 room study, and a Python tool that counts electrical fixtures"></video>
-    <button class="cover" id="cover" aria-label="Play the 30-second film with sound">
+    <video id="v" playsinline preload="auto" poster="/media/lamp-anim-poster.jpg?v=5343614" src="/media/lamp-anim.mp4?v=5343614"
+           aria-label="35-second film: a music-reactive lamp, an ESP32 room study, and a Python tool that counts electrical fixtures"></video>
+    <button class="cover" id="cover" aria-label="Play the 35-second film with sound">
       <span class="cover-in">
         <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
         <b>Play the film</b>
-        <span class="sub">30 seconds · with sound</span>
+        <span class="sub">35 seconds · with sound</span>
       </span>
     </button>
     <div class="after" id="after" hidden>
@@ -100,7 +99,7 @@
   <div class="below" id="below">
     <a class="deck" id="deck" href="/docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">Open the 12-slide deck
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <small id="hint">step 2 · unlocks when the film ends</small>
+    <small id="hint">step 2 · or open it any time</small>
   </div>
 
   <p class="foot">Available January – August 2027 · <a href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a></p>
@@ -114,9 +113,9 @@
   function start(){
     after.hidden = true; cover.hidden = true; below.hidden = false;
     v.controls = true; v.muted = false; v.currentTime = 0;
-    s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 30 seconds';
+    s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 35 seconds';
     s2.className = 'step'; s2.lastElementChild.textContent = 'Then open the 12-slide deck';
-    deck.classList.remove('go'); hint.textContent = 'step 2 · unlocks when the film ends';
+    deck.classList.remove('go'); hint.textContent = 'step 2 · or open it any time';
     var p = v.play();
     if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){ cover.hidden = false; }); });
   }
