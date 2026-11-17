@@ -16,53 +16,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/museum.css">
 <style>
-  /* one path: 1 watch, 2 open the deck. Nothing else competes for the click. */
-  .w{max-width:1080px;margin:0 auto;padding:clamp(14px,2.6vh,32px) clamp(16px,4vw,40px) 56px;position:relative;z-index:1}
-  .w-name{font:500 15px var(--sans);color:var(--ink-2);margin:0 0 clamp(16px,3vh,28px)}
+  /* One path: 1 watch, 2 open the deck. Nothing else competes for the click. */
+  .w{max-width:1240px;margin:0 auto;padding:clamp(16px,3vh,34px) clamp(16px,4vw,40px) 40px;display:grid;gap:22px 44px;grid-template-columns:minmax(0,1fr);position:relative;z-index:1}
+  @media(min-width:980px){
+    .w{grid-template-columns:minmax(0,1.62fr) minmax(300px,.85fr);grid-template-areas:"head film" "steps film" "cta film" "foot film";align-items:start}
+    .player{grid-area:film}
+  }
+  .head{grid-area:head}
+  .w-name{font:500 14px var(--sans);color:var(--ink-3);margin:0 0 14px}
   .w-name b{color:var(--ink);font-weight:500}
-  .w h1{font:400 clamp(30px,4.4vw,50px)/1.08 var(--serif);letter-spacing:-.01em;margin:0 0 20px}
+  .w h1{font:400 clamp(28px,3.6vw,46px)/1.06 var(--serif);letter-spacing:-.01em;margin:0}
 
-  .steps{display:flex;align-items:center;gap:14px;margin:0 0 16px;font:500 16px var(--sans);color:var(--ink-3);flex-wrap:wrap}
+  .steps{grid-area:steps;display:flex;align-items:center;gap:12px;margin:0;font:500 clamp(14px,1.5vw,17px) var(--sans);color:var(--ink-3);flex-wrap:wrap}
   .step{display:inline-flex;align-items:center;gap:10px;transition:color .3s var(--ease)}
-  .step i{font-style:normal;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1px solid currentColor;font:500 14px var(--mono)}
+  .step b{font-weight:500}
+  .step i{font-style:normal;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid currentColor;font:500 13px var(--mono);flex:none}
   .step.on{color:var(--ink)} .step.on i{background:var(--copper);border-color:var(--copper);color:var(--on-acc)}
-  .step.done{color:var(--ink-2)}
+  .step.done{color:var(--ink-3)} .step.done i{border-style:solid;color:var(--ink-3)}
   .steps .arrow{color:var(--ink-3)}
 
-  .player{position:relative;max-width:min(100%,calc((100dvh - 300px) * 16 / 9));background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .player{grid-area:auto;position:relative;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);margin:0}
   .player video{width:100%;aspect-ratio:16/9;display:block;background:#000}
-  .cover{position:absolute;inset:0;display:grid;place-items:center;border:0;padding:0;cursor:pointer;background:rgba(8,7,6,.5);color:var(--ink);font-family:var(--sans)}
-  .cover:hover{background:rgba(8,7,6,.38)}
-  .cover[hidden],.after[hidden]{display:none}
-  .cover-in{display:grid;justify-items:center;gap:18px}
-  .disc{display:grid;place-items:center;width:clamp(84px,12vw,128px);height:clamp(84px,12vw,128px);border-radius:50%;background:var(--copper);color:var(--on-acc)}
+  .cover{position:absolute;inset:0;display:grid;place-items:center;border:0;padding:0;cursor:pointer;background:rgba(8,7,6,.52);color:var(--ink);font-family:var(--sans)}
+  .cover:hover{background:rgba(8,7,6,.4)}
+  .cover[hidden],.after[hidden],.below[hidden]{display:none}
+  .cover-in{display:grid;justify-items:center;gap:16px}
+  .disc{display:grid;place-items:center;width:clamp(76px,10vw,116px);height:clamp(76px,10vw,116px);border-radius:50%;background:var(--copper);color:var(--on-acc)}
   .disc svg{width:38%;height:38%;margin-left:7%}
-  .cover b{font:500 clamp(20px,2.6vw,28px) var(--sans)}
-  .step b{font-weight:500}
-  .below[hidden]{display:none}
-  .cover span.sub{font:400 15px var(--mono);color:var(--ink-2)}
+  .cover b{font:500 clamp(19px,2.2vw,26px) var(--sans)}
+  .cover span.sub{font:400 14px var(--mono);color:var(--ink-2)}
 
   .after{position:absolute;inset:0;display:grid;place-items:center;background:#0c0b09;text-align:center;padding:20px}
-  .after-in{display:grid;justify-items:center;gap:18px}
-  .after p{margin:0;font:400 clamp(18px,2.2vw,24px) var(--sans);color:var(--ink-2)}
-  .again{background:none;border:0;color:var(--ink-2);font:400 15px var(--mono);cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:8px}
+  .after-in{display:grid;justify-items:center;gap:16px}
+  .after p{margin:0;font:400 clamp(17px,2vw,22px) var(--sans);color:var(--ink-2)}
+  .again{background:none;border:0;color:var(--ink-3);font:400 14px var(--mono);cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:6px}
   .again:hover{color:var(--ink)}
 
-  .deck{display:inline-flex;align-items:center;gap:14px;text-decoration:none;border-radius:12px;font:500 clamp(18px,2.2vw,22px) var(--sans);padding:18px 28px;border:1px solid var(--line);color:var(--ink-2);transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+  .deck{display:inline-flex;align-items:center;gap:12px;text-decoration:none;border-radius:11px;font:500 clamp(17px,1.9vw,20px) var(--sans);padding:16px 24px;border:1px solid var(--line);color:var(--ink-2);transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
   .deck.go{background:var(--copper);border-color:transparent;color:var(--on-acc)}
   .deck:hover{border-color:var(--copper)}
-  .deck svg{width:20px;height:20px}
-  .below{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:22px}
-  .below small{font:400 14px var(--mono);color:var(--ink-3)}
-  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font:400 14px var(--sans);color:var(--ink-3)}
+  .deck svg{width:18px;height:18px;flex:none}
+  .below{grid-area:cta;display:grid;justify-items:start;gap:10px;margin:0}
+  .below small{font:400 13px var(--mono);color:var(--ink-3)}
+  .foot{grid-area:foot;margin:0;padding-top:16px;border-top:1px solid var(--line);font:400 13px var(--sans);color:var(--ink-3)}
   .foot a{color:var(--ink-2)}
-  @media(max-width:640px){.steps{font-size:14px}.deck{width:100%;justify-content:center}}
+  @media(max-width:979px){.deck{width:100%;justify-content:center}.foot{order:9}}
 </style>
 </head>
 <body>
 <main class="w">
-  <p class="w-name"><b>Anmol Bhandohal</b> · Electrical Engineering co-op, University of Alberta</p>
-  <h1>Three builds, measured</h1>
+  <div class="head">
+    <p class="w-name"><b>Anmol Bhandohal</b> · Electrical Engineering co-op, University of Alberta</p>
+    <h1>Three builds, measured</h1>
+  </div>
 
   <div class="steps" aria-label="What to do on this page">
     <span class="step on" id="s1"><i>1</i><b>Watch the film · 30 seconds</b></span>
@@ -102,22 +108,23 @@
 <script>
 (function(){
   var v = document.getElementById('v'), cover = document.getElementById('cover'), after = document.getElementById('after'),
-      s1 = document.getElementById('s1'), s2 = document.getElementById('s2'), deck = document.getElementById('deck'), hint = document.getElementById('hint');
+      s1 = document.getElementById('s1'), s2 = document.getElementById('s2'), below = document.getElementById('below'),
+      deck = document.getElementById('deck'), hint = document.getElementById('hint');
   function start(){
-    after.hidden = true; cover.hidden = true; v.controls = true; v.muted = false; v.currentTime = 0;
-    document.getElementById('below').hidden = false;
+    after.hidden = true; cover.hidden = true; below.hidden = false;
+    v.controls = true; v.muted = false; v.currentTime = 0;
     s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 30 seconds';
     s2.className = 'step'; s2.lastElementChild.textContent = 'Then open the 12-slide deck';
+    deck.classList.remove('go'); hint.textContent = 'step 2, after the film';
     var p = v.play();
     if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){ cover.hidden = false; }); });
   }
   cover.addEventListener('click', start);
   document.getElementById('again').addEventListener('click', start);
   v.addEventListener('ended', function(){
-    v.controls = false; after.hidden = false;
+    v.controls = false; after.hidden = false; below.hidden = true;
     s1.className = 'step done'; s1.lastElementChild.textContent = 'Watched the film';
     s2.className = 'step on'; s2.lastElementChild.textContent = 'Open the 12-slide deck';
-    document.getElementById('below').hidden = true;
   });
 })();
 </script>
