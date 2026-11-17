@@ -38,9 +38,11 @@
   .disc{display:grid;place-items:center;width:clamp(84px,12vw,128px);height:clamp(84px,12vw,128px);border-radius:50%;background:var(--copper);color:var(--on-acc)}
   .disc svg{width:38%;height:38%;margin-left:7%}
   .cover b{font:500 clamp(20px,2.6vw,28px) var(--sans)}
+  .step b{font-weight:500}
+  .below[hidden]{display:none}
   .cover span.sub{font:400 15px var(--mono);color:var(--ink-2)}
 
-  .after{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,7,6,.86);text-align:center;padding:20px}
+  .after{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,7,6,.955);text-align:center;padding:20px}
   .after-in{display:grid;justify-items:center;gap:18px}
   .after p{margin:0;font:400 clamp(18px,2.2vw,24px) var(--sans);color:var(--ink-2)}
   .again{background:none;border:0;color:var(--ink-2);font:400 15px var(--mono);cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:8px}
@@ -63,9 +65,9 @@
   <h1>Three builds, measured</h1>
 
   <div class="steps" aria-label="What to do on this page">
-    <span class="step on" id="s1"><i>1</i>Watch the film · 30 seconds</span>
+    <span class="step on" id="s1"><i>1</i><b>Watch the film · 30 seconds</b></span>
     <span class="arrow" aria-hidden="true">→</span>
-    <span class="step" id="s2"><i>2</i>Then open the 12-slide deck</span>
+    <span class="step" id="s2"><i>2</i><b>Then open the 12-slide deck</b></span>
   </div>
 
   <div class="player">
@@ -88,7 +90,7 @@
     </div>
   </div>
 
-  <div class="below">
+  <div class="below" id="below">
     <a class="deck" id="deck" href="/docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">Open the 12-slide deck
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     <small id="hint">step 2, after the film</small>
@@ -103,6 +105,9 @@
       s1 = document.getElementById('s1'), s2 = document.getElementById('s2'), deck = document.getElementById('deck'), hint = document.getElementById('hint');
   function start(){
     after.hidden = true; cover.hidden = true; v.controls = true; v.muted = false; v.currentTime = 0;
+    document.getElementById('below').hidden = false;
+    s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 30 seconds';
+    s2.className = 'step'; s2.lastElementChild.textContent = 'Then open the 12-slide deck';
     var p = v.play();
     if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){ cover.hidden = false; }); });
   }
@@ -110,7 +115,9 @@
   document.getElementById('again').addEventListener('click', start);
   v.addEventListener('ended', function(){
     v.controls = false; after.hidden = false;
-    s1.className = 'step done'; s2.className = 'step on'; deck.classList.add('go'); hint.textContent = 'step 2';
+    s1.className = 'step done'; s1.lastElementChild.textContent = 'Watched the film';
+    s2.className = 'step on'; s2.lastElementChild.textContent = 'Open the 12-slide deck';
+    document.getElementById('below').hidden = true;
   });
 })();
 </script>
