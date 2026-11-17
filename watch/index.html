@@ -3,95 +3,115 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Three builds in 44 seconds · Anmol Bhandohal</title>
-<meta name="description" content="A 44-second silent film of three measured builds: a closed-loop music-reactive LED lamp, an ESP32 room-temperature study, and a Python tool that counts electrical fixtures off drawings.">
-<meta property="og:title" content="Three builds in 44 seconds · Anmol Bhandohal">
-<meta property="og:description" content="The lamp, the room study and the drawing takeoff, in 44 silent seconds.">
+<title>Three builds in 30 seconds · Anmol Bhandohal</title>
+<meta name="description" content="A 30-second film of three measured builds: a music-reactive LED lamp, an ESP32 room-temperature study, and a Python tool that counts electrical fixtures off drawings. Then the 12-slide deck.">
+<meta property="og:title" content="Three builds in 30 seconds · Anmol Bhandohal">
+<meta property="og:description" content="Watch the 30-second film, then open the 12-slide deck.">
 <meta property="og:image" content="https://anmol-portfolio-omega.vercel.app/media/lamp-anim-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#11100e">
 <link rel="canonical" href="https://anmol-portfolio-omega.vercel.app/watch/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2311100e'/><circle cx='16' cy='16' r='7' fill='%23c4834f'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/museum.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/museum.css">
 <style>
-  .watch-wrap{max-width:1120px;margin:0 auto;padding:clamp(24px,5vh,56px) clamp(18px,4vw,40px) 64px}
-  .watch-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
-  .watch-head h1{font:400 clamp(30px,4.6vw,54px)/1.06 var(--serif);letter-spacing:-.01em;margin:6px 0 0}
-  .watch-head h1 em{font-style:italic;color:var(--copper-2)}
-  .watch-back{font-family:var(--mono);font-size:13px;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
-  .watch-back:hover{color:var(--copper-2)}
-  .player{position:relative;background:var(--deep);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  /* one path: 1 watch, 2 open the deck. Nothing else competes for the click. */
+  .w{max-width:1080px;margin:0 auto;padding:clamp(20px,4vh,44px) clamp(16px,4vw,40px) 56px;position:relative;z-index:1}
+  .w-name{font:500 15px var(--sans);color:var(--ink-2);margin:0 0 clamp(16px,3vh,28px)}
+  .w-name b{color:var(--ink);font-weight:500}
+  .w h1{font:400 clamp(30px,4.4vw,50px)/1.08 var(--serif);letter-spacing:-.01em;margin:0 0 20px}
+
+  .steps{display:flex;align-items:center;gap:14px;margin:0 0 16px;font:500 16px var(--sans);color:var(--ink-3);flex-wrap:wrap}
+  .step{display:inline-flex;align-items:center;gap:10px;transition:color .3s var(--ease)}
+  .step i{font-style:normal;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1px solid currentColor;font:500 14px var(--mono)}
+  .step.on{color:var(--ink)} .step.on i{background:var(--copper);border-color:var(--copper);color:var(--on-acc)}
+  .step.done{color:var(--ink-2)}
+  .steps .arrow{color:var(--ink-3)}
+
+  .player{position:relative;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
   .player video{width:100%;aspect-ratio:16/9;display:block;background:#000}
-  .bigplay{position:absolute;inset:0;display:grid;place-items:center;border:0;background:rgba(8,7,6,.35);cursor:pointer;transition:background .2s var(--ease)}
-  .bigplay:hover{background:rgba(8,7,6,.15)}
-  .bigplay span{display:grid;place-items:center;width:clamp(72px,11vw,116px);height:clamp(72px,11vw,116px);border-radius:50%;background:var(--ink);color:var(--on-acc)}
-  .bigplay svg{width:40%;height:40%;margin-left:6%}
-  .bigplay[hidden]{display:none}
-  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,28px);margin:30px 0 0}
-  .fact{border-top:1px solid var(--line);padding-top:14px}
-  .fact b{display:block;font:500 clamp(26px,3.4vw,38px)/1 var(--sans);color:var(--copper-2)}
-  .fact p{margin:8px 0 0;color:var(--ink-2);font-size:15px}
-  .next{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:10px;text-decoration:none;font:500 16px var(--sans);border:1px solid var(--line);color:var(--ink);transition:transform .15s var(--ease),background .15s var(--ease)}
-  .btn:hover{transform:translateY(-1px)}
-  .btn.primary{background:var(--copper);color:var(--on-acc);border-color:transparent}
-  .note{margin-top:26px;color:var(--ink-3);font-family:var(--mono);font-size:12.5px}
-  @media(max-width:720px){.facts{grid-template-columns:1fr}.watch-head h1{font-size:34px}}
+  .cover{position:absolute;inset:0;display:grid;place-items:center;border:0;padding:0;cursor:pointer;background:rgba(8,7,6,.5);color:var(--ink);font-family:var(--sans)}
+  .cover:hover{background:rgba(8,7,6,.38)}
+  .cover[hidden],.after[hidden]{display:none}
+  .cover-in{display:grid;justify-items:center;gap:18px}
+  .disc{display:grid;place-items:center;width:clamp(84px,12vw,128px);height:clamp(84px,12vw,128px);border-radius:50%;background:var(--copper);color:var(--on-acc)}
+  .disc svg{width:38%;height:38%;margin-left:7%}
+  .cover b{font:500 clamp(20px,2.6vw,28px) var(--sans)}
+  .cover span.sub{font:400 15px var(--mono);color:var(--ink-2)}
+
+  .after{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,7,6,.86);text-align:center;padding:20px}
+  .after-in{display:grid;justify-items:center;gap:18px}
+  .after p{margin:0;font:400 clamp(18px,2.2vw,24px) var(--sans);color:var(--ink-2)}
+  .again{background:none;border:0;color:var(--ink-2);font:400 15px var(--mono);cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:8px}
+  .again:hover{color:var(--ink)}
+
+  .deck{display:inline-flex;align-items:center;gap:14px;text-decoration:none;border-radius:12px;font:500 clamp(18px,2.2vw,22px) var(--sans);padding:18px 28px;border:1px solid var(--line);color:var(--ink-2);transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+  .deck.go{background:var(--copper);border-color:transparent;color:var(--on-acc)}
+  .deck:hover{border-color:var(--copper)}
+  .deck svg{width:20px;height:20px}
+  .below{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:22px}
+  .below small{font:400 14px var(--mono);color:var(--ink-3)}
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font:400 14px var(--sans);color:var(--ink-3)}
+  .foot a{color:var(--ink-2)}
+  @media(max-width:640px){.steps{font-size:14px}.deck{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
-<header class="bar">
-  <a class="bar-name" href="../">Anmol Bhandohal</a>
-  <div class="bar-actions">
-    <a class="bar-link" href="../docs/">Reports &amp; slides</a>
-    <a class="bar-link" href="../resume.pdf" target="_blank" rel="noopener">Résumé</a>
-  </div>
-</header>
+<main class="w">
+  <p class="w-name"><b>Anmol Bhandohal</b> · Electrical Engineering co-op, University of Alberta</p>
+  <h1>Three builds, measured</h1>
 
-<main class="watch-wrap">
-  <div class="watch-head">
-    <div>
-      <p class="kicker mono">44 seconds · no sound needed</p>
-      <h1>Three builds, <em>measured</em></h1>
-    </div>
-    <a class="watch-back" href="../">← back to the site</a>
+  <div class="steps" aria-label="What to do on this page">
+    <span class="step on" id="s1"><i>1</i>Watch the film · 30 seconds</span>
+    <span class="arrow" aria-hidden="true">→</span>
+    <span class="step" id="s2"><i>2</i>Then open the 12-slide deck</span>
   </div>
 
-  <div class="player" id="player">
-    <video id="v" playsinline muted loop preload="auto" poster="../media/lamp-anim-poster.jpg"
-           src="../media/lamp-anim.mp4" aria-label="44-second film: a music-reactive lamp, an ESP32 room study, and a Python tool that counts electrical fixtures"></video>
-    <button class="bigplay" id="play" aria-label="Play the 44-second film">
-      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+  <div class="player">
+    <video id="v" playsinline preload="auto" poster="/media/lamp-anim-poster.jpg" src="/media/lamp-anim.mp4?v=3"
+           aria-label="30-second film: a music-reactive lamp, an ESP32 room study, and a Python tool that counts electrical fixtures"></video>
+    <button class="cover" id="cover" aria-label="Play the 30-second film with sound">
+      <span class="cover-in">
+        <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+        <b>Play the film</b>
+        <span class="sub">30 seconds · with sound</span>
+      </span>
     </button>
+    <div class="after" id="after" hidden>
+      <div class="after-in">
+        <p>That was the short version.</p>
+        <a class="deck go" href="/docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">Open the 12-slide deck
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button class="again" id="again">Watch the film again</button>
+      </div>
+    </div>
   </div>
 
-  <div class="facts">
-    <div class="fact"><b>R² = 0.9999</b><p>The lamp's light output against PWM duty, measured in a dark room.</p></div>
-    <div class="fact"><b>8 furnace cycles</b><p>Found automatically in 16 hours of ESP32 sensor data.</p></div>
-    <div class="fact"><b>96 fixtures</b><p>Counted off a 13-sheet electrical drawing set by a Python script.</p></div>
+  <div class="below">
+    <a class="deck" id="deck" href="/docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">Open the 12-slide deck
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <small id="hint">step 2, after the film</small>
   </div>
 
-  <div class="next">
-    <a class="btn primary" href="../docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">The 12-slide deck · PDF</a>
-    <a class="btn" href="../docs/">Reports &amp; slides</a>
-    <a class="btn" href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a>
-  </div>
-  <p class="note">Available January – August 2027 · BSc Electrical Engineering (Co-op), University of Alberta</p>
+  <p class="foot">Available January – August 2027 · <a href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a></p>
 </main>
 
 <script>
 (function(){
-  var v = document.getElementById('v'), b = document.getElementById('play');
-  function show(on){ b.hidden = !on; }
-  var p = v.play();
-  if (p && p.then) p.then(function(){ show(false); }).catch(function(){ show(true); });
-  b.addEventListener('click', function(){ v.play(); show(false); });
-  v.addEventListener('pause', function(){ if (!v.ended) show(true); });
-  v.addEventListener('ended', function(){ show(true); });
-  // click anywhere on the film to pause/play once it is running
-  v.addEventListener('click', function(){ v.paused ? v.play() : v.pause(); });
+  var v = document.getElementById('v'), cover = document.getElementById('cover'), after = document.getElementById('after'),
+      s1 = document.getElementById('s1'), s2 = document.getElementById('s2'), deck = document.getElementById('deck'), hint = document.getElementById('hint');
+  function start(){
+    after.hidden = true; cover.hidden = true; v.controls = true; v.muted = false; v.currentTime = 0;
+    var p = v.play();
+    if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){ cover.hidden = false; }); });
+  }
+  cover.addEventListener('click', start);
+  document.getElementById('again').addEventListener('click', start);
+  v.addEventListener('ended', function(){
+    v.controls = false; after.hidden = false;
+    s1.className = 'step done'; s2.className = 'step on'; deck.classList.add('go'); hint.textContent = 'step 2';
+  });
 })();
 </script>
 </body>

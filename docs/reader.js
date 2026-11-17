@@ -5,8 +5,8 @@
   const ORIGIN = location.origin + location.pathname.replace(/[^/]*$/, '');
   const office = f => 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(ORIGIN + 'files/' + f);
   const DOCS = {
-    slides: { title: 'The presentation · 12 slides', n: 12, v: 4, watch: { label: 'Watch the 44 s version', href: '../watch/' },
-      tools: [['▶ Watch the 44 s version', '../watch/'], ['Download .pptx', 'files/Projects_Deck.pptx', 1], ['PDF', 'files/Projects_Deck.pdf'], ['Open in PowerPoint Online', office('Projects_Deck.pptx'), 0, 1]],
+    slides: { title: 'The presentation · 12 slides', n: 12, v: 4, watch: { label: 'Watch the 30 s film', href: '../watch/' },
+      tools: [['▶ Watch the 30 s film', '../watch/'], ['Download .pptx', 'files/Projects_Deck.pptx', 1], ['PDF', 'files/Projects_Deck.pdf'], ['Open in PowerPoint Online', office('Projects_Deck.pptx'), 0, 1]],
       // transparent hot-spots over the play thumbnails that are drawn on the slides; click opens the clip in place
       hot: { 1: { x: 9.9, y: .62, w: 2.45, h: 4.35, src: '../media/lamp-music.mp4' },
              6: { x: .75, y: 2.1, w: 4.31, h: 4.0, src: '../media/lamp-music.mp4' } },
