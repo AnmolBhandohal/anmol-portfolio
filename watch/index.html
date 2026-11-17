@@ -17,13 +17,13 @@
 <link rel="stylesheet" href="/css/museum.css">
 <style>
   /* One path: 1 watch, 2 open the deck. Nothing else competes for the click. */
-  .w{max-width:1240px;margin:0 auto;padding:clamp(16px,3vh,34px) clamp(16px,4vw,40px) 40px;display:grid;gap:22px 44px;grid-template-columns:minmax(0,1fr);position:relative;z-index:1}
+  .w{--pad:clamp(12px,2.5vw,40px);--film:calc((100svh - 195px) * 16 / 9);max-width:min(1720px, calc(var(--film) + 2 * var(--pad)));margin:0 auto;padding:clamp(12px,2.2vh,26px) var(--pad) 18px;display:grid;gap:clamp(12px,1.8vh,20px) 40px;grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "steps" "film" "cta" "foot";position:relative;z-index:1}
   .head{grid-area:head}
-  .w-name{font:500 14px var(--sans);color:var(--ink-3);margin:0 0 14px}
+  .w-name{font:500 14px var(--sans);color:var(--ink-3);margin:0 0 6px}
   .w-name b{color:var(--ink);font-weight:500}
-  .w h1{font:400 clamp(28px,3.6vw,46px)/1.06 var(--serif);letter-spacing:-.01em;margin:0}
+  .w h1{white-space:nowrap;font:400 clamp(24px,2.2vw,40px)/1.06 var(--serif);letter-spacing:-.01em;margin:0}
 
-  .steps{grid-area:steps;display:flex;align-items:center;gap:12px;margin:0;font:500 clamp(14px,1.5vw,17px) var(--sans);color:var(--ink-3);flex-wrap:wrap}
+  .steps{grid-area:steps;display:flex;align-items:center;gap:12px;margin:0;font:500 clamp(14px,1.1vw,17px) var(--sans);color:var(--ink-3);flex-wrap:wrap}
   .step{display:inline-flex;align-items:center;gap:10px;transition:color .3s var(--ease)}
   .step b{font-weight:500}
   .step i{font-style:normal;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid currentColor;font:500 13px var(--mono);flex:none}
@@ -31,7 +31,7 @@
   .step.done{color:var(--ink-3)} .step.done i{border-style:solid;color:var(--ink-3)}
   .steps .arrow{color:var(--ink-3)}
 
-  .player{grid-area:auto;position:relative;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);margin:0}
+  .player{grid-area:film;position:relative;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);margin:0}
   .player video{width:100%;aspect-ratio:16/9;display:block;background:#000}
   .cover{position:absolute;inset:0;display:grid;place-items:center;border:0;padding:0;cursor:pointer;background:rgba(8,7,6,.8);color:var(--ink);font-family:var(--sans)}
   .cover:hover{background:rgba(8,7,6,.72)}
@@ -55,25 +55,34 @@
   .below{grid-area:cta;display:grid;justify-items:start;gap:10px;margin:0}
   .below small{font:400 13px var(--mono);color:var(--ink-3)}
   .foot{grid-area:foot;margin:0;padding-top:16px;border-top:1px solid var(--line);font:400 13px var(--sans);color:var(--ink-3)}
-  .foot a{color:var(--ink-2)}
+  .foot a{color:var(--ink-2)} .foot b{color:var(--ink-2);font-weight:500}
+  @media(min-width:980px) and (max-width:1249px){
+    .w{--film:calc((100svh - 245px) * 16 / 9)}
+    .w.w{grid-template-areas:"head head" "steps steps" "film film" "cta foot"}
+    .w .steps{justify-self:start}
+  }
   @media(max-width:979px){.deck{width:100%;justify-content:center}.foot{order:9}}
+  /* The film is the page: the column is as wide as the window allows while the whole 16:9 frame, the
+     one-line header and the deck button still fit on one screen, so it reads well without full-screen. */
   @media(min-width:980px){
-    .w{grid-template-columns:minmax(0,1.62fr) minmax(300px,.85fr);grid-template-areas:"film head" "film steps" "film cta" "film foot";align-items:start}
-    .player{grid-area:film}
+    .w{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"head steps" "film film" "cta foot";align-items:center}
+    .steps{flex-wrap:nowrap;white-space:nowrap}
+    .steps{justify-self:end}
+    .below{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap}
+    .foot{border-top:0;padding-top:0;justify-self:end;text-align:right}
   }
 </style>
 </head>
 <body>
 <main class="w">
   <div class="head">
-    <p class="w-name"><b>Anmol Bhandohal</b> · Electrical Engineering co-op, University of Alberta</p>
     <h1>Three builds, measured</h1>
   </div>
 
   <div class="steps" aria-label="What to do on this page">
-    <span class="step on" id="s1"><i>1</i><b>Watch the film · 35 seconds</b></span>
+    <span class="step on" id="s1"><i>1</i><b>Watch the film · 35 s</b></span>
     <span class="arrow" aria-hidden="true">→</span>
-    <span class="step" id="s2"><i>2</i><b>Then open the 12-slide deck</b></span>
+    <span class="step" id="s2"><i>2</i><b>Then open the deck</b></span>
   </div>
 
   <div class="player">
@@ -99,10 +108,10 @@
   <div class="below" id="below">
     <a class="deck" id="deck" href="/docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">Open the 12-slide deck
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <small id="hint">step 2 · or open it any time</small>
+    <small id="hint">or open it any time</small>
   </div>
 
-  <p class="foot">Available January – August 2027 · <a href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a></p>
+  <p class="foot"><b>Anmol Bhandohal</b> · EE co-op, U of Alberta · available Jan&nbsp;–&nbsp;Aug&nbsp;2027 · <a href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a></p>
 </main>
 
 <script>
@@ -113,9 +122,9 @@
   function start(){
     after.hidden = true; cover.hidden = true; below.hidden = false;
     v.controls = true; v.muted = false; v.currentTime = 0;
-    s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 35 seconds';
-    s2.className = 'step'; s2.lastElementChild.textContent = 'Then open the 12-slide deck';
-    deck.classList.remove('go'); hint.textContent = 'step 2 · or open it any time';
+    s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 35 s';
+    s2.className = 'step'; s2.lastElementChild.textContent = 'Then open the deck';
+    deck.classList.remove('go'); hint.textContent = 'or open it any time';
     var p = v.play();
     if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){ cover.hidden = false; }); });
   }
