@@ -18,10 +18,6 @@
 <style>
   /* One path: 1 watch, 2 open the deck. Nothing else competes for the click. */
   .w{max-width:1240px;margin:0 auto;padding:clamp(16px,3vh,34px) clamp(16px,4vw,40px) 40px;display:grid;gap:22px 44px;grid-template-columns:minmax(0,1fr);position:relative;z-index:1}
-  @media(min-width:980px){
-    .w{grid-template-columns:minmax(0,1.62fr) minmax(300px,.85fr);grid-template-areas:"head film" "steps film" "cta film" "foot film";align-items:start}
-    .player{grid-area:film}
-  }
   .head{grid-area:head}
   .w-name{font:500 14px var(--sans);color:var(--ink-3);margin:0 0 14px}
   .w-name b{color:var(--ink);font-weight:500}
@@ -61,6 +57,10 @@
   .foot{grid-area:foot;margin:0;padding-top:16px;border-top:1px solid var(--line);font:400 13px var(--sans);color:var(--ink-3)}
   .foot a{color:var(--ink-2)}
   @media(max-width:979px){.deck{width:100%;justify-content:center}.foot{order:9}}
+  @media(min-width:980px){
+    .w{grid-template-columns:minmax(0,1.62fr) minmax(300px,.85fr);grid-template-areas:"head film" "steps film" "cta film" "foot film";align-items:start}
+    .player{grid-area:film}
+  }
 </style>
 </head>
 <body>
