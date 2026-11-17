@@ -14,20 +14,20 @@
       ]
     },
     {
-      "source": "/media/(.*)\\.(mp4|webm|jpg|jpeg|png)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
       "source": "/(models|vendor|img|media|docs/slides|docs/report-cold|docs/report-lamp|docs/sheets|docs/labs)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/media/(.*)\\.(mp4|webm|jpg|jpeg|png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     }
