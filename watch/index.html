@@ -33,8 +33,8 @@
 
   .player{grid-area:auto;position:relative;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45);margin:0}
   .player video{width:100%;aspect-ratio:16/9;display:block;background:#000}
-  .cover{position:absolute;inset:0;display:grid;place-items:center;border:0;padding:0;cursor:pointer;background:rgba(8,7,6,.52);color:var(--ink);font-family:var(--sans)}
-  .cover:hover{background:rgba(8,7,6,.4)}
+  .cover{position:absolute;inset:0;display:grid;place-items:center;border:0;padding:0;cursor:pointer;background:rgba(8,7,6,.8);color:var(--ink);font-family:var(--sans)}
+  .cover:hover{background:rgba(8,7,6,.72)}
   .cover[hidden],.after[hidden],.below[hidden]{display:none}
   .cover-in{display:grid;justify-items:center;gap:16px}
   .disc{display:grid;place-items:center;width:clamp(76px,10vw,116px);height:clamp(76px,10vw,116px);border-radius:50%;background:var(--copper);color:var(--on-acc)}
@@ -53,6 +53,7 @@
   .deck:hover{border-color:var(--copper)}
   .deck svg{width:18px;height:18px;flex:none}
   .below{grid-area:cta;display:grid;justify-items:start;gap:10px;margin:0}
+  .below .deck:not(.go){opacity:.45;pointer-events:none}
   .below small{font:400 13px var(--mono);color:var(--ink-3)}
   .foot{grid-area:foot;margin:0;padding-top:16px;border-top:1px solid var(--line);font:400 13px var(--sans);color:var(--ink-3)}
   .foot a{color:var(--ink-2)}
@@ -99,7 +100,7 @@
   <div class="below" id="below">
     <a class="deck" id="deck" href="/docs/files/Projects_Deck.pdf" target="_blank" rel="noopener">Open the 12-slide deck
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <small id="hint">step 2, after the film</small>
+    <small id="hint">step 2 · unlocks when the film ends</small>
   </div>
 
   <p class="foot">Available January – August 2027 · <a href="mailto:bhandoha@ualberta.ca">bhandoha@ualberta.ca</a></p>
@@ -115,7 +116,7 @@
     v.controls = true; v.muted = false; v.currentTime = 0;
     s1.className = 'step on'; s1.lastElementChild.textContent = 'Watch the film · 30 seconds';
     s2.className = 'step'; s2.lastElementChild.textContent = 'Then open the 12-slide deck';
-    deck.classList.remove('go'); hint.textContent = 'step 2, after the film';
+    deck.classList.remove('go'); hint.textContent = 'step 2 · unlocks when the film ends';
     var p = v.play();
     if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){ cover.hidden = false; }); });
   }
